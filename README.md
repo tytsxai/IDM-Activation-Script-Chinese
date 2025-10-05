@@ -221,7 +221,6 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 - 本工具仅用于学习 Windows 注册表操作和批处理编程
 - 请支持正版软件，购买官方授权
 - 长期使用建议购买正版：https://www.internetdownloadmanager.com/buy_now.html
-- 作者不对使用本工具产生的任何后果负责
 
 ## 📄 许可证
 
