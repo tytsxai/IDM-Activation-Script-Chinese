@@ -1,24 +1,27 @@
-IDM æ¿€æ´»è„šæœ¬ä½¿ç”¨è¯´æ˜Ž
+IDM ¼¤»î½Å±¾Ê¹ÓÃËµÃ÷
 ====================
 
-æ–‡ä»¶ä¸€è§ˆ
+¹ØÓÚ±¾²Ö¿â
 --------
-IAS.cmd           â€”â€” ä¸»è„šæœ¬ï¼Œæä¾›å†»ç»“/æ¿€æ´»/é‡ç½®ç­‰å…¨éƒ¨åŠŸèƒ½
-å¿«é€Ÿæ¿€æ´».cmd      â€”â€” ä¸€é”®è°ƒç”¨ IAS.cmd /frzï¼ˆæŽ¨èï¼‰
-æµ‹è¯•è„šæœ¬.cmd      â€”â€” çŽ¯å¢ƒæ£€æµ‹è„šæœ¬ï¼ˆç®¡ç†å‘˜/PowerShell è¯­è¨€æ¨¡å¼/Null æœåŠ¡/ç½‘ç»œ/ä»£ç é¡µ/IAS è·¯å¾„ï¼‰
-README.md         â€”â€” è¯¦ç»†å›¾æ–‡è¯´æ˜Ž
-ä½¿ç”¨è¯´æ˜Ž.txt      â€”â€” å½“å‰æ–‡æ¡£ï¼Œç”¨äºŽå¿«é€Ÿé˜…è¯»
+±¾²Ö¿âÌá¹©ÖÐÎÄÓÅ»¯µÄ IDM ¼¤»î½Å±¾£¬Åú´¦ÀíÓë±¾ÎÄµµ¾ùÎª GBK ±àÂë¡¢CRLF »»ÐÐ£¬Ö±½ÓÔÚ Windows CMD ÖÐ²é¿´²»»áÂÒÂë¡£
 
-ä½¿ç”¨æ­¥éª¤
+ÎÄ¼þÒ»ÀÀ
 --------
-1. å³é”®ä»¥ç®¡ç†å‘˜èº«ä»½è¿è¡Œâ€œæµ‹è¯•è„šæœ¬.cmdâ€ï¼Œç¡®ä¿ç®¡ç†å‘˜/PowerShell/Null æœåŠ¡/ç½‘ç»œ/ä»£ç é¡µ/IAS æ£€æµ‹é€šè¿‡ã€‚
-2. å³é”®ä»¥ç®¡ç†å‘˜èº«ä»½è¿è¡Œâ€œå¿«é€Ÿæ¿€æ´».cmdâ€ï¼Œé»˜è®¤æ‰§è¡Œå†»ç»“æ¿€æ´»æ¨¡å¼ã€‚
-3. å¦‚éœ€å…¶å®ƒæ“ä½œï¼ˆæ™®é€šæ¿€æ´»/é‡ç½®ç­‰ï¼‰ï¼Œç›´æŽ¥ä»¥ç®¡ç†å‘˜èº«ä»½è¿è¡Œâ€œIAS.cmdâ€å¹¶æŒ‰ç…§èœå•æç¤ºé€‰æ‹©å¯¹åº”ç¼–å·ã€‚
+IAS.cmd           ¡ª¡ª Ö÷½Å±¾£¬Ìá¹©¶³½á/¼¤»î/ÖØÖÃµÈÈ«²¿¹¦ÄÜ
+¿ìËÙ¼¤»î.cmd      ¡ª¡ª Ò»¼üµ÷ÓÃ IAS.cmd /frz£¨Ä¬ÈÏ·½°¸£©
+²âÊÔ½Å±¾.cmd      ¡ª¡ª »·¾³¼ì²â½Å±¾£¨¹ÜÀíÔ±/PowerShell ÓïÑÔÄ£Ê½/Null ·þÎñ/ÍøÂç/´úÂëÒ³/IAS Â·¾¶£©
+README.md         ¡ª¡ª ÏêÏ¸Í¼ÎÄËµÃ÷
+Ê¹ÓÃËµÃ÷.txt      ¡ª¡ª µ±Ç°ÎÄµµ£¬ÓÃÓÚ¿ìËÙÔÄ¶Á
 
-å¸¸è§é—®é¢˜
+×¼±¸²½Öè
 --------
-- å¦‚è„šæœ¬æ˜¾ç¤ºä¸­æ–‡ä¹±ç ï¼Œè¯·åœ¨ CMD ä¸­æ‰§è¡Œ `chcp 936` å†è¿è¡Œè„šæœ¬ã€‚
-- è‹¥æ— æ³•è”ç½‘ï¼Œè¯·ç¡®è®¤èƒ½å¤Ÿè®¿é—® https://www.internetdownloadmanager.comã€‚
-- æ¿€æ´»åŽä»æç¤ºæ³¨å†Œï¼Œå¯å…ˆæ‰§è¡Œâ€œé‡ç½®æ¿€æ´»/è¯•ç”¨æœŸâ€ï¼Œé‡å¯ç”µè„‘åŽé‡æ–°æ¿€æ´»ã€‚
-- è‹¥æç¤º Null æœåŠ¡æœªè¿è¡Œæˆ– PowerShell è¯­è¨€æ¨¡å¼è¢«é™åˆ¶ï¼Œè¯·å…ˆä¿®å¤å¯¹åº”é¡¹åŽå†æ‰§è¡Œæ¿€æ´»è„šæœ¬ã€‚
-- ä»Ž macOS/Linux ä¿®æ”¹æ‰¹å¤„ç†åŽè¯·ä¿æŒ CRLF æ¢è¡Œï¼ˆä»“åº“å·²å›ºå®š .cmd/.txt è¡Œå°¾ï¼‰ã€‚
+1. ÓÒ¼üÒÔ¹ÜÀíÔ±Éí·ÝÔËÐÐ¡°²âÊÔ½Å±¾.cmd¡±£¬È·ÈÏ¹ÜÀíÔ±È¨ÏÞ¡¢PowerShell ÓïÑÔÄ£Ê½¡¢Null ·þÎñ¡¢ÍøÂç¡¢´úÂëÒ³ºÍ IAS Â·¾¶¾ùÕý³£¡£
+2. ÓÒ¼üÒÔ¹ÜÀíÔ±Éí·ÝÔËÐÐ¡°¿ìËÙ¼¤»î.cmd¡±£¬Ä¬ÈÏÖ´ÐÐ¶³½á¼¤»îÄ£Ê½²¢»á×Ô¶¯ÇëÇó¹ÜÀíÔ±È¨ÏÞ¡£
+3. ÐèÒªÆäËü²Ù×÷£¨ÆÕÍ¨¼¤»î/ÖØÖÃµÈ£©Ê±£¬ÒÔ¹ÜÀíÔ±Éí·ÝÔËÐÐ¡°IAS.cmd¡±²¢°´²Ëµ¥Ñ¡Ôñ¡£
+
+³£¼ûÎÊÌâ
+--------
+- Èç½Å±¾ÏÔÊ¾ÖÐÎÄÂÒÂë£¬ÇëÔÚ CMD ÖÐÖ´ÐÐ `chcp 936` ÔÙÔËÐÐ½Å±¾¡£
+- ÎÞ·¨ÁªÍøÊ±£¬ÇëÈ·ÈÏÄÜ¹»·ÃÎÊ https://www.internetdownloadmanager.com£¨¿É³¢ÊÔ¹Ø±Õ´úÀí/VPN£©¡£
+- ¼¤»îºóÈÔÌáÊ¾×¢²á£¬¿ÉÏÈÖ´ÐÐ¡°ÖØÖÃ¼¤»î/ÊÔÓÃÆÚ¡±£¬ÖØÆôµçÄÔºóÖØÐÂ¼¤»î¡£
+- ÈôÌáÊ¾ Null ·þÎñÎ´ÔËÐÐ»ò PowerShell ÓïÑÔÄ£Ê½±»ÏÞÖÆ£¬ÇëÏÈÐÞ¸´¶ÔÓ¦ÏîºóÔÙÖ´ÐÐ¼¤»î½Å±¾¡£

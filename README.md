@@ -1,6 +1,6 @@
 # IDM 激活脚本 v1.2
 
-> 🚀 一键激活 Internet Download Manager (IDM) 下载管理器
+> 🚀 一键激活 Internet Download Manager (IDM) 下载管理器（中文优化版，不依赖其他仓库即可使用）
 
 ## 📋 目录
 
@@ -16,13 +16,13 @@
 
 - ✅ **支持最新版本** - 兼容所有 IDM 版本
 - ✅ **三种激活模式** - 冻结激活、普通激活、重置功能
-- ✅ **中文显示优化** - 运行时强制 `chcp 936`，避免控制台乱码
+- ✅ **中文显示优化** - 全部批处理/文本使用 GBK 编码，运行时强制 `chcp 936`，避免控制台乱码
 - ✅ **自动备份** - 安全备份注册表，随时可恢复
 - ✅ **智能检测** - 自动检测系统环境和 IDM 状态
 - ✅ **环境自检** - 附带环境检测脚本（管理员/PowerShell/Null 服务/网络/代码页）
 - ✅ **无需破解** - 不修改 IDM 程序文件
 
-> ⚠️ 提示：脚本文件保存为 GBK 编码（便于 Windows 控制台显示），在 GitHub/Web IDE 中查看可能出现乱码，可使用支持 GBK 的编辑器或 `iconv`。
+> ⚠️ 提示：脚本文件使用 GBK 编码（便于 Windows 控制台显示），在 GitHub/Web IDE 中查看可能出现乱码，可用支持 GBK 的编辑器或 `iconv`。
 
 ## 💻 系统要求
 
@@ -36,7 +36,7 @@
 
 ## 🚀 使用方法
 
-> 小贴士：首次使用前可右键以管理员身份运行 `测试脚本.cmd`，快速检查管理员权限、PowerShell 语言模式、Null 服务、网络连通性和代码页设置。
+> 小贴士：首次使用前可右键以管理员身份运行 `测试脚本.cmd`，快速检查管理员权限、PowerShell 语言模式、Null 服务、网络连通性和代码页设置，无需额外下载其他仓库文件。
 
 ### 方法一：图形界面（推荐新手）
 
@@ -148,9 +148,9 @@ IAS.cmd /res
 <summary><b>Q6: PowerShell 被组织策略禁用？</b></summary>
 
 **解决方法：**
-1. 联系 IT 管理员
-2. 查看帮助文档：https://massgrave.dev/idm-activation-script.html#Troubleshoot
-3. 使用个人电脑尝试
+- 联系本机/域管理员解除限制
+- 在 PowerShell 终端执行 `Set-ExecutionPolicy RemoteSigned`（需管理员权限）
+- 如为公司设备，建议在个人设备上使用
 
 </details>
 
@@ -176,8 +176,8 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 ### 编码说明
 
-- `IAS.cmd` 使用 GBK（代码页 936）保存，并在运行时强制切换控制台到相同代码页以保证中文显示。
-- 在 UTF-8 环境下阅读源码，可使用 `iconv -f GBK -t UTF-8 IAS.cmd` 或支持 GBK 的文本编辑器。
+- 所有 `.cmd`/`.txt` 文件使用 GBK（代码页 936）保存，并在运行时强制切换控制台到相同代码页以保证中文显示。
+- 在 UTF-8 环境下阅读源码，可使用 `iconv -f GBK -t UTF-8 IAS.cmd`（或替换为其他文件名）或支持 GBK 的文本编辑器。
 - 仓库通过 `.gitattributes` 固定 `.cmd`/`.txt` 为 CRLF 行尾，避免批处理因 LF 换行导致的校验错误。
 
 ### 安全性
@@ -208,13 +208,14 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 - 新增 `快速激活.cmd`（冻结模式快捷方式）、`测试脚本.cmd`（环境检测）、`使用说明.txt`（快速上手指南）
 - `测试脚本.cmd` 补充 Null 服务、PowerShell 语言模式与 TCP 端口检测，失败时返回非零退出码
 - `快速激活.cmd` 在缺少 PowerShell 时提示手动提权，并向上传递 IAS 的返回码
+- 辅助批处理与文本全部统一为 GBK 编码，确保在中文 CMD 下无乱码
 
 ## 🌐 相关链接
 
-- **项目主页**: https://github.com/WindowsAddict/IDM-Activation-Script
-- **文档中心**: https://massgrave.dev/idm-activation-script
+- **项目主页**: https://github.com/tytsxai/IDM-Activation-Script-Chinese
+- **上游英文版**: https://github.com/WindowsAddict/IDM-Activation-Script
 - **IDM 官网**: https://www.internetdownloadmanager.com
-- **问题反馈**: windowsaddict@protonmail.com
+- **问题反馈**: https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues
 
 ## ⚠️ 免责声明
 
