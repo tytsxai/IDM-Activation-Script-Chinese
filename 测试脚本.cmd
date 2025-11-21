@@ -4,40 +4,40 @@ setlocal EnableExtensions EnableDelayedExpansion
 
 set "issues=0"
 echo ==========================================
-echo IDM æ¿€æ´»ç¯å¢ƒæ£€æµ‹
+echo IDM ¼¤»î»·¾³¼ì²â
 echo ==========================================
 echo:
 
 fltmc >nul 2>&1 && (
-    echo [âˆš] å·²è·å–ç®¡ç†å‘˜æƒé™
+    echo [¡Ì] ÒÑ»ñÈ¡¹ÜÀíÔ±È¨ÏŞ
 ) || (
-    echo [Ã—] å½“å‰æœªä»¥ç®¡ç†å‘˜èº«ä»½è¿è¡Œ
+    echo [¡Á] µ±Ç°Î´ÒÔ¹ÜÀíÔ±Éí·İÔËĞĞ
     set "issues=1"
 )
 
 where powershell.exe >nul 2>&1 && (
-    echo [âˆš] PowerShell å¯ç”¨
+    echo [¡Ì] PowerShell ¿ÉÓÃ
     for /f "delims=" %%a in ('powershell -NoProfile -Command "$ExecutionContext.SessionState.LanguageMode" 2^>nul') do set "psmode=%%a"
     if defined psmode (
         if /i "!psmode!"=="FullLanguage" (
-            echo [âˆš] PowerShell è¯­è¨€æ¨¡å¼: !psmode!
+            echo [¡Ì] PowerShell ÓïÑÔÄ£Ê½: !psmode!
         ) else (
-            echo [Ã—] PowerShell è¯­è¨€æ¨¡å¼ä¸º !psmode! ï¼ˆå¯èƒ½è¢«ç»„ç»‡ç­–ç•¥é™åˆ¶ï¼‰
+            echo [¡Á] PowerShell ÓïÑÔÄ£Ê½Îª !psmode! £¨¿ÉÄÜ±»×éÖ¯²ßÂÔÏŞÖÆ£©
             set "issues=1"
         )
     ) else (
-        echo [Ã—] æ— æ³•è¯»å– PowerShell è¯­è¨€æ¨¡å¼ï¼ˆå¯èƒ½è¢«ç¦ç”¨ï¼‰
+        echo [¡Á] ÎŞ·¨¶ÁÈ¡ PowerShell ÓïÑÔÄ£Ê½£¨¿ÉÄÜ±»½ûÓÃ£©
         set "issues=1"
     )
 ) || (
-    echo [Ã—] ç³»ç»Ÿæœªæ‰¾åˆ° PowerShell
+    echo [¡Á] ÏµÍ³Î´ÕÒµ½ PowerShell
     set "issues=1"
 )
 
 sc query Null | find /i "RUNNING" >nul 2>&1 && (
-    echo [âˆš] Null æœåŠ¡è¿è¡Œæ­£å¸¸
+    echo [¡Ì] Null ·şÎñÔËĞĞÕı³£
 ) || (
-    echo [Ã—] Null æœåŠ¡æœªè¿è¡Œï¼Œæ‰¹å¤„ç†è„šæœ¬å¯èƒ½å¼‚å¸¸
+    echo [¡Á] Null ·şÎñÎ´ÔËĞĞ£¬Åú´¦Àí½Å±¾¿ÉÄÜÒì³£
     set "issues=1"
 )
 
@@ -47,37 +47,37 @@ if not defined netok if defined psmode (
     for /f "delims=" %%a in ('powershell -NoProfile -Command "$c=New-Object Net.Sockets.TcpClient;try{$c.Connect(\"internetdownloadmanager.com\",80)}catch{};$c.Connected" 2^>nul') do set "netok=%%a"
 )
 if /i "!netok!"=="True" (
-    echo [âˆš] å¯ä»¥è®¿é—® internetdownloadmanager.com
+    echo [¡Ì] ¿ÉÒÔ·ÃÎÊ internetdownloadmanager.com
 ) else (
     if defined netok (
-        echo [âˆš] ç«¯å£ 80 è¿é€šï¼ˆPING å¤±è´¥å¯å¿½ç•¥ï¼‰
+        echo [¡Ì] ¶Ë¿Ú 80 Á¬Í¨£¨PING Ê§°Ü¿ÉºöÂÔ£©
     ) else (
-        echo [Ã—] æ— æ³•è¿æ¥åˆ° internetdownloadmanager.com
+        echo [¡Á] ÎŞ·¨Á¬½Óµ½ internetdownloadmanager.com
         set "issues=1"
     )
 )
 
 for /f "tokens=2 delims=:." %%a in ('chcp') do set "cp=%%a"
 if "!cp!"=="936" (
-    echo [âˆš] å½“å‰ä»£ç é¡µ: !cp! ï¼ˆç®€ä½“ä¸­æ–‡ï¼‰
+    echo [¡Ì] µ±Ç°´úÂëÒ³: !cp! £¨¼òÌåÖĞÎÄ£©
 ) else (
-    echo [Ã—] å½“å‰ä»£ç é¡µ: !cp! ï¼ˆå»ºè®®è¿è¡Œ chcp 936ï¼‰
+    echo [¡Á] µ±Ç°´úÂëÒ³: !cp! £¨½¨ÒéÔËĞĞ chcp 936£©
     set "issues=1"
 )
 
 if exist "%~dp0IAS.cmd" (
-    echo [âˆš] å·²æ£€æµ‹åˆ° IAS.cmd
+    echo [¡Ì] ÒÑ¼ì²âµ½ IAS.cmd
 ) else (
-    echo [Ã—] æœªæ£€æµ‹åˆ° IAS.cmdï¼Œè¯·ç¡®è®¤æ–‡ä»¶åœ¨åŒä¸€ç›®å½•
+    echo [¡Á] Î´¼ì²âµ½ IAS.cmd£¬ÇëÈ·ÈÏÎÄ¼şÔÚÍ¬Ò»Ä¿Â¼
     set "issues=1"
 )
 
 echo:
 if !issues! EQU 0 (
-    echo [å®Œæˆ] ç¯å¢ƒæ£€æµ‹é€šè¿‡ï¼Œå¯ç›´æ¥è¿è¡Œâ€œå¿«é€Ÿæ¿€æ´».cmdâ€æˆ–â€œIAS.cmdâ€ã€‚
+    echo [Íê³É] »·¾³¼ì²âÍ¨¹ı£¬¿ÉÖ±½ÓÔËĞĞ¡°¿ìËÙ¼¤»î.cmd¡±»ò¡°IAS.cmd¡±¡£
     endlocal & exit /b 0
 ) else (
-    echo [æç¤º] ä»¥ä¸Šé¡¹ç›®æ ‡è®°ä¸º Ã— æ—¶è¯·å…ˆä¿®å¤åå†è¿è¡Œæ¿€æ´»è„šæœ¬ã€‚
+    echo [ÌáÊ¾] ÒÔÉÏÏîÄ¿±ê¼ÇÎª ¡Á Ê±ÇëÏÈĞŞ¸´ºóÔÙÔËĞĞ¼¤»î½Å±¾¡£
     pause
     endlocal & exit /b 1
 )
