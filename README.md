@@ -1,6 +1,6 @@
 # IDM 激活脚本 v1.2
 
-> 🚀 一键激活 Internet Download Manager (IDM) 下载管理器（中文优化版，不依赖其他仓库即可使用）
+> 🚀 一键激活 Internet Download Manager (IDM) 下载管理器 —— 中文优化、单仓库即用，无需依赖其他文档或仓库
 
 ## 📋 目录
 
@@ -36,7 +36,7 @@
 
 ## 🚀 使用方法
 
-> 小贴士：首次使用前可右键以管理员身份运行 `测试脚本.cmd`，快速检查管理员权限、PowerShell 语言模式、Null 服务、网络连通性和代码页设置，无需额外下载其他仓库文件。
+> 小贴士：首次使用前可右键以管理员身份运行 `测试脚本.cmd`，快速检查管理员权限、PowerShell 语言模式、Null 服务、网络连通性和代码页设置，全程仅需本仓库文件。
 
 ### 方法一：图形界面（推荐新手）
 
@@ -204,7 +204,7 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 #### ✅ 已完成
 - 脚本启动及关键交互中强制 `chcp 936`，并在执行 `cls` 后恢复代码页，保证 CMD 内中文显示正常
 - 主菜单与提示信息中文化，保留激活（冻结/普通）与重置三种模式
-- 继续提供自动注册表备份、网络检测与 CLSID 锁定功能，逻辑与上游项目保持一致
+- 保留自动注册表备份、网络检测与 CLSID 锁定等核心功能，单仓库即可完整使用
 - 新增 `快速激活.cmd`（冻结模式快捷方式）、`测试脚本.cmd`（环境检测）、`使用说明.txt`（快速上手指南）
 - `测试脚本.cmd` 补充 Null 服务、PowerShell 语言模式与 TCP 端口检测，失败时返回非零退出码
 - `快速激活.cmd` 在缺少 PowerShell 时提示手动提权，并向上传递 IAS 的返回码
@@ -213,7 +213,6 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 ## 🌐 相关链接
 
 - **项目主页**: https://github.com/tytsxai/IDM-Activation-Script-Chinese
-- **上游英文版**: https://github.com/WindowsAddict/IDM-Activation-Script
 - **IDM 官网**: https://www.internetdownloadmanager.com
 - **问题反馈**: https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues
 
@@ -227,7 +226,7 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 ## 📄 许可证
 
-本项目遵循原项目许可证。详见：https://github.com/WindowsAddict/IDM-Activation-Script
+本项目基于 WindowsAddict 的 IDM Activation Script，沿用原项目许可证；本仓库已包含所有必需文件，可直接使用。许可详情参考：https://github.com/WindowsAddict/IDM-Activation-Script
 
 ---
 
