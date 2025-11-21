@@ -10,8 +10,8 @@ chcp 936 >nul 2>&1
 ::
 ::   IDM 激活脚本 (IAS)
 ::
-::   Homepages: https://github.com/WindowsAddict/IDM-Activation-Script
-::              https://massgrave.dev/idm-activation-script
+::   Homepages: https://github.com/tytsxai/IDM-Activation-Script-Chinese
+::   Original : https://github.com/WindowsAddict/IDM-Activation-Script
 ::
 ::       Email: windowsaddict@protonmail.com
 ::
@@ -65,7 +65,7 @@ exit /b
 ::========================================================================================================================================
 
 set "blank="
-set "mas=ht%blank%tps%blank%://mass%blank%grave.dev/"
+set "mas=ht%blank%tps%blank%://github.com/tytsxai/IDM-Activation-Script-Chinese"
 
 ::  Check if Null service is working, it's important for the batch script
 
@@ -75,7 +75,7 @@ echo:
 echo Null 服务未运行，脚本可能会出错...
 echo:
 echo:
-echo 帮助 - %mas%idm-activation-script.html#Troubleshoot
+echo 帮助 - %mas%
 echo:
 echo:
 ping 127.0.0.1 -n 10
@@ -218,7 +218,7 @@ echo:
 echo PowerShell 无法正常工作，进程被阻止...
 echo 你的组织可能禁用了 Powershell 应用，以防止这些情况。
 echo:
-echo 查看网页以获取帮助：%mas%idm-activation-script.html#Troubleshoot
+echo 查看网页以获取帮助：%mas%
 goto done2
 )
 
@@ -271,28 +271,13 @@ if defined quedit goto :skipQE
 
 ::  Check for updates
 
-set -=
 set old=
-
-for /f "delims=[] tokens=2" %%# in ('ping -4 -n 1 iasupdatecheck.mass%-%grave.dev') do (
-if not [%%#]==[] (echo "%%#" | find "127.69" %nul1% && (echo "%%#" | find "127.69.%iasver%" %nul1% || set old=1))
-)
-
-if defined old (
-echo ________________________________________________
-%eline%
-echo 你正在使用过时的 IAS 版本 %iasver%
-echo ________________________________________________
-echo:
 if not %_unattended%==1 (
-echo [1] 获取最新的 IAS
-echo [0] 仍然继续
+echo ________________________________________________
+echo 当前版本：%iasver% （本地仓库版本）
+echo 如需检查更新，请访问项目主页：%mas%
+echo ________________________________________________
 echo:
-call :_color %_Green% "在键盘上输入你的选项 [1,0] :"
-choice /C:10 /N
-if !errorlevel!==2 rem
-if !errorlevel!==1 (start https://github.com/WindowsAddict/IDM-Activation-Script & start %mas%/idm-activation-script & exit /b)
-)
 )
 
 ::========================================================================================================================================
@@ -312,7 +297,7 @@ echo 正在初始化...
 echo:
 echo WMI 无法正常工作，进程被阻止...
 echo:
-echo 查看网页以获取帮助：%mas%idm-activation-script.html#Troubleshoot
+echo 查看网页以获取帮助：%mas%
 goto done2
 )
 
@@ -331,7 +316,7 @@ echo:
 echo [%_sid%]
 echo 未找到用户帐户 SID，进程被阻止...
 echo:
-echo 查看网页以获取帮助：%mas%idm-activation-script.html#Troubleshoot
+echo 查看网页以获取帮助：%mas%
 goto done2
 )
 
@@ -383,7 +368,7 @@ set "idmcheck=tasklist /fi "imagename eq idman.exe" | findstr /i "idman.exe" %nu
 %eline%
 echo 无法写入 %CLSID2%
 echo:
-echo 查看网页以获取帮助：%mas%idm-activation-script.html#Troubleshoot
+echo 查看网页以获取帮助：%mas%
 goto done2
 )
 
@@ -425,7 +410,7 @@ choice /C:123450 /N
 set _erl=%errorlevel%
 
 if %_erl%==6 exit /b
-if %_erl%==5 start https://github.com/WindowsAddict/IDM-Activation-Script & start https://massgrave.dev/idm-activation-script & goto MainMenu
+if %_erl%==5 start %mas% & goto MainMenu
 if %_erl%==4 start https://www.internetdownloadmanager.com/download.html & goto MainMenu
 if %_erl%==3 goto _reset
 if %_erl%==2 (set frz=0&goto :_activate)
@@ -601,7 +586,7 @@ if not defined _fileexist (
 %eline%
 echo 错误: 无法通过 IDM 下载文件。
 echo:
-echo 帮助: %mas%idm-activation-script.html#Troubleshoot
+echo 帮助: %mas%
 goto :done
 )
 
