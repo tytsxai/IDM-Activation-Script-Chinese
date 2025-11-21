@@ -1,3 +1,8 @@
-# IAS.cmd export-ignore
-# LICENSE export-ignore
-# README.md export-ignore
+# Keep batch scripts runnable on Windows (IAS.cmd expects CRLF)
+*.cmd text eol=crlf
+
+# Keep plain-text helpers aligned with Windows editors
+*.txt text eol=crlf
+
+# Normalize Markdown for GitHub
+*.md text eol=lf
