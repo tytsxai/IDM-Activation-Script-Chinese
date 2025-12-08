@@ -2,6 +2,8 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
+# Ensure legacy code pages (e.g., 936/GBK) are available on .NET Core/PowerShell 7
+[System.Text.Encoding]::RegisterProvider([System.Text.CodePagesEncodingProvider]::Instance)
 
 function Add-Failure {
     param(
@@ -141,14 +143,14 @@ function Validate-Encoding {
 
 function Probe-CmdSyntax {
     $probe = @(
-        'cmd /?',
-        'setlocal EnableExtensions & call /? >nul'
+        'echo probe-cmd',
+        'setlocal EnableExtensions & ver >nul'
     )
 
     foreach ($command in $probe) {
         $process = Start-Process -FilePath 'cmd.exe' -ArgumentList "/c $command" -NoNewWindow -PassThru -Wait
         if ($process.ExitCode -ne 0) {
-            Add-Failure -Message "cmd syntax probe failed: $command"
+            Add-Failure -Message "cmd syntax probe failed: $command (exit $($process.ExitCode))"
         }
     }
 }
