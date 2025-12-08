@@ -1,9 +1,13 @@
-# IDM 激活脚本 v1.3 发布说明（草稿）
+# IDM 激活脚本 v1.3 发布说明
 
 ## 版本概览
 - 版本：v1.3（批次 B3）
 - 主要变更：新增 `/silent` `/log` 静默/日志参数（IAS/快速激活皆可透传）、环境自检脚本扩充 10 项检查并按位退出码汇总、GitHub Actions（Windows）执行编码/行尾/`cmd` 语法校验。
 - 包含文件：`IAS.cmd`、`快速激活.cmd`、`测试脚本.cmd`、`使用说明.txt`、`README.md`、`docs/release-notes-v1.3.md`。
+
+## 冒烟结果与发布标记
+- 冒烟：尚未在 Win10/11 管理员环境补跑，当前仅在 macOS 做脚本语法/编码校验（需按下方已知问题补跑）。
+- 发布标记：`v1.3`（https://github.com/tytsxai/IDM-Activation-Script-Chinese/tree/v1.3）。
 
 ## 安装与升级步骤
 1) 校验压缩包：`shasum -a 256 release/IDM-Activation-Script-v1.3.zip`，确认与下方校验值一致后再展开。
