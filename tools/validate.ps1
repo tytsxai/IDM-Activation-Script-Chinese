@@ -37,7 +37,7 @@ function Get-EolExpectation {
         [string]$Path
     )
 
-    $attr = git -C $repoRoot check-attr eol -- $Path 2>$null
+    $attr = git -C $repoRoot -c core.quotePath=false check-attr eol -- $Path 2>$null
     if (-not $attr) {
         return $null
     }
@@ -155,7 +155,7 @@ function Probe-CmdSyntax {
 
 $script:Failures = @()
 
-$trackedFiles = git -C $repoRoot ls-files
+$trackedFiles = (git -C $repoRoot -c core.quotePath=false ls-files -z) -split "`0" | Where-Object { $_ }
 
 foreach ($file in $trackedFiles) {
     $expectedEol = Get-EolExpectation -Path $file
@@ -164,7 +164,7 @@ foreach ($file in $trackedFiles) {
     }
 }
 
-$cmdAndText = git -C $repoRoot ls-files -- '*.cmd' '*.txt'
+$cmdAndText = (git -C $repoRoot -c core.quotePath=false ls-files -z -- '*.cmd' '*.txt') -split "`0" | Where-Object { $_ }
 foreach ($file in $cmdAndText) {
     Validate-Encoding -Path $file
 }
