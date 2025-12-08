@@ -1,0 +1,19 @@
+# IDM 激活脚本 v1.3 Windows 冒烟基线（待执行）
+
+## 范围与前置
+- 最小路径验证其一即可（冻结 `/frz`、激活 `/act` 或重置 `/res`），推荐冻结。
+- 环境：Win10/11 x64（管理员 CMD），IDM 已安装，代码页 936，网络可直连 `internetdownloadmanager.com`。
+- 包：`release/IDM-Activation-Script-v1.3.zip`（SHA256：`810855c004dd763114d17304b7e8b8c3b286b249f109f3c614f7090e8579547e`）。
+
+## 执行步骤
+1. `测试脚本.cmd`（管理员），确认 10/10 全绿且退出码 `0`。
+2. `IAS.cmd /frz /silent /log="C:\Temp\\ias-frz.log"`（或换 `/act` `/res`），预期退出码 `0`，日志写入成功。
+3. 观察是否有 Defender/Smartscreen 拦截或编码乱码。
+
+## 记录模板
+| 日期 | OS/版本 | 执行命令 | 退出码 | 日志路径 | 备注 |
+| --- | --- | --- | --- | --- | --- |
+| 待补 |  |  |  |  |  |
+
+## 当前状态
+- 尚未在实际 Windows 主机补跑（macOS 环境无法复现），请完成后补充上表并附异常描述/截图（如有）。
