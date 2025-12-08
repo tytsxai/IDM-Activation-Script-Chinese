@@ -1,4 +1,4 @@
-# IDM 激活脚本 v1.2
+# IDM 激活脚本 v1.3
 
 > 🚀 一键激活 Internet Download Manager (IDM) 下载管理器 —— 中文优化、单仓库即用，无需依赖其他文档或仓库
 
@@ -199,7 +199,15 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 ## 📝 更新日志
 
-### v1.2 (当前版本) - 2024-10-05
+### v1.3 (当前版本) - 2025-12-09
+
+#### ✅ 已完成
+- 新增静默/日志参数：`IAS.cmd` 支持 `/silent` 与 `/log=<路径>`，可在无人值守场景下抑制菜单交互并输出运行日志；`快速激活.cmd` 透传同样参数
+- 环境检测强化：`测试脚本.cmd` 扩展 PowerShell/WMI/IDM 路径/目录写权限等 10 项检查，退出码按位汇总便于自动化解析
+- CI 校验：新增 GitHub Actions（Windows）运行 `tools/validate.ps1`，强制批处理/文本文件保持 GBK 编码与 CRLF 行尾，并探测 cmd 语法可用性
+- 文档补充：新增执行流程说明与 v1.3 冒烟计划草稿，便于在管理员环境下快速回归
+
+### v1.2 - 2024-10-05
 
 #### ✅ 已完成
 - 脚本启动及关键交互中强制 `chcp 936`，并在执行 `cls` 后恢复代码页，保证 CMD 内中文显示正常
@@ -226,16 +234,9 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 ## 📄 许可证
 
-本项目基于 WindowsAddict 的 IDM Activation Script，沿用原项目许可证；本仓库已包含所有必需文件，可直接使用。许可详情参考：https://github.com/WindowsAddict/IDM-Activation-Script
+本仓库为独立维护的中文版本，遵循 IDM Activation Script 原项目的开源许可证要求进行分发和修改。
 
----
+- 本仓库已包含所有必需文件，可单独使用，无需依赖其他仓库
+- 原英文脚本与许可证详情可参考：https://github.com/WindowsAddict/IDM-Activation-Script
 
-<div align="center">
-
-**如果这个工具帮到了你，请给原项目一个 ⭐ Star！**
-
-Made with ❤️ by [WindowsAddict](https://github.com/WindowsAddict)
-
-中文优化版本 v1.2
-
-</div>
+中文优化版本 v1.3（持续根据实际使用情况做本地改动）

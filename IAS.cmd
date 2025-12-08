@@ -1,4 +1,4 @@
-@set iasver=1.2
+@set iasver=1.3
 @setlocal DisableDelayedExpansion
 @echo off
 
@@ -67,10 +67,60 @@ exit /b
 set "blank="
 set "mas=ht%blank%tps%blank%://github.com/tytsxai/IDM-Activation-Script-Chinese"
 
+set _args=
+set _elev=
+set _silent=0
+set _log=0
+set _log_enabled=0
+set _unattended=0
+set "log_file="
+set "exit_code=0"
+
+set _args=%*
+if defined _args set _args=%_args:"=%
+if defined _args (
+for %%A in (%_args%) do (
+if /i "%%A"=="-el"  set _elev=1
+if /i "%%A"=="/res" set _reset=1
+if /i "%%A"=="/frz" set _freeze=1
+if /i "%%A"=="/act" set _activate=1
+if /i "%%A"=="/silent" set _silent=1
+if /i "%%A"=="/quiet" set _silent=1
+if /i "%%A"=="/log" set _log=1
+)
+)
+
+for %%A in (%_activate% %_freeze% %_reset%) do (if "%%A"=="1" set _unattended=1)
+if %_silent%==1 set _unattended=1
+if %_silent%==1 set _log=1
+
+set "log_dir=%SystemRoot%\Temp"
+if %_log%==1 (
+if not exist "%log_dir%" md "%log_dir%"
+set "_logstamp=%date%_%time%"
+set "_logstamp=%_logstamp::=%"
+set "_logstamp=%_logstamp: =0%"
+set "_logstamp=%_logstamp:.=%"
+set "_logstamp=%_logstamp:,=%"
+set "_logstamp=%_logstamp:/=%"
+set "_logstamp=%_logstamp:\=%"
+set "log_file=%log_dir%\IAS-%_logstamp%.log"
+set _log_enabled=1
+call :log "IAS %iasver% 启动，参数: %_args%"
+call :log "日志输出: %log_file%"
+if %_silent%==0 echo 日志文件: %log_file%
+)
+
+if %_silent%==1 if %_activate%==0 if %_freeze%==0 if %_reset%==0 (
+call :set_exit 2 "静默模式缺少操作参数，退出"
+goto done2
+)
+
 ::  Check if Null service is working, it's important for the batch script
 
 sc query Null | find /i "RUNNING"
 if %errorlevel% NEQ 0 (
+call :log "警告: Null 服务未运行，可能导致脚本出错"
 echo:
 echo Null 服务未运行，脚本可能会出错...
 echo:
@@ -78,7 +128,7 @@ echo:
 echo 帮助 - %mas%
 echo:
 echo:
-ping 127.0.0.1 -n 10
+if %_silent%==1 (ping 127.0.0.1 -n 2 >nul) else ping 127.0.0.1 -n 10
 )
 cls
 chcp 936 >nul 2>&1
@@ -90,9 +140,10 @@ pushd "%~dp0"
 echo:
 echo 错误: 脚本包含LF换行符或脚本末尾缺少空行。
 echo:
-ping 127.0.0.1 -n 6 >nul
+call :set_exit 2 "错误: 检测到 LF 换行符或缺少末尾空行"
+if %_silent%==1 (ping 127.0.0.1 -n 2 >nul) else ping 127.0.0.1 -n 6 >nul
 popd
-exit /b
+exit /b %exit_code%
 )
 popd
 
@@ -102,23 +153,6 @@ cls
 chcp 936 >nul 2>&1
 color 07
 title  IDM 激活脚本 %iasver%
-
-set _args=
-set _elev=
-set _unattended=0
-
-set _args=%*
-if defined _args set _args=%_args:"=%
-if defined _args (
-for %%A in (%_args%) do (
-if /i "%%A"=="-el"  set _elev=1
-if /i "%%A"=="/res" set _reset=1
-if /i "%%A"=="/frz" set _freeze=1
-if /i "%%A"=="/act" set _activate=1
-)
-)
-
-for %%A in (%_activate% %_freeze% %_reset%) do (if "%%A"=="1" set _unattended=1)
 
 ::========================================================================================================================================
 
@@ -165,12 +199,14 @@ if %winbuild% LSS 7600 (
 %nceline%
 echo 检测到不支持的操作系统版本 [%winbuild%].
 echo 此脚本支持 Windows 7/8/8.1/10/11 及其后续版本。
+call :set_exit 2 "不支持的操作系统版本 [%winbuild%]"
 goto done2
 )
 
 for %%# in (powershell.exe) do @if "%%~$PATH:#"=="" (
 %nceline%
 echo 系统中找不到 powershell.exe。
+call :set_exit 2 "系统中找不到 powershell.exe"
 goto done2
 )
 
@@ -201,6 +237,7 @@ echo 脚本从临时文件夹中运行。
 echo 你可能从压缩文件查看器中运行脚本。
 echo:
 echo 请解压压缩文件，然后从解压后的文件夹中运行脚本。
+call :set_exit 2 "脚本从临时文件夹运行，被阻止"
 goto done2
 )
 )
@@ -219,6 +256,7 @@ echo PowerShell 无法正常工作，进程被阻止...
 echo 你的组织可能禁用了 Powershell 应用，以防止这些情况。
 echo:
 echo 查看网页以获取帮助：%mas%
+call :set_exit 2 "PowerShell 运行被阻止"
 goto done2
 )
 
@@ -231,6 +269,7 @@ if not defined _elev %psc% "start cmd.exe -arg '/c \"!_PSarg!\"' -verb runas" &&
 %eline%
 echo 此脚本需要管理员权限。
 echo 请右键此脚本，选择"以管理员身份运行"。
+call :set_exit 2 "缺少管理员权限"
 goto done2
 )
 
@@ -298,6 +337,7 @@ echo:
 echo WMI 无法正常工作，进程被阻止...
 echo:
 echo 查看网页以获取帮助：%mas%
+call :set_exit 2 "WMI 查询失败"
 goto done2
 )
 
@@ -317,6 +357,7 @@ echo [%_sid%]
 echo 未找到用户帐户 SID，进程被阻止...
 echo:
 echo 查看网页以获取帮助：%mas%
+call :set_exit 2 "未能获取当前用户 SID"
 goto done2
 )
 
@@ -369,6 +410,7 @@ set "idmcheck=tasklist /fi "imagename eq idman.exe" | findstr /i "idman.exe" %nu
 echo 无法写入 %CLSID2%
 echo:
 echo 查看网页以获取帮助：%mas%
+call :set_exit 2 "无法写入 %CLSID2%"
 goto done2
 )
 
@@ -421,6 +463,7 @@ goto :MainMenu
 
 :_reset
 
+call :log "开始执行重置流程"
 cls
 chcp 936 >nul 2>&1
 if not %HKCUsync%==1 (
@@ -441,6 +484,8 @@ echo 正在备份 CLSID 注册表到 %SystemRoot%\Temp
 
 reg export %CLSID% "%SystemRoot%\Temp\_Backup_HKCU_CLSID_%_time%.reg"
 if not %HKCUsync%==1 reg export %CLSID2% "%SystemRoot%\Temp\_Backup_HKU-%_sid%_CLSID_%_time%.reg"
+call :log "已备份注册表: _Backup_HKCU_CLSID_%_time%.reg"
+if not %HKCUsync%==1 call :log "已备份注册表: _Backup_HKU-%_sid%_CLSID_%_time%.reg"
 
 call :delete_queue
 %psc% "$sid = '%_sid%'; $HKCUsync = %HKCUsync%; $lockKey = $null; $deleteKey = 1; $f=[io.file]::ReadAllText('!_batp!') -split ':regscan\:.*';iex ($f[1])"
@@ -459,6 +504,7 @@ goto done
 echo:
 echo 正在删除 IDM 注册表键...
 echo:
+call :log "开始删除 IDM 注册表键"
 
 for %%# in (
 ""HKCU\Software\DownloadManager" "/v" "FName""
@@ -500,9 +546,11 @@ reg delete %reg% /f %nul%
 if "%errorlevel%"=="0" (
 set "reg=%reg:"=%"
 echo 已删除 - !reg!
+call :log "已删除 - !reg!"
 ) else (
 set "reg=%reg:"=%"
 call :_color2 %Red% "失败 - !reg!"
+call :set_exit 1 "删除失败 - !reg!"
 )
 
 exit /b
@@ -511,6 +559,7 @@ exit /b
 
 :_activate
 
+if %frz%==1 (call :log "开始冻结试用期流程") else (call :log "开始激活流程")
 cls
 chcp 936 >nul 2>&1
 if not %HKCUsync%==1 (
@@ -539,6 +588,7 @@ echo:
 if not exist "%IDMan%" (
 call :_color %Red% "IDM [Internet Download Manager] 未安装。"
 echo 你可以从此网址下载: https://www.internetdownloadmanager.com/download.html
+call :set_exit 1 "未检测到 IDM 安装"
 goto done
 )
 
@@ -550,6 +600,7 @@ for /f "delims=[] tokens=2" %%# in ('ping -n 1 internetdownloadmanager.com') do 
 if not defined _int (
 %psc% "$t = New-Object Net.Sockets.TcpClient;try{$t.Connect("""internetdownloadmanager.com""", 80)}catch{};$t.Connected" | findstr /i "true" %nul1% || (
 call :_color %Red% "无法连接到 internetdownloadmanager.com，进程被阻止..."
+call :set_exit 1 "无法连接到 internetdownloadmanager.com"
 goto done
 )
 call :_color %Gray% "Ping 测试到 internetdownloadmanager.com 失败"
@@ -562,6 +613,7 @@ for /f "tokens=6-7 delims=[]. " %%i in ('ver') do if "%%j"=="" (set fullbuild=%%
 for /f "tokens=2*" %%a in ('reg query "HKU\%_sid%\Software\DownloadManager" /v idmvers %nul6%') do set "IDMver=%%b"
 
 echo 检测到信息 - [%regwinos% ^| %fullbuild% ^| %regarch% ^| IDM: %IDMver%]
+call :log "检测到信息 - [%regwinos% | %fullbuild% | %regarch% | IDM: %IDMver%]"
 
 %idmcheck% && (echo: & taskkill /f /im idman.exe)
 
@@ -587,6 +639,7 @@ if not defined _fileexist (
 echo 错误: 无法通过 IDM 下载文件。
 echo:
 echo 帮助: %mas%
+call :set_exit 1 "IDM 下载测试失败"
 goto :done
 )
 
@@ -612,7 +665,11 @@ call :_color %Gray% "如果 IDM 提示注册弹窗，请重新安装 IDM。"
 echo %line%
 echo:
 echo:
-if %_unattended%==1 timeout /t 2 & exit /b
+call :log "流程结束，退出码 %exit_code%"
+if %_unattended%==1 (
+if %_silent%==1 exit /b %exit_code%
+timeout /t 2 & exit /b %exit_code%
+)
 
 if defined terminal (
 call :_color %_Yellow% "按 0 键返回..."
@@ -625,16 +682,20 @@ goto MainMenu
 
 :done2
 
-if %_unattended%==1 timeout /t 2 & exit /b
+call :log "流程结束，退出码 %exit_code%"
+if %_unattended%==1 (
+if %_silent%==1 exit /b %exit_code%
+timeout /t 2 & exit /b %exit_code%
+)
 
 if defined terminal (
 echo 按 0 键退出...
 choice /c 0 /n
 ) else (
-echo 按任意键退出...
-pause %nul1%
-)
-exit /b
+	echo 按任意键退出...
+	pause %nul1%
+	)
+	exit /b %exit_code%
 
 ::========================================================================================================================================
 
@@ -674,6 +735,7 @@ exit /b
 echo:
 echo 正在下载测试资源以及锁定注册表键后...
 echo:
+call :log "开始下载测试资源"
 
 set "file=%SystemRoot%\Temp\temp.png"
 set _fileexist=
@@ -689,11 +751,13 @@ echo:
 timeout /t 3 %nul1%
 %idmcheck% && taskkill /f /im idman.exe
 if exist "%file%" del /f /q "%file%"
+if defined _fileexist (call :log "下载测试资源成功") else (call :log "下载测试资源失败")
 exit /b
 
 :download
 
 set /a attempt=0
+set "current_link=%link%"
 if exist "%file%" del /f /q "%file%"
 start "" /B "%IDMan%" /n /d "%link%" /p "%SystemRoot%\Temp" /f temp.png
 
@@ -701,8 +765,8 @@ start "" /B "%IDMan%" /n /d "%link%" /p "%SystemRoot%\Temp" /f temp.png
 
 timeout /t 1 %nul1%
 set /a attempt+=1
-if exist "%file%" set _fileexist=1&exit /b
-if %attempt% GEQ 20 exit /b
+if exist "%file%" (set _fileexist=1&call :log "下载成功: %current_link%"&exit /b)
+if %attempt% GEQ 20 (call :log "下载失败: %current_link%"&exit /b)
 goto :Check_file
 
 ::========================================================================================================================================
@@ -712,6 +776,7 @@ goto :Check_file
 echo:
 echo 正在添加注册表键...
 echo:
+call :log "开始添加注册表键"
 
 set "reg="%HKLM%" /v "AdvIntDriverEnabled2""
 
@@ -722,9 +787,11 @@ reg add %reg% /t REG_DWORD /d "1" /f %nul%
 if "%errorlevel%"=="0" (
 set "reg=%reg:"=%"
 echo 已添加 - !reg!
+call :log "已添加 - !reg!"
 ) else (
 set "reg=%reg:"=%"
 call :_color2 %Red% "失败 - !reg!"
+call :set_exit 1 "添加失败 - !reg!"
 )
 exit /b
 
@@ -911,6 +978,20 @@ foreach ($regPath in $regPaths) {
     }
 }
 :regscan:
+
+::========================================================================================================================================
+
+:set_exit
+if "%~1"=="" exit /b
+if "%exit_code%"=="0" set "exit_code=%~1"
+if not "%~2"=="" call :log %~2
+exit /b
+
+:log
+if not "%_log_enabled%"=="1" exit /b
+set "_log_now=%date% %time%"
+>>"%log_file%" echo [%_log_now%] %*
+exit /b
 
 ::========================================================================================================================================
 

@@ -2,7 +2,18 @@
 chcp 936 >nul 2>&1
 setlocal EnableExtensions EnableDelayedExpansion
 
-set "issues=0"
+set "ERR_ADMIN=1"
+set "ERR_PS_MISSING=2"
+set "ERR_PS_MODE=4"
+set "ERR_NULL_SERVICE=8"
+set "ERR_NETWORK=16"
+set "ERR_CODEPAGE=32"
+set "ERR_IAS=64"
+set "ERR_WMI=128"
+set "ERR_IDM_PATH=256"
+set "ERR_DIR_PERM=512"
+
+set /a "issues=0"
 echo ==========================================
 echo IDM 激活环境检测
 echo ==========================================
@@ -12,7 +23,7 @@ fltmc >nul 2>&1 && (
     echo [√] 已获取管理员权限
 ) || (
     echo [×] 当前未以管理员身份运行
-    set "issues=1"
+    set /a issues^|=ERR_ADMIN
 )
 
 where powershell.exe >nul 2>&1 && (
@@ -23,22 +34,22 @@ where powershell.exe >nul 2>&1 && (
             echo [√] PowerShell 语言模式: !psmode!
         ) else (
             echo [×] PowerShell 语言模式为 !psmode! （可能被组织策略限制）
-            set "issues=1"
+            set /a issues^|=ERR_PS_MODE
         )
     ) else (
         echo [×] 无法读取 PowerShell 语言模式（可能被禁用）
-        set "issues=1"
+        set /a issues^|=ERR_PS_MODE
     )
 ) || (
     echo [×] 系统未找到 PowerShell
-    set "issues=1"
+    set /a issues^|=ERR_PS_MISSING
 )
 
 sc query Null | find /i "RUNNING" >nul 2>&1 && (
     echo [√] Null 服务运行正常
 ) || (
     echo [×] Null 服务未运行，批处理脚本可能异常
-    set "issues=1"
+    set /a issues^|=ERR_NULL_SERVICE
 )
 
 set "netok="
@@ -48,13 +59,11 @@ if not defined netok if defined psmode (
 )
 if /i "!netok!"=="True" (
     echo [√] 可以访问 internetdownloadmanager.com
+) else if /i "!netok!"=="ping" (
+    echo [√] 端口 80 连通（PING 失败可忽略）
 ) else (
-    if defined netok (
-        echo [√] 端口 80 连通（PING 失败可忽略）
-    ) else (
-        echo [×] 无法连接到 internetdownloadmanager.com
-        set "issues=1"
-    )
+    echo [×] 无法连接到 internetdownloadmanager.com
+    set /a issues^|=ERR_NETWORK
 )
 
 for /f "tokens=2 delims=:." %%a in ('chcp') do set "cp=%%a"
@@ -62,14 +71,53 @@ if "!cp!"=="936" (
     echo [√] 当前代码页: !cp! （简体中文）
 ) else (
     echo [×] 当前代码页: !cp! （建议运行 chcp 936）
-    set "issues=1"
+    set /a issues^|=ERR_CODEPAGE
 )
 
 if exist "%~dp0IAS.cmd" (
     echo [√] 已检测到 IAS.cmd
 ) else (
     echo [×] 未检测到 IAS.cmd，请确认文件在同一目录
-    set "issues=1"
+    set /a issues^|=ERR_IAS
+)
+
+set "wmiok="
+wmic path Win32_OperatingSystem get Caption /value >nul 2>&1 && set "wmiok=ok"
+if not defined wmiok if defined psmode (
+    for /f "delims=" %%a in ('powershell -NoProfile -Command "Try{Get-CimInstance Win32_OperatingSystem ^| Out-Null;$true}catch{$false}" 2^>nul') do if /i "%%a"=="True" set "wmiok=ok"
+)
+if defined wmiok (
+    echo [√] WMI 可用
+) else (
+    echo [×] WMI 不可用，无法读取系统信息
+    set /a issues^|=ERR_WMI
+)
+
+set "idmPath="
+for /f "skip=2 tokens=3*" %%a in ('reg query "HKLM\SOFTWARE\Internet Download Manager" /v InstallFolder 2^>nul') do set "idmPath=%%a %%b"
+if not defined idmPath (
+    for /f "skip=2 tokens=3*" %%a in ('reg query "HKLM\SOFTWARE\WOW6432Node\Internet Download Manager" /v InstallFolder 2^>nul') do set "idmPath=%%a %%b"
+)
+if defined idmPath (
+    if exist "!idmPath!\IDMan.exe" (
+        echo [√] 已检测到 IDM 安装路径: !idmPath!
+    ) else (
+        echo [×] 注册表中的 IDM 路径无效: !idmPath!
+        set /a issues^|=ERR_IDM_PATH
+    )
+) else (
+    echo [×] 未在注册表找到 IDM 安装路径
+    set /a issues^|=ERR_IDM_PATH
+)
+
+set "writeTest=%~dp0.__ias_write_test.tmp"
+> "!writeTest!" echo test >nul 2>&1
+if exist "!writeTest!" (
+    del /f /q "!writeTest!" >nul 2>&1
+    echo [√] 脚本目录可写: %~dp0
+) else (
+    echo [×] 脚本目录不可写: %~dp0 （请移出受限目录）
+    set /a issues^|=ERR_DIR_PERM
 )
 
 echo:
@@ -77,7 +125,6 @@ if !issues! EQU 0 (
     echo [完成] 环境检测通过，可直接运行“快速激活.cmd”或“IAS.cmd”。
     endlocal & exit /b 0
 ) else (
-    echo [提示] 以上项目标记为 × 时请先修复后再运行激活脚本。
-    pause
-    endlocal & exit /b 1
+    echo [提示] 以上项目标记为 × 时请先修复后再运行激活脚本。（退出码: !issues!）
+    endlocal & exit /b !issues!
 )
