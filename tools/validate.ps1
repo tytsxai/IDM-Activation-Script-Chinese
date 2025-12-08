@@ -141,8 +141,8 @@ function Validate-Encoding {
 
 function Probe-CmdSyntax {
     $probe = @(
-        'cmd /c /?',
-        'cmd /c "setlocal EnableExtensions & call /? >nul"'
+        'cmd /?',
+        'setlocal EnableExtensions & call /? >nul'
     )
 
     foreach ($command in $probe) {
