@@ -3,10 +3,10 @@
 ## 版本概览
 - 版本：v1.3（批次 B3）
 - 主要变更：新增 `/silent` `/log` 静默/日志参数（IAS/快速激活皆可透传）、环境自检脚本扩充 10 项检查并按位退出码汇总、GitHub Actions（Windows）执行编码/行尾/`cmd` 语法校验。
-- 包含文件：`IAS.cmd`、`快速激活.cmd`、`测试脚本.cmd`、`使用说明.txt`、`README.md`、`docs/release-notes-v1.3.md`。
+- 包含文件：`IAS.cmd`、`快速激活.cmd`、`测试脚本.cmd`、`使用说明.txt`、`README.md`、`docs/release-notes-v1.3.md`、`docs/reports/smoke-win-baseline.md`。
 
 ## 冒烟结果与发布标记
-- 冒烟：尚未在 Win10/11 管理员环境补跑，当前仅在 macOS 做脚本语法/编码校验（需按下方已知问题补跑）。
+- 冒烟：尚未在 Win10/11 管理员环境补跑；需按 `docs/reports/smoke-win-baseline.md` 补一次管理员 CMD 路径（推荐冻结 + 日志），当前仅在 macOS 做脚本语法/编码校验。
 - 发布标记：`v1.3`（https://github.com/tytsxai/IDM-Activation-Script-Chinese/tree/v1.3）。
 
 ## 安装与升级步骤
@@ -23,7 +23,7 @@
 - 压缩包文件名：已写入 UTF-8 文件名标记，中文文件名在 Win10/11 解压正常；若旧版解压工具显示乱码，请手动切换为 UTF-8。
 
 ## 已知问题与注意事项
-- B3-T1 冒烟与静默日志验证未在实际 Windows 管理员环境执行（当前环境为 macOS），发布前需在 Win10/11 x64 补跑并记录日志。
+- B3-T1 冒烟与静默日志验证未在实际 Windows 管理员环境执行（当前环境为 macOS），发布前需在 Win10/11 x64 按 `docs/reports/smoke-win-baseline.md` 补跑并记录日志。
 - 依赖中文代码页 936，若控制台乱码可先运行 `chcp 936`。
 - 需要管理员权限与可访问 `internetdownloadmanager.com` 的网络；PowerShell/WMI 被策略禁用会导致脚本退出。
 

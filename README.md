@@ -1,5 +1,7 @@
 # IDM 激活脚本 v1.3
 
+> 本仓库为 IDM Activation Script 的中文专用版本，菜单/文档/提示均为中文，批处理与文本默认 GBK 编码（936）以确保 Windows 控制台无乱码。
+
 > 🚀 一键激活 Internet Download Manager (IDM) 下载管理器 —— 中文优化、单仓库即用，无需依赖其他文档或仓库
 
 ## 📋 目录
