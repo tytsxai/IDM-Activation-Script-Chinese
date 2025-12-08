@@ -3,7 +3,7 @@
 ## 版本概览
 - 版本：v1.3（批次 B3）
 - 主要变更：新增 `/silent` `/log` 静默/日志参数（IAS/快速激活皆可透传）、环境自检脚本扩充 10 项检查并按位退出码汇总、GitHub Actions（Windows）执行编码/行尾/`cmd` 语法校验。
-- 包含文件：`IAS.cmd`、`快速激活.cmd`、`测试脚本.cmd`、`使用说明.txt`、`README.md`、`docs/` 下的流程与测试文档。
+- 包含文件：`IAS.cmd`、`快速激活.cmd`、`测试脚本.cmd`、`使用说明.txt`、`README.md`、`docs/release-notes-v1.3.md`。
 
 ## 安装与升级步骤
 1) 校验压缩包：`shasum -a 256 release/IDM-Activation-Script-v1.3.zip`，确认与下方校验值一致后再展开。
@@ -14,8 +14,8 @@
 
 ## 校验信息
 - 文件：`release/IDM-Activation-Script-v1.3.zip`
-- SHA256：`f6e2dfbcafb48dd397fcf4af233bb885f5bb73d03dfaaec936786cd7bb8e98b0`
-- 编码/行尾：`.cmd`/`.txt` 为 GBK + CRLF，`.md` 为 UTF-8 + LF（CI 已检查）。
+- SHA256：`810855c004dd763114d17304b7e8b8c3b286b249f109f3c614f7090e8579547e`
+- 编码/行尾：`.cmd`/`.txt` 为 GBK + CRLF，`.md` 为 UTF-8 + LF。
 - 压缩包文件名：已写入 UTF-8 文件名标记，中文文件名在 Win10/11 解压正常；若旧版解压工具显示乱码，请手动切换为 UTF-8。
 
 ## 已知问题与注意事项
