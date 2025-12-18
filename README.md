@@ -2,7 +2,7 @@
 
 > 本仓库为 IDM Activation Script 的中文专用版本，菜单/文档/提示均为中文，批处理与文本默认 GBK 编码（936）以确保 Windows 控制台无乱码。
 
-> 🚀 一键激活 Internet Download Manager (IDM) 下载管理器 —— 中文优化、单仓库即用，无需依赖其他文档或仓库
+> 说明：本仓库包含会对 Windows 系统配置产生影响的脚本。请在你拥有合法授权、并明确理解风险的前提下使用，并遵守软件许可协议与所在地法律法规。
 
 ## 📋 目录
 
@@ -13,6 +13,7 @@
 - [常见问题](#常见问题)
 - [技术细节](#技术细节)
 - [更新日志](#更新日志)
+- [维护与贡献](#维护与贡献)
 
 ## ✨ 功能特性
 
@@ -224,6 +225,15 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 - `测试脚本.cmd` 补充 Null 服务、PowerShell 语言模式与 TCP 端口检测，失败时返回非零退出码
 - `快速激活.cmd` 在缺少 PowerShell 时提示手动提权，并向上传递 IAS 的返回码
 - 辅助批处理与文本全部统一为 GBK 编码，确保在中文 CMD 下无乱码
+
+## 🧰 维护与贡献
+
+- 贡献指南：`CONTRIBUTING.md`
+- 架构/结构说明：`ARCHITECTURE.md`
+- 维护检查清单：`docs/maintenance-checklist.md`
+- 安全问题上报：`SECURITY.md`
+- CI 校验脚本：`tools/validate.ps1`（在 GitHub Actions 的 `Windows validation` 工作流中执行）
+- 编码/换行约束：`.gitattributes`（`*.cmd`/`*.txt` 为 CRLF；`*.md` 为 LF）
 
 ## 🌐 相关链接
 
