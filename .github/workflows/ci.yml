@@ -3,6 +3,14 @@ name: Windows validation
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-validation-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   checks:
