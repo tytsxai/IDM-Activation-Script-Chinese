@@ -1,6 +1,21 @@
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
+<#
+.SYNOPSIS
+Validates repository text hygiene (EOL + encoding) on Windows runners.
+
+.DESCRIPTION
+This script is intended to run in CI (GitHub Actions) and fail fast when:
+  - A tracked file violates the expected line-ending declared by `.gitattributes`.
+  - Any tracked `.cmd` / `.txt` file is not decodable as GBK (code page 936), or contains a BOM.
+  - Basic `cmd.exe` invocation fails (sanity check for runner/tooling issues).
+
+Notes:
+  - Markdown is expected to be LF; batch/text helpers are expected to be CRLF.
+  - The GBK requirement exists to keep Windows console output readable for Chinese text.
+#>
+
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 # Ensure legacy code pages (e.g., 936/GBK) are available on .NET Core/PowerShell 7
 [System.Text.Encoding]::RegisterProvider([System.Text.CodePagesEncodingProvider]::Instance)
@@ -142,6 +157,8 @@ function Validate-Encoding {
 }
 
 function Probe-CmdSyntax {
+    # Keep this probe minimal and robust across runner images.
+    # Avoid commands that may produce locale-dependent output or huge help text.
     $probe = @(
         'echo probe-cmd',
         'setlocal EnableExtensions & ver >nul'
