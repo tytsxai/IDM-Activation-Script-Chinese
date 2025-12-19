@@ -75,6 +75,7 @@ set _log_enabled=0
 set _unattended=0
 set "log_file="
 set "exit_code=0"
+set "backup_failed=0"
 
 set _args=%*
 if defined _args set _args=%_args:"=%
@@ -87,6 +88,12 @@ if /i "%%A"=="/act" set _activate=1
 if /i "%%A"=="/silent" set _silent=1
 if /i "%%A"=="/quiet" set _silent=1
 if /i "%%A"=="/log" set _log=1
+for /f "tokens=1* delims==" %%L in ("%%A") do (
+if /i "%%~L"=="/log" (
+set _log=1
+if not "%%~M"=="" set "log_file=%%~M"
+)
+)
 )
 )
 
@@ -95,21 +102,7 @@ if %_silent%==1 set _unattended=1
 if %_silent%==1 set _log=1
 
 set "log_dir=%SystemRoot%\Temp"
-if %_log%==1 (
-if not exist "%log_dir%" md "%log_dir%"
-set "_logstamp=%date%_%time%"
-set "_logstamp=%_logstamp::=%"
-set "_logstamp=%_logstamp: =0%"
-set "_logstamp=%_logstamp:.=%"
-set "_logstamp=%_logstamp:,=%"
-set "_logstamp=%_logstamp:/=%"
-set "_logstamp=%_logstamp:\=%"
-set "log_file=%log_dir%\IAS-%_logstamp%.log"
-set _log_enabled=1
-call :log "IAS %iasver% 启动，参数: %_args%"
-call :log "日志输出: %log_file%"
-if %_silent%==0 echo 日志文件: %log_file%
-)
+if %_log%==1 call :init_log
 
 if %_silent%==1 if %_activate%==0 if %_freeze%==0 if %_reset%==0 (
 call :set_exit 2 "静默模式缺少操作参数，退出"
@@ -480,12 +473,14 @@ set _time=
 for /f %%a in ('%psc% "(Get-Date).ToString('yyyyMMdd-HHmmssfff')"') do set _time=%%a
 
 echo:
-echo 正在备份 CLSID 注册表到 %SystemRoot%\Temp
+echo 正在备份注册表到 %SystemRoot%\Temp
 
-reg export %CLSID% "%SystemRoot%\Temp\_Backup_HKCU_CLSID_%_time%.reg"
-if not %HKCUsync%==1 reg export %CLSID2% "%SystemRoot%\Temp\_Backup_HKU-%_sid%_CLSID_%_time%.reg"
-call :log "已备份注册表: _Backup_HKCU_CLSID_%_time%.reg"
-if not %HKCUsync%==1 call :log "已备份注册表: _Backup_HKU-%_sid%_CLSID_%_time%.reg"
+call :backup_reg "%CLSID%" "%SystemRoot%\Temp\_Backup_HKCU_CLSID_%_time%.reg"
+if not %HKCUsync%==1 call :backup_reg "%CLSID2%" "%SystemRoot%\Temp\_Backup_HKU-%_sid%_CLSID_%_time%.reg"
+call :backup_reg "HKCU\Software\DownloadManager" "%SystemRoot%\Temp\_Backup_HKCU_DownloadManager_%_time%.reg"
+if not %HKCUsync%==1 call :backup_reg "HKU\%_sid%\Software\DownloadManager" "%SystemRoot%\Temp\_Backup_HKU-%_sid%_DownloadManager_%_time%.reg"
+call :backup_reg "%HKLM%" "%SystemRoot%\Temp\_Backup_HKLM_IDM_%_time%.reg"
+if %backup_failed%==1 goto done2
 
 call :delete_queue
 %psc% "$sid = '%_sid%'; $HKCUsync = %HKCUsync%; $lockKey = $null; $deleteKey = 1; $f=[io.file]::ReadAllText('!_batp!') -split ':regscan\:.*';iex ($f[1])"
@@ -555,6 +550,60 @@ call :set_exit 1 "删除失败 - !reg!"
 
 exit /b
 
+:backup_reg
+
+set "bk_key=%~1"
+set "bk_file=%~2"
+if "!bk_key!"=="" exit /b
+
+reg query "!bk_key!" %nul% || (
+call :log "跳过备份（未找到）: !bk_key!"
+exit /b
+)
+
+reg export "!bk_key!" "!bk_file!" %nul%
+if "!errorlevel!"=="0" (
+call :log "已备份注册表: !bk_file!"
+) else (
+call :_color2 %Red% "失败 - !bk_key!"
+call :set_exit 1 "备份失败 - !bk_key!"
+set "backup_failed=1"
+)
+exit /b
+
+:init_log
+
+if not defined log_file (
+if not exist "%log_dir%" md "%log_dir%"
+set "_logstamp=%date%_%time%"
+set "_logstamp=%_logstamp::=%"
+set "_logstamp=%_logstamp: =0%"
+set "_logstamp=%_logstamp:.=%"
+set "_logstamp=%_logstamp:,=%"
+set "_logstamp=%_logstamp:/=%"
+set "_logstamp=%_logstamp:\=%"
+set "log_file=%log_dir%\IAS-%_logstamp%.log"
+)
+
+if defined log_file for %%P in ("%log_file%") do set "log_dir=%%~dpP"
+
+if not exist "%log_dir%" (
+echo 错误: 无法创建日志目录 "%log_dir%"
+call :set_exit 2 "无法创建日志目录 %log_dir%"
+goto done2
+)
+type nul >>"%log_file%" 2>nul
+if not exist "%log_file%" (
+echo 错误: 无法写入日志文件 "%log_file%"
+call :set_exit 2 "无法写入日志文件 %log_file%"
+goto done2
+)
+set _log_enabled=1
+call :log "IAS %iasver% 启动，参数: %_args%"
+call :log "日志输出: %log_file%"
+if %_silent%==0 echo 日志文件: %log_file%
+exit /b
+
 ::========================================================================================================================================
 
 :_activate
@@ -621,10 +670,14 @@ set _time=
 for /f %%a in ('%psc% "(Get-Date).ToString('yyyyMMdd-HHmmssfff')"') do set _time=%%a
 
 echo:
-echo 正在备份 CLSID 注册表到 %SystemRoot%\Temp
+echo 正在备份注册表到 %SystemRoot%\Temp
 
-reg export %CLSID% "%SystemRoot%\Temp\_Backup_HKCU_CLSID_%_time%.reg"
-if not %HKCUsync%==1 reg export %CLSID2% "%SystemRoot%\Temp\_Backup_HKU-%_sid%_CLSID_%_time%.reg"
+call :backup_reg "%CLSID%" "%SystemRoot%\Temp\_Backup_HKCU_CLSID_%_time%.reg"
+if not %HKCUsync%==1 call :backup_reg "%CLSID2%" "%SystemRoot%\Temp\_Backup_HKU-%_sid%_CLSID_%_time%.reg"
+call :backup_reg "HKCU\Software\DownloadManager" "%SystemRoot%\Temp\_Backup_HKCU_DownloadManager_%_time%.reg"
+if not %HKCUsync%==1 call :backup_reg "HKU\%_sid%\Software\DownloadManager" "%SystemRoot%\Temp\_Backup_HKU-%_sid%_DownloadManager_%_time%.reg"
+call :backup_reg "%HKLM%" "%SystemRoot%\Temp\_Backup_HKLM_IDM_%_time%.reg"
+if %backup_failed%==1 goto done2
 
 call :delete_queue
 call :add_key

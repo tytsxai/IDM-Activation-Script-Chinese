@@ -17,7 +17,7 @@ if %errorlevel% NEQ 0 (
         pause
         exit /b 1
     )
-    powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs"
+    powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs -ArgumentList '%*'"
     exit /b
 )
 
