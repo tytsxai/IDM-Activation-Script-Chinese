@@ -13,11 +13,17 @@
 - `IAS.cmd`
   - 主批处理脚本（体量最大），包含参数解析、环境探测、以及核心执行流程。
   - 维护注意：该文件依赖 CRLF 行尾与 GBK 编码；部分环境/编辑器的自动转换会导致异常。
+- `IDM-Activation.cmd`
+  - 英文别名入口：调用同目录的 `IAS.cmd`，便于识别与命令行输入。
 - `快速激活.cmd`
   - 入口脚本：用于定位同目录的 `IAS.cmd` 并以管理员权限运行，透传命令行参数。
+- `IDM-Quick-Activate.cmd`
+  - 英文别名入口：调用 `快速激活.cmd`，保持冻结激活的默认行为。
 - `测试脚本.cmd`
   - 环境自检：管理员权限、PowerShell 语言模式、网络连通性、代码页、WMI 等。
   - 用于把“脚本为什么跑不起来”的原因前置并显式化（并用按位退出码便于自动化解析）。
+- `IDM-Environment-Check.cmd`
+  - 英文别名入口：调用 `测试脚本.cmd`，用于环境检测。
 - `docs/`
   - `docs/release-notes-v1.3.md`：发布说明与回归建议。
   - `docs/reports/smoke-win-baseline.md`：Windows 冒烟基线模板（待补跑并填表）。
@@ -35,4 +41,3 @@
 1. push/PR 触发 GitHub Actions（Windows runner）。
 2. checkout 代码后执行 `tools/validate.ps1`。
 3. 校验失败时以 `::error` 格式标注具体文件与原因，阻止合并（配合分支保护）。
-

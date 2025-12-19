@@ -1,4 +1,4 @@
-# IDM 激活脚本 v1.3
+# IDM 激活脚本 v1.3（IAS-CN）
 
 > 本仓库为 IDM Activation Script 的中文专用版本，菜单/文档/提示均为中文，批处理与文本默认 GBK 编码（936）以确保 Windows 控制台无乱码。
 
@@ -40,11 +40,12 @@
 ## 🚀 使用方法
 
 > 懒人三步（管理员身份）：`测试脚本.cmd` 自检 → 双击 `快速激活.cmd` → 按提示完成即可。  
-> 小贴士：`测试脚本.cmd` 会一次检查管理员权限、PowerShell 语言模式、Null 服务、网络连通性、代码页、WMI、IDM 路径与当前目录写权限，全程仅需本仓库文件。
+> 小贴士：`测试脚本.cmd` 会一次检查管理员权限、PowerShell 语言模式、Null 服务、网络连通性、代码页、WMI、IDM 路径与当前目录写权限，全程仅需本仓库文件。  
+> 入口别名：为提升辨识度，提供英文前缀入口文件，功能与原文件一致：`IDM-Activation.cmd`（= `IAS.cmd`）、`IDM-Quick-Activate.cmd`（= `快速激活.cmd`）、`IDM-Environment-Check.cmd`（= `测试脚本.cmd`）。
 
 ### 方法一：图形界面（推荐新手）
 
-1. **右键点击** `快速激活.cmd`（默认执行冻结激活）或 `IAS.cmd`
+1. **右键点击** `IDM-Quick-Activate.cmd`（默认执行冻结激活，别名：`快速激活.cmd`）或 `IDM-Activation.cmd`（别名：`IAS.cmd`）
 2. **选择** "以管理员身份运行"
 3. **按照菜单提示操作**
 
@@ -67,18 +68,19 @@
 
 ```cmd
 # 冻结激活（推荐）
-IAS.cmd /frz
+IDM-Activation.cmd /frz
 
 # 普通激活
-IAS.cmd /act
+IDM-Activation.cmd /act
 
 # 重置激活
-IAS.cmd /res
+IDM-Activation.cmd /res
 
 # 静默模式 + 日志（无人值守）
-IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"
+IDM-Activation.cmd /frz /silent /log="C:\Temp\ias-frz.log"
 ```
 > 说明：`/silent` 抑制菜单与等待，`/log` 或 `/log=路径` 记录运行日志（不指定路径时默认写入 `%SystemRoot%\Temp\IAS-[时间戳].log`，路径尽量不要包含空格）；未带 `/frz` `/act` `/res` 即开启静默将返回码 2。
+> `IDM-Activation.cmd` 与 `IAS.cmd` 等价，可继续使用原脚本名。
 
 ## 📖 功能说明
 
@@ -202,9 +204,9 @@ C:\Windows\Temp\_Backup_HKLM_IDM_[时间戳].reg
 
 | 文件名 | 说明 |
 |--------|------|
-| `IAS.cmd` | 主激活脚本（批处理，GBK 编码） |
-| `快速激活.cmd` | 一键调用冻结激活模式，自动请求管理员权限 |
-| `测试脚本.cmd` | 环境检测工具（管理员/PowerShell 语言模式/Null 服务/网络/代码页） |
+| `IAS.cmd` | 主激活脚本（批处理，GBK 编码）；英文别名：`IDM-Activation.cmd` |
+| `快速激活.cmd` | 一键调用冻结激活模式，自动请求管理员权限；英文别名：`IDM-Quick-Activate.cmd` |
+| `测试脚本.cmd` | 环境检测工具（管理员/PowerShell 语言模式/Null 服务/网络/代码页）；英文别名：`IDM-Environment-Check.cmd` |
 | `使用说明.txt` | 快速入门文档 |
 | `README.md` | 当前图文说明 |
 
