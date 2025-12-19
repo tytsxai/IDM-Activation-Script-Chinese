@@ -78,7 +78,7 @@ IAS.cmd /res
 # 静默模式 + 日志（无人值守）
 IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"
 ```
-> 说明：`/silent` 抑制菜单与等待，`/log=路径` 记录运行日志；未带 `/frz` `/act` `/res` 即开启静默将返回码 2。
+> 说明：`/silent` 抑制菜单与等待，`/log` 或 `/log=路径` 记录运行日志（不指定路径时默认写入 `%SystemRoot%\Temp\IAS-[时间戳].log`，路径尽量不要包含空格）；未带 `/frz` `/act` `/res` 即开启静默将返回码 2。
 
 ## 📖 功能说明
 
@@ -178,6 +178,9 @@ IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"
 ```
 C:\Windows\Temp\_Backup_HKCU_CLSID_[时间戳].reg
 C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
+C:\Windows\Temp\_Backup_HKCU_DownloadManager_[时间戳].reg
+C:\Windows\Temp\_Backup_HKU-[SID]_DownloadManager_[时间戳].reg
+C:\Windows\Temp\_Backup_HKLM_IDM_[时间戳].reg
 ```
 
 **恢复方法：** 双击 `.reg` 文件即可导入恢复
