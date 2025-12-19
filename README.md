@@ -234,6 +234,7 @@ C:\Windows\Temp\_Backup_HKLM_IDM_[时间戳].reg
 - 贡献指南：`CONTRIBUTING.md`
 - 架构/结构说明：`ARCHITECTURE.md`
 - 维护检查清单：`docs/maintenance-checklist.md`
+- 运行/回滚手册：`docs/ops-runbook.md`
 - 安全问题上报：`SECURITY.md`
 - CI 校验脚本：`tools/validate.ps1`（在 GitHub Actions 的 `Windows validation` 工作流中执行）
 - 编码/换行约束：`.gitattributes`（`*.cmd`/`*.txt` 为 CRLF；`*.md` 为 LF）
