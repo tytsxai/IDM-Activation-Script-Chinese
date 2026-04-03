@@ -255,5 +255,6 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 - 本仓库已包含所有必需文件，可单独使用，无需依赖其他仓库
 - 原英文脚本与许可证详情可参考：https://github.com/WindowsAddict/IDM-Activation-Script
+  > ⚠️ 上游项目（WindowsAddict/IDM-Activation-Script）已于 2024-04-09 归档，不再维护。本中文版本为独立分支，后续更新由本仓库自行推进。
 
 中文优化版本 v1.3（持续根据实际使用情况做本地改动）
