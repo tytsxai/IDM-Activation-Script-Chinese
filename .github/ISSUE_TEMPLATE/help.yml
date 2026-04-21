@@ -1,0 +1,76 @@
+name: 使用帮助 / 新手求助
+description: 我不确定是不是 bug，只是不会用或卡在某一步
+title: "[Help] "
+labels: ["question", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        这个模板专门给"我不是报 bug，只是不会用"或"卡在某一步搞不定"的情况。
+        在开始之前，**强烈建议先打开 README 的 FAQ（Q1–Q10）扫一眼**，很多常见问题那里已经有答案。
+
+  - type: dropdown
+    id: stuck-step
+    attributes:
+      label: 你卡在哪一步？
+      options:
+        - 下载/解压阶段
+        - 运行"测试脚本.cmd"自检阶段
+        - 双击"快速激活.cmd"没反应 / 闪退
+        - UAC 弹窗点了之后没有后续
+        - Windows SmartScreen / Defender 拦截
+        - 激活脚本运行到一半卡住
+        - 激活成功了但 IDM 还是提示注册
+        - 其他（请在描述区说明）
+    validations:
+      required: true
+
+  - type: input
+    id: os-version
+    attributes:
+      label: Windows 版本
+      description: 不知道怎么看？按 Win+R，输入 winver，回车即可。
+      placeholder: "Windows 11 23H2 / Windows 10 22H2 / ..."
+    validations:
+      required: true
+
+  - type: input
+    id: idm-version
+    attributes:
+      label: IDM 版本（如已安装）
+      description: 打开 IDM → 帮助 → 关于
+      placeholder: "6.42 build 10 / 未安装 / 不确定"
+
+  - type: textarea
+    id: desc
+    attributes:
+      label: 详细描述
+      description: |
+        说清楚你做了什么、期望什么、实际发生了什么。
+        **可以截图直接粘贴到这里**（GitHub 会自动上传）。
+      placeholder: |
+        例如：
+        我双击"快速激活.cmd"后，窗口闪了一下就关了。
+        我按照 README 说的以管理员身份运行了，还是闪退。
+    validations:
+      required: true
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: 你已经尝试过什么（可选）
+      placeholder: |
+        例如：
+        - 已经运行了"测试脚本.cmd"，结果是 ...
+        - 看了 FAQ 的 Q1–Q3，没命中
+        - 重启电脑后再试，还是一样
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 简单自检
+      options:
+        - label: 我已经在 README 的"常见问题"里搜了一下，没找到答案
+          required: true
+        - label: 我是以管理员身份运行的（或至少尝试过）
+          required: true
