@@ -22,3 +22,14 @@ jobs:
       - name: Run encoding and EOL checks
         shell: pwsh
         run: ./tools/validate.ps1
+
+      - name: Smoke probe — IAS.cmd /silent without action (expect exit 2)
+        shell: cmd
+        run: |
+          chcp 936 >nul
+          call IAS.cmd /silent
+          if %errorlevel% NEQ 2 (
+            echo ::error::IAS.cmd /silent should exit with 2 when no action flag is supplied, got %errorlevel%
+            exit /b 1
+          )
+          echo Smoke probe OK: IAS.cmd /silent exited with 2 as expected.

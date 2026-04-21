@@ -1,0 +1,112 @@
+name: Bug 反馈
+description: 报告脚本运行异常、中文显示异常、激活失败等问题
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈问题。**提交前请先运行一次 `测试脚本.cmd`（以管理员身份）**，并把结果一并贴出，能大幅缩短排查时间。
+
+  - type: input
+    id: os-version
+    attributes:
+      label: Windows 版本
+      description: 在 CMD 中运行 `ver` 获得，例如 `Microsoft Windows [Version 10.0.22631.3593]`
+      placeholder: "Microsoft Windows [Version 10.0.22631.3593]"
+    validations:
+      required: true
+
+  - type: input
+    id: idm-version
+    attributes:
+      label: IDM 版本
+      description: 打开 IDM → 帮助 → 关于，或从注册表 `HKCU\Software\DownloadManager\version` 读取
+      placeholder: "6.42 build 10"
+    validations:
+      required: true
+
+  - type: input
+    id: script-version
+    attributes:
+      label: 脚本版本
+      description: 查看 `IAS.cmd` 第一行的 `@set iasver=...`
+      placeholder: "1.3.1"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: run-mode
+    attributes:
+      label: 运行的命令 / 入口
+      options:
+        - 快速激活.cmd（冻结）
+        - 普通激活.cmd
+        - 重置激活.cmd
+        - IAS.cmd 菜单交互
+        - IAS.cmd /frz
+        - IAS.cmd /act
+        - IAS.cmd /res
+        - IAS.cmd + /silent + /log
+        - 其他（请在描述区说明）
+    validations:
+      required: true
+
+  - type: textarea
+    id: smoke-output
+    attributes:
+      label: 测试脚本.cmd 输出
+      description: |
+        以**管理员身份**运行 `测试脚本.cmd`，把全部屏幕输出贴在下方（含退出码）。
+        若无法运行，请说明卡在哪一步。
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 请按 1 / 2 / 3 分点描述，越详细越好
+      placeholder: |
+        1. 管理员身份双击 `快速激活.cmd`
+        2. ...
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+      placeholder: 例如：冻结激活成功，IDM 打开后不再提示注册
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际结果
+      description: 附上脚本输出、错误信息、截图（图片可直接粘贴）
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 运行日志（可选）
+      description: |
+        如果使用了 `/log="C:\Temp\ias.log"` 写入日志，请把日志内容贴在这里（建议删除敏感路径/用户名）。
+      render: text
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 提交前的自检
+      options:
+        - label: 我已阅读 README 的"常见问题"章节，问题未被覆盖
+          required: true
+        - label: 我已以管理员身份运行 `测试脚本.cmd` 并附上了输出
+          required: true
+        - label: 我已确认没有在 Issue 中贴出任何账号密码、许可证密钥或其他敏感信息
+          required: true
