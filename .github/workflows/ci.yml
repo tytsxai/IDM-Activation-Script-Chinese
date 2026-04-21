@@ -33,3 +33,4 @@ jobs:
             exit /b 1
           )
           echo Smoke probe OK: IAS.cmd /silent exited with 2 as expected.
+          exit /b 0
