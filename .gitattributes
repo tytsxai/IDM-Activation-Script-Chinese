@@ -6,3 +6,7 @@
 
 # Normalize Markdown for GitHub
 *.md text eol=lf
+
+# GitHub Actions / Issue templates (YAML must be LF)
+*.yml text eol=lf
+*.yaml text eol=lf

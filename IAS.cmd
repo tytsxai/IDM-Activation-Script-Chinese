@@ -1,4 +1,4 @@
-@set iasver=1.3
+@set iasver=1.3.1
 @setlocal DisableDelayedExpansion
 @echo off
 
@@ -10,10 +10,18 @@ chcp 936 >nul 2>&1
 ::
 ::   IDM 激活脚本 (IAS)
 ::
-::   Homepages: https://github.com/tytsxai/IDM-Activation-Script-Chinese
-::   Original : https://github.com/WindowsAddict/IDM-Activation-Script
+::   项目主页: https://github.com/tytsxai/IDM-Activation-Script-Chinese
+::   问题反馈: https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues
+::   许可证  : GPL-3.0（详见仓库根目录 LICENSE）
 ::
-::       Email: windowsaddict@protonmail.com
+::   ----- 代码导航（便于后续维护） -----
+::   01-040 行  : 头部元信息、代码页设置、默认开关
+::   040-110 行 : PATH 设置、Sysnative / SysArm32 架构重入、参数解析（/act /frz /res /silent /log）
+::   110-150 行 : 静默模式校验、Null 服务检测、日志初始化
+::   150-400 行 : 环境探测（管理员权限、IDM 安装路径、CLSID 注册表项、网络连通性）
+::   400-600 行 : 主菜单（冻结 / 激活 / 重置 / 下载 / 帮助），交互分派
+::   600-870 行 : 激活与冻结核心流程、注册表备份、随机注册信息注入
+::   870-1017 行: 重置流程、错误处理、日志收尾、退出码
 ::
 ::============================================================================
 

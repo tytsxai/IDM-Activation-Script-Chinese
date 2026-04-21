@@ -1,16 +1,42 @@
-# Security Policy
+# 安全策略（Security Policy）
 
-## Reporting a Vulnerability
+> 本文档说明如何向本仓库维护者私下报告安全问题。**请勿在公开 Issue 中提交与安全漏洞相关的细节**，以免被未修复前就扩散利用。
 
-If you discover a security issue, please report it privately.
+## 支持的版本
 
-- Preferred: open a GitHub Security Advisory for this repository
-- Alternative: contact the repository owner via GitHub
+仅对 **最新发布版本（当前：v1.3.1）** 提供安全修复。较早版本不再回溯。
 
-Please include:
-- A clear description of the issue and its impact
-- Steps to reproduce (as minimal as possible)
-- Affected files/versions (commit SHA or tag)
+## 漏洞上报方式（按优先级）
 
-Do not publicly disclose vulnerabilities until a fix is available.
+1. **推荐**：在 GitHub 仓库页面打开 `Security` 标签，选择 `Report a vulnerability`，提交私密安全公告（Security Advisory）。
+2. **备选**：通过 GitHub 私信联系仓库所有者（账号见仓库 About 区）。
 
+## 上报内容建议包含
+
+为了尽快定位并修复，请在报告中提供：
+
+- 问题的清晰描述与潜在影响（例如：是否可被远程触发、是否涉及权限提升、是否影响终端用户数据）；
+- 最小化的复现步骤（Windows 版本、IDM 版本、执行的命令行参数、相关日志）；
+- 受影响的文件或版本（commit SHA 或发布 tag）；
+- 你对修复建议的初步想法（可选）。
+
+## 处理时间与流程
+
+- 维护者将在 **7 天内**给出首次确认回复。
+- 漏洞被确认后，会协同报告人给出初步修复时间表，目标在合理范围内（通常 2 周内）发布修复版本。
+- 未经报告人同意，维护者 **不会** 公开披露漏洞细节；修复发布后，会在 `CHANGELOG.md` 致谢（如报告人接受）。
+
+## 范围说明
+
+本策略**覆盖**：
+- 脚本本身存在的代码注入、命令注入、路径穿越等安全问题；
+- 导致非预期系统修改、数据丢失、凭据泄漏的缺陷；
+- 发布产物（zip）完整性校验问题。
+
+本策略**不覆盖**：
+- 终端用户自行环境（例如被劫持的 PowerShell、被替换的系统 `cmd.exe`）引入的问题；
+- 第三方杀软对本脚本的启发式告警（属于预期摩擦，非安全漏洞，FAQ 中已有说明）。
+
+## 请勿在修复前公开披露
+
+在维护者确认问题已修复并发布前，请不要在公开论坛、博客或 Issue 中披露漏洞细节。感谢配合。

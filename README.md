@@ -1,11 +1,27 @@
-# IDM 激活脚本 v1.3
+# IDM 激活脚本中文版 v1.3.1（IDM Activation Script · 简体中文）
 
-> 本仓库为 IDM Activation Script 的中文专用版本，菜单/文档/提示均为中文，批处理与文本默认 GBK 编码（936）以确保 Windows 控制台无乱码。
+[![Windows validation](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL_v3-blue.svg)](./LICENSE)
+[![Version](https://img.shields.io/badge/version-v1.3.1-brightgreen.svg)](./CHANGELOG.md)
+[![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)]()
 
-> 说明：本仓库包含会对 Windows 系统配置产生影响的脚本。请在你拥有合法授权、并明确理解风险的前提下使用，并遵守软件许可协议与所在地法律法规。
+> **一键激活 Internet Download Manager（IDM）的中文脚本工具**：支持 IDM 冻结试用期、随机注册信息激活、试用期一键重置三种模式，全程中文菜单与提示，无需安装任何依赖，单个 `.cmd` 文件即可在 Windows 7 / 8 / 10 / 11 上稳定运行。
+
+## 📥 快速下载
+
+- 最新版（推荐）：[IDM-Activation-Script-v1.3.1.zip](./release/IDM-Activation-Script-v1.3.1.zip)
+- 校验值（SHA256）：[IDM-Activation-Script-v1.3.1.zip.sha256](./release/IDM-Activation-Script-v1.3.1.zip.sha256)
+- 完整更新历史：[CHANGELOG.md](./CHANGELOG.md)
+
+> 下载后在 PowerShell 中执行 `Get-FileHash .\IDM-Activation-Script-v1.3.1.zip -Algorithm SHA256`，与 `.sha256` 文件内的值比对一致再解压使用。
+
+> **关键词**：IDM 激活、IDM 中文版、IDM 注册机、IDM 冻结试用期、IDM 试用期重置、Internet Download Manager 激活脚本、IDM Windows 激活、IDM 批处理激活、IDM 免费使用。
+
+> **运行说明**：本工具通过批处理脚本调整 Windows 注册表键值以完成激活，不修改 IDM 任何程序文件，所有注册表变更前均会自动备份，可随时还原。请在合法授权且理解风险的前提下使用，并遵守所在地法律法规与 IDM 软件许可协议。
 
 ## 📋 目录
 
+- [快速下载](#-快速下载)
 - [功能特性](#功能特性)
 - [系统要求](#系统要求)
 - [使用方法](#使用方法)
@@ -14,6 +30,8 @@
 - [技术细节](#技术细节)
 - [更新日志](#更新日志)
 - [维护与贡献](#维护与贡献)
+- [版本与维护](#版本与维护)
+- [许可证](#许可证)
 
 ## ✨ 功能特性
 
@@ -39,7 +57,7 @@
 
 ## 🚀 使用方法
 
-> 懒人三步（管理员身份）：`测试脚本.cmd` 自检 → 双击 `快速激活.cmd` → 按提示完成即可。  
+> 懒人三步（管理员身份）：`测试脚本.cmd` 自检 → 双击 `快速激活.cmd`（冻结）/ `普通激活.cmd` / `重置激活.cmd` 中对应入口 → 按提示完成即可。  
 > 小贴士：`测试脚本.cmd` 会一次检查管理员权限、PowerShell 语言模式、Null 服务、网络连通性、代码页、WMI、IDM 路径与当前目录写权限，全程仅需本仓库文件。
 
 ### 方法一：图形界面（推荐新手）
@@ -162,6 +180,46 @@ IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"
 
 </details>
 
+<details>
+<summary><b>Q7: Windows 11 24H2 上脚本是否可用？</b></summary>
+
+**解决方法：**
+- 24H2 默认启用 SmartScreen 与云保护，首次运行时可能弹出"已阻止"提示
+- 右键 `快速激活.cmd` → 属性 → 底部勾选"解除锁定"，再以管理员身份运行
+- 若 PowerShell 在 ConstrainedLanguage 模式下被限制，`测试脚本.cmd` 会明确指出对应检查项失败，按提示处理即可
+
+</details>
+
+<details>
+<summary><b>Q8: Windows Defender / 第三方杀软拦截脚本？</b></summary>
+
+**解决方法：**
+- 本脚本涉及注册表写入、WMI 查询与 PowerShell 提权，启发式引擎可能产生误报
+- 如果信任本仓库发布的 `release` 产物（可用 `release/IDM-Activation-Script-v1.3.1.zip.sha256` 校验），可把解压目录加入 Defender 排除项再运行
+- 校验命令：PowerShell 里 `Get-FileHash IDM-Activation-Script-v1.3.1.zip -Algorithm SHA256`，与 `.sha256` 文件内容比对
+
+</details>
+
+<details>
+<summary><b>Q9: 企业环境启用了 WDAC / AppLocker，脚本直接拒绝执行？</b></summary>
+
+**解决方法：**
+- WDAC 或 AppLocker 策略通常会阻止未签名脚本运行，这是企业 IT 的策略层拦截，不是脚本本身的问题
+- 正确处理方式是联系 IT 获取授权，不建议绕过
+- 个人设备上不存在此问题
+
+</details>
+
+<details>
+<summary><b>Q10: IDM 6.42 / 6.43 等较新版本是否兼容？</b></summary>
+
+**解决方法：**
+- 本脚本基于 IDM 注册表 CLSID 结构工作，IDM 6.x 系列整体保持兼容
+- 若更新 IDM 后发现激活失效，建议先执行"重置激活"（`重置激活.cmd` 或 `IAS.cmd /res`），再重新选择"冻结激活"
+- 仍不生效时，请在 Issue 中带上 `测试脚本.cmd` 输出与 IDM 具体版本号
+
+</details>
+
 ## 🔧 技术细节
 
 ### 工作原理
@@ -199,15 +257,31 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 | 文件名 | 说明 |
 |--------|------|
-| `IAS.cmd` | 主激活脚本（批处理，GBK 编码） |
-| `快速激活.cmd` | 一键调用冻结激活模式，自动请求管理员权限 |
-| `测试脚本.cmd` | 环境检测工具（管理员/PowerShell 语言模式/Null 服务/网络/代码页） |
-| `使用说明.txt` | 快速入门文档 |
-| `README.md` | 当前图文说明 |
+| `IAS.cmd` | 主激活脚本（批处理，GBK 编码），支持 `/frz` `/act` `/res` `/silent` `/log=` 参数 |
+| `快速激活.cmd` | 一键调用 **冻结激活** 模式，自动请求管理员权限（推荐新手） |
+| `普通激活.cmd` | 一键调用 **普通激活** 模式（随机注册信息） |
+| `重置激活.cmd` | 一键调用 **重置** 模式，清理当前激活与试用信息 |
+| `测试脚本.cmd` | 环境自检（管理员 / PowerShell / Null 服务 / 网络 / 代码页 / WMI / IDM 路径 / 目录写权限） |
+| `使用说明.txt` | 三步极简指南（GBK，Windows 记事本即可查看） |
+| `README.md` | 当前完整图文说明 |
+| `CHANGELOG.md` | 全部历史版本的详细变更记录 |
 
 ## 📝 更新日志
 
-### v1.3 (当前版本) - 2025-12-09
+> 完整历史变更请查看 [`CHANGELOG.md`](./CHANGELOG.md)。下方仅保留最近两个版本的摘要。
+
+### v1.3.1 (当前版本) - 2026-04-21
+
+#### ✅ 已完成
+- 新增 `普通激活.cmd` / `重置激活.cmd` 两个一键入口，与 `快速激活.cmd` 形成完整三件套
+- `测试脚本.cmd` 在结尾显式打印"第一项未通过的检查"，帮助用户快速定位问题
+- 修复 `快速激活.cmd` 在路径含单引号或特殊字符时 PowerShell 自动提权失败的问题
+- 常见问题新增 4 条（Win11 24H2 / Defender / WDAC / IDM 6.42+）
+- `SECURITY.md` 全文中文化，新增 `.github/ISSUE_TEMPLATE/bug_report.yml` 结构化 Bug 反馈模板
+- CI 新增 `IAS.cmd /?` 冒烟探测，防止语法级回归进入主分支
+- 发布包 `release/IDM-Activation-Script-v1.3.1.zip` 重打，校验值同步更新
+
+### v1.3 - 2025-12-09
 
 #### ✅ 已完成
 - 新增静默/日志参数：`IAS.cmd` 支持 `/silent` 与 `/log=<路径>`，可在无人值守场景下抑制菜单交互并输出运行日志；`快速激活.cmd` 透传同样参数
@@ -251,10 +325,18 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 ## 📄 许可证
 
-本仓库为独立维护的中文版本，遵循 IDM Activation Script 原项目的开源许可证要求进行分发和修改。
+本项目以 **GNU General Public License v3.0（GPL-3.0）** 开源发布，完整条款见仓库根目录的 `LICENSE` 文件。
 
-- 本仓库已包含所有必需文件，可单独使用，无需依赖其他仓库
-- 原英文脚本与许可证详情可参考：https://github.com/WindowsAddict/IDM-Activation-Script
-  > ⚠️ 上游项目（WindowsAddict/IDM-Activation-Script）已于 2024-04-09 归档，不再维护。本中文版本为独立分支，后续更新由本仓库自行推进。
+使用、修改或再分发本项目时，需遵循 GPL-3.0 的基本要求：
 
-中文优化版本 v1.3（持续根据实际使用情况做本地改动）
+- 可自由使用、学习、修改与再分发脚本；
+- 二次发布必须保留 GPL-3.0 许可证文本、版权声明与修改记录；
+- 基于本项目派生的作品需以相同或兼容的 GPL 许可证发布；
+- 作者不对脚本使用过程中产生的任何直接或间接损失承担责任，详见 `LICENSE` 中"NO WARRANTY"条款。
+
+## 🔄 版本与维护
+
+- 当前版本：**v1.3.1**（发布日期 2026-04-21）
+- 维护状态：独立维护，根据真实使用反馈持续迭代脚本与文档
+- 仓库文件自洽：所有依赖项已包含在仓库内，可离线运行，无需额外下载其他组件
+- 中文编码约束：`.cmd` / `.txt` 强制 GBK + CRLF，`.md` 强制 UTF-8 + LF，由 GitHub Actions CI 自动校验，防止乱码误入主分支

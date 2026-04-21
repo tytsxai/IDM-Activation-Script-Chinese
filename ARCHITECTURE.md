@@ -19,7 +19,8 @@
   - 环境自检：管理员权限、PowerShell 语言模式、网络连通性、代码页、WMI 等。
   - 用于把“脚本为什么跑不起来”的原因前置并显式化（并用按位退出码便于自动化解析）。
 - `docs/`
-  - `docs/release-notes-v1.3.md`：发布说明与回归建议。
+  - `docs/release-notes-v1.3.1.md`：当前版本发布说明与回归建议。
+  - `docs/release-notes-v1.3.md`：历史版本发布说明（保留）。
   - `docs/reports/smoke-win-baseline.md`：Windows 冒烟基线模板（待补跑并填表）。
 - `release/`
   - 发布产物（zip），用于用户侧下载与校验。

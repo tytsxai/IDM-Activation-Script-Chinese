@@ -1,14 +1,15 @@
-# IDM 激活脚本 v1.3 Windows 冒烟基线（待执行）
+# IDM 激活脚本 v1.3.1 Windows 冒烟基线（待执行）
 
 ## 范围与前置
 - 最小路径验证其一即可（冻结 `/frz`、激活 `/act` 或重置 `/res`），推荐冻结。
-- 环境：Win10/11 x64（管理员 CMD），IDM 已安装，代码页 936，网络可直连 `internetdownloadmanager.com`。
-- 包：`release/IDM-Activation-Script-v1.3.zip`（SHA256：`810855c004dd763114d17304b7e8b8c3b286b249f109f3c614f7090e8579547e`）。
+- 环境：Win10/11 x64（含 24H2，管理员 CMD），IDM 已安装，代码页 936，网络可直连 `internetdownloadmanager.com`。
+- 包：`release/IDM-Activation-Script-v1.3.1.zip`（SHA256 见同目录 `.sha256` 文件）。
 
 ## 执行步骤
-1. `测试脚本.cmd`（管理员），确认 10/10 全绿且退出码 `0`。
-2. 运行 `IAS.cmd` 的一个代表性路径（建议使用静默 + 日志），预期退出码 `0`，日志写入成功。
-3. 观察是否有 Defender/Smartscreen 拦截或编码乱码。
+1. `测试脚本.cmd`（管理员），确认 10/10 全绿且退出码 `0`；若失败，记录脚本末尾打印的"首个未通过项"。
+2. 运行三选一入口（`快速激活.cmd` / `普通激活.cmd` / `重置激活.cmd`），或 `IAS.cmd /frz|/act|/res` 的一个代表性路径（建议使用静默 + 日志），预期退出码 `0`，日志写入成功。
+3. 观察是否有 Defender/SmartScreen 拦截或编码乱码。
+4. 在 PR 提交前运行 `IAS.cmd /silent` 一次，确认退出码为 `2`（CI 同款冒烟）。
 
 ## 记录模板
 | 日期 | OS/版本 | 执行命令 | 退出码 | 日志路径 | 备注 |

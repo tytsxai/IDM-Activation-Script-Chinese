@@ -21,8 +21,8 @@ if %errorlevel% NEQ 0 (
     exit /b
 )
 
-echo [信息] 正在调用 IAS.cmd /frz（冻结激活模式）...
-call "%IAS%" /frz %*
+echo [信息] 正在调用 IAS.cmd /res（重置激活/试用期）...
+call "%IAS%" /res %*
 set "ret=%errorlevel%"
 if not "%ret%"=="0" (
     echo [提示] IAS.cmd 返回代码 %ret%，可查看屏幕输出或先运行"测试脚本.cmd"排查环境。
