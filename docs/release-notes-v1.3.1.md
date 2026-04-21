@@ -31,7 +31,7 @@
 ## 校验信息
 
 - 文件：`release/IDM-Activation-Script-v1.3.1.zip`
-- SHA256：见同级 `release/IDM-Activation-Script-v1.3.1.zip.sha256`
+- SHA256：`f885c60b8ecd8d5ed9cd942536ef516ca2005abfa6b5a0d9dab5b9b8a7f732cd`（同级 `.sha256` 文件也可下载校验）
 - 编码/行尾：`.cmd`/`.txt` 为 GBK + CRLF，`.md` 为 UTF-8 + LF。
 - 压缩包内中文文件名已写入 UTF-8 文件名标记，Win10/11 内置解压工具可正常显示。
 

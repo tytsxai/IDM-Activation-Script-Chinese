@@ -3,17 +3,22 @@
 [![Windows validation](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL_v3-blue.svg)](./LICENSE)
 [![Version](https://img.shields.io/badge/version-v1.3.1-brightgreen.svg)](./CHANGELOG.md)
-[![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)]()
+[![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)](#-系统要求)
 
 > **一键激活 Internet Download Manager（IDM）的中文脚本工具**：支持 IDM 冻结试用期、随机注册信息激活、试用期一键重置三种模式，全程中文菜单与提示，无需安装任何依赖，单个 `.cmd` 文件即可在 Windows 7 / 8 / 10 / 11 上稳定运行。
 
 ## 📥 快速下载
 
-- 最新版（推荐）：[IDM-Activation-Script-v1.3.1.zip](./release/IDM-Activation-Script-v1.3.1.zip)
-- 校验值（SHA256）：[IDM-Activation-Script-v1.3.1.zip.sha256](./release/IDM-Activation-Script-v1.3.1.zip.sha256)
+> **👉 直接下载按钮（推荐）**：[前往 GitHub Releases 页面下载最新版](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases/latest)  
+> 页面中 `Assets` 区域的 `.zip` 文件即为安装包，点击即下载。
+
+也可以在本仓库内直接下载（右键"链接另存为"）：
+
+- 最新版压缩包（点击右键另存为）：[IDM-Activation-Script-v1.3.1.zip](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script-v1.3.1.zip)
+- 校验值（SHA256）：[IDM-Activation-Script-v1.3.1.zip.sha256](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script-v1.3.1.zip.sha256)
 - 完整更新历史：[CHANGELOG.md](./CHANGELOG.md)
 
-> 下载后在 PowerShell 中执行 `Get-FileHash .\IDM-Activation-Script-v1.3.1.zip -Algorithm SHA256`，与 `.sha256` 文件内的值比对一致再解压使用。
+> 安全起见建议校验：下载后在 PowerShell 中执行 `Get-FileHash .\IDM-Activation-Script-v1.3.1.zip -Algorithm SHA256`，与 `.sha256` 文件内的值比对一致后再解压使用。若嫌麻烦，校验可略过。
 
 > **关键词**：IDM 激活、IDM 中文版、IDM 注册机、IDM 冻结试用期、IDM 试用期重置、Internet Download Manager 激活脚本、IDM Windows 激活、IDM 批处理激活、IDM 免费使用。
 
@@ -49,16 +54,24 @@
 
 | 项目 | 要求 |
 |------|------|
-| 操作系统 | Windows 7/8/8.1/10/11 |
-| 权限 | 管理员权限 |
-| 依赖 | PowerShell (系统自带) |
-| 网络 | 需访问 internetdownloadmanager.com |
-| CMD 代码页 | 936 (GBK) |
+| 操作系统 | Windows 7 / 8 / 8.1 / 10 / 11（含 24H2） |
+| 权限 | **管理员权限**（脚本会自动请求，无需手动设置） |
+| 依赖 | PowerShell（Windows 系统自带，无需额外安装） |
+| 网络 | 能访问 internetdownloadmanager.com 即可（关闭 VPN/代理再试） |
+| 编码 | 中文控制台（脚本自动执行 `chcp 936`，**无需手动设置**） |
 
 ## 🚀 使用方法
 
 > 懒人三步（管理员身份）：`测试脚本.cmd` 自检 → 双击 `快速激活.cmd`（冻结）/ `普通激活.cmd` / `重置激活.cmd` 中对应入口 → 按提示完成即可。  
 > 小贴士：`测试脚本.cmd` 会一次检查管理员权限、PowerShell 语言模式、Null 服务、网络连通性、代码页、WMI、IDM 路径与当前目录写权限，全程仅需本仓库文件。
+
+> ### ⚠️ 第一次运行前必看
+>
+> 1. **必须以管理员身份运行**。`快速激活.cmd` 和 `IAS.cmd` 都会自动弹出 UAC 提权窗口，点"**是**"即可。
+> 2. **Windows 可能弹出"已阻止"或"Windows 已保护你的电脑"**（SmartScreen）。这是对未签名批处理脚本的标准提示，不是脚本真的有问题。处理方法：
+>    - SmartScreen 弹窗：点 **"更多信息"** → **"仍要运行"**；
+>    - 文件属性里若出现"此文件来自其他计算机，可能会阻止此文件"，在文件上右键 → **属性** → 底部勾选"**解除锁定**" → 确定。
+> 3. **杀软（Defender/360/火绒）可能报毒**。本脚本涉及注册表写入和提权，属于启发式引擎的常规误报。若信任本仓库的发布包（SHA256 已公布），可把解压目录临时加入杀软白名单再运行。
 
 ### 方法一：图形界面（推荐新手）
 
@@ -79,7 +92,8 @@
 └─────────────────────────────────────┘
 ```
 
-### 方法二：命令行（推荐高级用户）
+<details>
+<summary><b>方法二：命令行（高级用户，新手可以跳过）</b></summary>
 
 以管理员身份打开 CMD，然后运行：
 
@@ -96,7 +110,10 @@ IAS.cmd /res
 # 静默模式 + 日志（无人值守）
 IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"
 ```
+
 > 说明：`/silent` 抑制菜单与等待，`/log=路径` 记录运行日志；未带 `/frz` `/act` `/res` 即开启静默将返回码 2。
+
+</details>
 
 ## 📖 功能说明
 
