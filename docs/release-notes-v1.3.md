@@ -1,4 +1,6 @@
-# IDM 激活脚本 v1.3 发布说明
+# IDM 激活脚本 v1.3 发布说明（历史版本）
+
+> ⚠️ **历史版本说明**：v1.3 已被后续版本取代。最新发布说明请以根目录 [`CHANGELOG.md`](../CHANGELOG.md)、GitHub Releases 与 [`reports/smoke-win-baseline.md`](./reports/smoke-win-baseline.md) 为准。本文件仅作为变更轨迹保留，不再回溯。
 
 ## 版本概览
 - 版本：v1.3（批次 B3）
@@ -6,7 +8,7 @@
 - 包含文件：`IAS.cmd`、`快速激活.cmd`、`测试脚本.cmd`、`使用说明.txt`、`README.md`、`docs/release-notes-v1.3.md`、`docs/reports/smoke-win-baseline.md`。
 
 ## 冒烟结果与发布标记
-- 冒烟：尚未在 Win10/11 管理员环境补跑；需按 `docs/reports/smoke-win-baseline.md` 补一次管理员 CMD 路径（推荐冻结 + 日志），当前仅在 macOS 做脚本语法/编码校验。
+- 冒烟：v1.3 历史版本未单独补跑 Windows 真实管理员路径；后续回归与冒烟记录以最新发布版本和 [`reports/smoke-win-baseline.md`](./reports/smoke-win-baseline.md) 为准。
 - 发布标记：`v1.3`（https://github.com/tytsxai/IDM-Activation-Script-Chinese/tree/v1.3）。
 
 ## 安装与升级步骤
