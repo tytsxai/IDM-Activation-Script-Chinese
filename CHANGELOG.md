@@ -8,6 +8,19 @@
 
 ---
 
+## v1.3.4 — 2026-05-19
+
+### 文档
+- **新增 `llms.txt`**：面向 ChatGPT / Claude / Perplexity / Gemini 等 AI 搜索引擎的精炼项目索引，覆盖能做 / 不能做 / 常见问题 / 长尾搜索词。
+- **README 顶部新增英文摘要区块**：面向英文搜索流量（"IDM Activation Script Chinese"、"GBK encoded IDM activator"），明确这是 lstprjct/IDM-Activation-Script 的中文本地化分叉，列出三种激活模式与与上游差异。
+- **README 顶部新增 Release / llms.txt / Changelog / Issues 导航行**。
+
+### 发布
+- 文档专项发版,**脚本与压缩包未改动**,仍沿用 v1.3.3 的 `release/IDM-Activation-Script-v1.3.3.zip` 作为运行时产物。Tag `v1.3.4` 仅标记本次文档更新。
+- 已使用 v1.3.3 的用户**无需重新下载**。
+
+---
+
 ## v1.3.3 — 2026-04-27
 
 ### 文档

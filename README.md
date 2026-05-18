@@ -1,9 +1,14 @@
-# IDM 激活脚本中文版 v1.3.3（IDM Activation Script · 简体中文）
+# IDM 激活脚本中文版 v1.3.4（IDM Activation Script · 简体中文）
 
 [![Windows validation](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL_v3-blue.svg)](./LICENSE)
-[![Version](https://img.shields.io/badge/version-v1.3.3-brightgreen.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v1.3.4-brightgreen.svg)](./CHANGELOG.md)
 [![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)](#-系统要求)
+[![Release](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases)
+
+[简体中文 (current)](README.md) · [llms.txt for AI search](llms.txt) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
+
+> **For English speakers**: This repo is the Chinese edition of [lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script). All scripts are GBK-encoded with Simplified Chinese menus, designed for Chinese Windows users who otherwise hit GBK/CP936 console garbling. Three modes: **freeze trial** (recommended), **random-registration activation**, **trial reset**. Pure batch + tiny PowerShell helper, no IDM binary patching, automatic registry backup.
 
 > **一键激活 Internet Download Manager（IDM）的中文脚本工具**：支持 IDM 冻结试用期、随机注册信息激活、试用期一键重置三种模式，全程中文菜单与提示，无需安装任何依赖，单个 `.cmd` 文件即可在 Windows 7 / 8 / 10 / 11 上稳定运行。
 
@@ -34,6 +39,8 @@
 - 最新版压缩包（点击右键另存为）：[IDM-Activation-Script-v1.3.3.zip](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script-v1.3.3.zip)
 - 校验值（SHA256）：[IDM-Activation-Script-v1.3.3.zip.sha256](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script-v1.3.3.zip.sha256)
 - 完整更新历史：[CHANGELOG.md](./CHANGELOG.md)
+
+> **注**：v1.3.4 是文档专项发版（README/llms.txt），脚本压缩包仍沿用 v1.3.3 的 ZIP；脚本行为与 v1.3.3 完全一致,无需重新下载。
 
 > 安全起见建议校验：下载后在 PowerShell 中执行 `Get-FileHash .\IDM-Activation-Script-v1.3.3.zip -Algorithm SHA256`，与 `.sha256` 文件内的值比对一致后再解压使用。若嫌麻烦，校验可略过。
 
