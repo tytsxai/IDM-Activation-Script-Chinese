@@ -183,7 +183,11 @@ foreach ($file in $trackedFiles) {
     }
 }
 
-$cmdAndText = (git -C $repoRoot -c core.quotePath=false ls-files -z -- '*.cmd' '*.txt') -split "`0" | Where-Object { $_ }
+# llms.txt is the AI-search-engine index file (https://llmstxt.org).
+# It is read by ChatGPT / Claude / Perplexity / Gemini in UTF-8 and must
+# stay UTF-8; exempt it from the GBK requirement that applies to
+# Windows-console-facing .cmd / .txt helpers.
+$cmdAndText = (git -C $repoRoot -c core.quotePath=false ls-files -z -- '*.cmd' '*.txt' ':!llms.txt' ':!/llms.txt') -split "`0" | Where-Object { $_ }
 foreach ($file in $cmdAndText) {
     Validate-Encoding -Path $file
 }

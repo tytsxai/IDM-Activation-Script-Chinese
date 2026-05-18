@@ -4,6 +4,10 @@
 # Keep plain-text helpers aligned with Windows editors
 *.txt text eol=crlf
 
+# llms.txt is read by AI search engines (https://llmstxt.org) in UTF-8 + LF;
+# override the *.txt rule above so this single file stays cross-platform.
+llms.txt text eol=lf
+
 # Normalize Markdown for GitHub
 *.md text eol=lf
 
