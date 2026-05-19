@@ -396,3 +396,7 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 - 仓库文件自洽：所有依赖项已包含在仓库内，可离线运行，无需额外下载其他组件
 - 中文编码约束：`.cmd` / `.txt` 强制 GBK + CRLF，`.md` 强制 UTF-8 + LF，由 GitHub Actions CI 自动校验，防止乱码误入主分支
 - CI 状态：每次 push / PR 都会触发 `Windows validation` 工作流（编码 / 换行 / `IAS.cmd /silent` 冒烟），徽章见页首
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=tytsxai/IDM-Activation-Script-Chinese&type=Date)](https://www.star-history.com/#tytsxai/IDM-Activation-Script-Chinese&Date)
