@@ -10,7 +10,8 @@
   - macOS / Linux 维护者可改用 `iconv -f GBK -t UTF-8 <file>` 抽样确认 GBK 解码不报错；编码/换行的最终判定仍以 CI 为准。
 - 若改了 `IAS.cmd`：本地用 `iconv` 抽看相关行号，确保改动符合「代码导航」注释块描述的分区。
 - 若涉及发布包：重新打包并更新 `release/IDM-Activation-Script-v<版本>.zip` 与同名 `.sha256`，同步 `docs/release-notes-*.md`。
-- `docs/` 默认作为本地维护资料保留，不随发布提交 / 推送到云端仓库；公开发布信息以 `README.md`、`CHANGELOG.md`、GitHub Release 和 `release/*.sha256` 为准。
+- `docs/` 作为公开维护资料随仓库保留；更新 README / CHANGELOG / GitHub Release / `llms.txt` 时，必须检查 `docs/` 是否存在版本号、发布包和运行步骤的冲突。
+- 本仓库必须保持 GPL-3.0 开源表达；不要把文档、Release 或 Issue 模板写成私有仓库、闭源分发或不可再分发项目。
 
 ## PR 合并前（GitHub）
 
@@ -27,4 +28,4 @@
 - 重新计算并核对 `release/*.zip.sha256`：
   - PowerShell：`Get-FileHash release\IDM-Activation-Script-v<版本>.zip -Algorithm SHA256`
   - macOS / Linux：`shasum -a 256 release/IDM-Activation-Script-v<版本>.zip`
-- 发布后确认 `git status --short` 中只有预期的本地维护文档改动；若准备推送，先确认暂存区不包含 `docs/`。
+- 发布后确认 `git status --short` 中只有预期改动；若准备推送，先确认 README、CHANGELOG、`llms.txt`、`docs/` 与 Release 资产版本一致。

@@ -33,12 +33,14 @@
   - SECURITY：安全漏洞上报渠道与处理流程。
   - ARCHITECTURE：本文件，维护者视角的仓库结构与高风险点。
 - `docs/`
-  - `release-notes-v1.3.3.md`：当前本地发布说明与回归建议。
+  - `README.md`：公开文档索引，面向新用户、维护者和 AI 搜索引擎说明文档入口与真实性边界。
+  - `release-notes-v1.3.4.md`：v1.3.4 文档专项发布说明。
+  - `release-notes-v1.3.3.md`：v1.3.3 运行时发布说明与回归建议。
   - `release-notes-v1.3.1.md`：v1.3.1 历史发布说明（保留）。
   - `release-notes-v1.3.md`：v1.3 历史发布说明（保留）。
   - `maintenance-checklist.md`：维护/发布检查清单。
   - `reports/smoke-win-baseline.md`：当前版本 Windows 冒烟基线模板。
-  - 维护约束：`docs/` 用作本地维护资料，默认不随发布提交到云端仓库。
+  - 维护约束：`docs/` 作为公开维护资料随仓库保留；发版时应同步 README / CHANGELOG / llms.txt 中的用户可见信息，避免公开文档互相矛盾。
 - `release/`
   - 发布产物：`IDM-Activation-Script-v<版本>.zip` 与同名 `.sha256` 校验文件。
 

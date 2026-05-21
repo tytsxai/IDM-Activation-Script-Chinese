@@ -31,7 +31,7 @@ body:
     attributes:
       label: 脚本版本
       description: 查看 `IAS.cmd` 第一行的 `@set iasver=...`
-      placeholder: "1.3.1"
+      placeholder: "1.3.3 / 1.3.4"
     validations:
       required: true
 

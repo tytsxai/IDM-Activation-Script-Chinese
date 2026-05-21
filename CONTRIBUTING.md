@@ -5,6 +5,7 @@
 ## 基本原则
 
 - 不要在仓库中提交任何密钥、令牌、个人隐私或机器特征信息。
+- 本仓库按 GPL-3.0 开源维护，文档、发布说明和派生说明都应保持公开可审查、可再分发的表达，不要把项目描述为私有或闭源分发。
 - 任何变更都应能在 GitHub Actions 的 `Windows validation` 工作流中通过。
 - 尽量保持改动小且可回滚：一次 PR 只做一件事（文档/CI/脚本逻辑请分开）。
 
@@ -35,4 +36,3 @@
 - 工作流文件：`.github/workflows/ci.yml`
 - 校验脚本：`tools/validate.ps1`
 - 运行环境：GitHub-hosted Windows runner（`windows-latest`）
-

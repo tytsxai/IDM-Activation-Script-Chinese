@@ -1,21 +1,32 @@
-# IDM Activation Script · Chinese Edition / IDM 激活脚本中文版
+# IDM Activation Script Chinese / IDM 激活脚本中文版
 
-> Open-source Chinese-localized `.cmd` batch toolkit for Internet Download Manager (IDM) on Windows 7/8/10/11. Three modes: freeze trial (推荐), random-registration activation, and trial reset. No dependencies, runs from a single `.cmd` file, all menus and prompts in Simplified Chinese.
+> GPL-3.0 open-source Chinese-localized `.cmd` batch toolkit for Internet Download Manager (IDM) on Windows 7/8/10/11. Three modes: freeze trial (推荐), random-registration activation, and trial reset. No dependencies, runs from a single `.cmd` file, all menus and prompts in Simplified Chinese.
 
 This is a Chinese-language fork that wraps the well-known IDM-Activation-Script flow with GBK-encoded batch files, an explicit Chinese console layer (`chcp 936`), automatic registry backup, an environment self-check script, and SHA256-verified release ZIPs.
+
+## Project identity
+
+- Project name: IDM 激活脚本中文版 / IDM Activation Script Chinese
+- Repository: `tytsxai/IDM-Activation-Script-Chinese`
+- Project type: Windows batch script toolkit; Chinese localization and maintenance fork
+- Primary language: Simplified Chinese user-facing text, English metadata for international search
+- License: GPL-3.0; this repository should remain public and open source
+- Runtime package: v1.3.3 ZIP; v1.3.4 is a documentation-only update
+- Best first command for users: run `测试脚本.cmd` as administrator, then run `快速激活.cmd` for freeze mode
 
 ## Key docs
 
 - [README.md](README.md): Main Chinese README — features, system requirements, four entry scripts (`快速激活.cmd` / `普通激活.cmd` / `重置激活.cmd` / `测试脚本.cmd`), FAQ, technical details, registry-backup behavior.
+- [docs/README.md](docs/README.md): Documentation map for maintainers, AI search engines, and new contributors.
 - [CHANGELOG.md](CHANGELOG.md): Version history (v1.2 → current).
 - [ARCHITECTURE.md](ARCHITECTURE.md): How the script flows internally.
 - [SECURITY.md](SECURITY.md): Threat model, what the script touches, what it doesn't.
 - [CONTRIBUTING.md](CONTRIBUTING.md): How to submit fixes / translations.
-- Release ZIPs: [release/IDM-Activation-Script-v1.3.4.zip](release/) + matching `.sha256` files.
+- Release ZIPs: [release/IDM-Activation-Script-v1.3.3.zip](release/IDM-Activation-Script-v1.3.3.zip) + [SHA256](release/IDM-Activation-Script-v1.3.3.zip.sha256).
 
 ## What this script does
 
-- **Freeze trial (冻结模式)** — Stops the IDM 30-day trial counter; the recommended mode. Survives IDM updates.
+- **Freeze trial (冻结模式)** — Freezes the IDM trial counter; the recommended mode for most users.
 - **Random-registration activation (普通激活)** — Writes randomized registration name + serial into the IDM registry keys.
 - **Trial reset (重置激活)** — Resets the trial expiration when "试用期已过期" appears.
 - **Environment self-check (测试脚本)** — Verifies admin rights, PowerShell access, console code page (936 for GBK), Null service, network egress — surfacing the common reasons activation fails on Chinese Windows.
@@ -29,6 +40,7 @@ This is a Chinese-language fork that wraps the well-known IDM-Activation-Script 
 - ❌ Phone home to any server (no network calls beyond the optional self-check egress probe)
 - ❌ Work on non-Windows OSes (Linux/macOS users should look elsewhere)
 - ❌ Bypass IDM updates — after a major IDM version bump, re-run freeze mode
+- ❌ Provide a private or proprietary distribution path; this repository is GPL-3.0 open source
 
 ## Common questions
 
@@ -45,6 +57,10 @@ This is a Chinese-language fork that wraps the well-known IDM-Activation-Script 
 - Platforms: Windows 7 / 8 / 8.1 / 10 / 11 (incl. 24H2)
 - Encoding: GBK (script source), Simplified Chinese (all UI strings)
 - Author: tytsxai (Chinese localization fork; original tool: lstprjct/IDM-Activation-Script)
+
+## Suggested GitHub topics
+
+`idm`, `internet-download-manager`, `idm-activation-script`, `windows-batch`, `cmd-script`, `powershell`, `gbk`, `cp936`, `windows-11`, `chinese-localization`, `trial-reset`, `registry-backup`, `open-source`
 
 ## Useful search phrases
 

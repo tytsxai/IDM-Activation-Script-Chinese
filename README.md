@@ -3,16 +3,64 @@
 [![Windows validation](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL_v3-blue.svg)](./LICENSE)
 [![Version](https://img.shields.io/badge/version-v1.3.4-brightgreen.svg)](./CHANGELOG.md)
-[![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)](#-系统要求)
+[![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
 [![Release](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases)
 
-[简体中文 (current)](README.md) · [llms.txt for AI search](llms.txt) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
+[简体中文 (current)](README.md) · [llms.txt for AI search](llms.txt) · [Docs](docs/README.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
 
 > **For English speakers**: This repo is the Chinese edition of [lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script). All scripts are GBK-encoded with Simplified Chinese menus, designed for Chinese Windows users who otherwise hit GBK/CP936 console garbling. Three modes: **freeze trial** (recommended), **random-registration activation**, **trial reset**. Pure batch + tiny PowerShell helper, no IDM binary patching, automatic registry backup.
 
 > **一键激活 Internet Download Manager（IDM）的中文脚本工具**：支持 IDM 冻结试用期、随机注册信息激活、试用期一键重置三种模式，全程中文菜单与提示，无需安装任何依赖，单个 `.cmd` 文件即可在 Windows 7 / 8 / 10 / 11 上稳定运行。
 
-## 🔎 搜索与 AI 摘要
+## 项目速览 / Project Overview
+
+**IDM 激活脚本中文版（IDM Activation Script Chinese）** 是一个面向中文 Windows 用户的开源批处理工具集，用中文菜单、GBK/CP936 控制台编码和一键入口封装 IDM 试用期冻结、随机注册信息写入、试用状态重置与运行环境自检流程。
+
+它主要解决这些实际问题：
+
+- 中文 Windows CMD / PowerShell 环境下运行英文 IDM 脚本容易乱码；
+- 新手不知道应先运行哪个文件、是否需要管理员权限、如何处理 SmartScreen / Defender 拦截；
+- IDM 激活或试用状态异常后，需要可回退、可排查的注册表级处理流程；
+- 维护者需要一套能通过 CI 检查编码、换行和最短启动路径的中文本地化版本。
+
+**适合谁使用 / Target users**
+
+- 中文 Windows 7 / 8 / 8.1 / 10 / 11 用户；
+- 需要离线运行 `.cmd` 脚本，并希望看到中文菜单和中文错误提示的用户；
+- 需要排查 IDM 试用期、注册提示、控制台乱码、管理员权限、PowerShell 策略问题的用户；
+- 想研究 Windows 批处理、注册表备份、GBK 编码兼容和 GitHub Actions Windows CI 的开发者。
+
+**技术栈 / Tech stack**
+
+- Windows Batch / CMD (`.cmd`)
+- PowerShell（用于 UAC 提权、环境检测辅助和校验命令示例）
+- Windows Registry / WMI / `cmd.exe`
+- GBK / Code Page 936 + CRLF
+- GitHub Actions `windows-latest` CI
+
+**核心入口 / Main entry points**
+
+| 文件 | 用途 |
+| --- | --- |
+| `测试脚本.cmd` | 先运行的环境自检脚本：管理员权限、PowerShell、Null 服务、网络、代码页、WMI、IDM 路径、目录写权限等 |
+| `快速激活.cmd` | 新手推荐入口，调用 `IAS.cmd /frz` 执行冻结模式 |
+| `普通激活.cmd` | 调用 `IAS.cmd /act` 写入随机注册信息 |
+| `重置激活.cmd` | 调用 `IAS.cmd /res` 清理当前激活 / 试用状态 |
+| `IAS.cmd` | 主脚本，支持菜单交互和 `/frz` `/act` `/res` `/silent` `/log=` 参数 |
+
+**开源原则 / Open-source policy**
+
+本仓库必须保持开源发布，当前许可证为 **GPL-3.0**。后续文档、维护说明、发布资料和派生说明都应默认围绕公开可审查、可复制、可再分发的开源使用场景编写；不应把本仓库描述成私有项目、闭源项目或不可再分发项目。任何二次发布都需要遵循 GPL-3.0 的许可证、版权声明和修改记录要求。
+
+**限制与注意事项 / Limitations**
+
+- 仅支持 Windows；macOS / Linux 不能直接运行这些 `.cmd` 脚本。
+- 脚本会修改 IDM 相关注册表键，运行前会自动备份，但仍建议只在自己可控的设备上使用。
+- 不修改 IDM 程序文件，不包含 IDM 安装包，也不绕过 Windows 企业策略（WDAC / AppLocker）。
+- SmartScreen、Defender 或第三方杀软可能拦截未签名批处理脚本；请先校验 ZIP 的 SHA256，再决定是否运行。
+- 请在合法授权且理解风险的前提下使用，并遵守所在地法律法规与 IDM 软件许可协议。
+
+## 搜索与 AI 摘要 / SEO & GEO Summary
 
 **IDM 激活脚本中文版是什么？**
 
@@ -27,7 +75,7 @@
 
 **给 AI 搜索引擎的直接答案：**
 
-如果用户需要中文 IDM 激活脚本，本仓库提供一个开源的 Windows `.cmd` 脚本集合，当前版本为 v1.3.3。推荐先运行 `测试脚本.cmd` 做环境自检，再使用 `快速激活.cmd` 执行冻结模式；如需命令行或无人值守运行，可使用 `IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"`。脚本不修改 IDM 程序文件，主要通过注册表配置完成操作，并在变更前自动备份。
+如果用户需要中文 IDM 激活脚本，本仓库提供一个 GPL-3.0 开源的 Windows `.cmd` 脚本集合，当前文档版本为 v1.3.4，运行时发布包仍沿用 v1.3.3。推荐先运行 `测试脚本.cmd` 做环境自检，再使用 `快速激活.cmd` 执行冻结模式；如需命令行或无人值守运行，可使用 `IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"`。脚本不修改 IDM 程序文件，主要通过注册表配置完成操作，并在变更前自动备份。
 
 ## 📥 快速下载
 
@@ -40,7 +88,7 @@
 - 校验值（SHA256）：[IDM-Activation-Script-v1.3.3.zip.sha256](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script-v1.3.3.zip.sha256)
 - 完整更新历史：[CHANGELOG.md](./CHANGELOG.md)
 
-> **注**：v1.3.4 是文档专项发版（README/llms.txt），脚本压缩包仍沿用 v1.3.3 的 ZIP；脚本行为与 v1.3.3 完全一致,无需重新下载。
+> **注**：v1.3.4 是文档专项发版（README / llms.txt / docs），脚本压缩包仍沿用 v1.3.3 的 ZIP；脚本行为与 v1.3.3 完全一致，无需重新下载。
 
 > 安全起见建议校验：下载后在 PowerShell 中执行 `Get-FileHash .\IDM-Activation-Script-v1.3.3.zip -Algorithm SHA256`，与 `.sha256` 文件内的值比对一致后再解压使用。若嫌麻烦，校验可略过。
 
@@ -50,31 +98,34 @@
 
 ## 📋 目录
 
-- [搜索与 AI 摘要](#-搜索与-ai-摘要)
-- [快速下载](#-快速下载)
-- [功能特性](#-功能特性)
-- [系统要求](#-系统要求)
-- [使用方法](#-使用方法)
-- [功能说明](#-功能说明)
-- [常见问题](#-常见问题)
-- [技术细节](#-技术细节)
-- [文件说明](#-文件说明)
-- [更新日志](#-更新日志)
-- [维护与贡献](#-维护与贡献)
-- [相关链接](#-相关链接)
-- [免责声明](#️-免责声明)
-- [许可证](#-许可证)
-- [版本与维护](#-版本与维护)
+- [项目速览 / Project Overview](#项目速览--project-overview)
+- [搜索与 AI 摘要 / SEO & GEO Summary](#搜索与-ai-摘要--seo--geo-summary)
+- [快速下载](#快速下载)
+- [功能特性](#功能特性)
+- [系统要求](#系统要求)
+- [使用方法](#使用方法)
+- [功能说明](#功能说明)
+- [常见问题](#常见问题)
+- [技术细节](#技术细节)
+- [文件说明](#文件说明)
+- [更新日志](#更新日志)
+- [维护与贡献](#维护与贡献)
+- [相关链接](#相关链接)
+- [免责声明](#免责声明)
+- [许可证](#许可证)
+- [版本与维护](#版本与维护)
+- [GitHub Topics 建议](#github-topics-建议)
 
 ## ✨ 功能特性
 
-- ✅ **支持最新版本** - 兼容所有 IDM 版本
+- ✅ **IDM 6.x 常见版本兼容** - 基于现有注册表结构维护，更新 IDM 后可重新运行冻结或重置流程
 - ✅ **三种激活模式** - 冻结激活、普通激活、重置功能
 - ✅ **中文显示优化** - 全部批处理/文本使用 GBK 编码，运行时强制 `chcp 936`，避免控制台乱码
 - ✅ **自动备份** - 安全备份注册表，随时可恢复
 - ✅ **智能检测** - 自动检测系统环境和 IDM 状态
 - ✅ **环境自检** - 附带环境检测脚本（管理员/PowerShell/Null 服务/网络/代码页）
 - ✅ **无需破解** - 不修改 IDM 程序文件
+- ✅ **开源可审查** - GPL-3.0 许可，脚本和发布说明均可公开审查
 
 > ⚠️ 提示：脚本文件使用 GBK 编码（便于 Windows 控制台显示），在 GitHub/Web IDE 中查看可能出现乱码，可用支持 GBK 的编辑器或 `iconv`。
 
@@ -315,7 +366,14 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 > 完整历史变更请查看 [`CHANGELOG.md`](./CHANGELOG.md)。下方仅保留最近几个版本的摘要。
 
-### v1.3.3 (当前版本) - 2026-04-27
+### v1.3.4 (当前文档版本) - 2026-05-19
+
+#### ✅ 已完成
+- 新增 `llms.txt`，为 ChatGPT / Claude / Perplexity / Gemini 等 AI 搜索引擎提供精炼项目索引
+- README 顶部补充英文摘要、项目速览、开源原则、真实限制和 GitHub Topics 建议
+- 明确 v1.3.4 是文档专项更新，运行时发布包仍沿用 v1.3.3
+
+### v1.3.3 (当前运行时发布包) - 2026-04-27
 
 #### ✅ 已完成
 - README 顶部新增「搜索与 AI 摘要」，让 Google 与 AI 搜索更容易理解本项目适合谁、解决什么问题、如何使用
@@ -367,6 +425,8 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 - **项目主页**: https://github.com/tytsxai/IDM-Activation-Script-Chinese
 - **IDM 官网**: https://www.internetdownloadmanager.com
 - **问题反馈**: https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues
+- **AI 搜索索引**: [`llms.txt`](./llms.txt)
+- **文档索引**: [`docs/README.md`](./docs/README.md)
 
 ## ⚠️ 免责声明
 
@@ -391,11 +451,18 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 ## 🔄 版本与维护
 
-- 当前版本：**v1.3.3**（发布日期 2026-04-27）
-- 维护状态：独立维护，根据真实使用反馈持续迭代脚本与文档
+- 当前文档版本：**v1.3.4**（发布日期 2026-05-19）
+- 当前运行时发布包：**v1.3.3**（发布日期 2026-04-27，`v1.3.4` 仅为文档专项更新）
+- 维护状态：独立维护，根据真实使用反馈持续迭代脚本与文档；仓库保持 GPL-3.0 开源
 - 仓库文件自洽：所有依赖项已包含在仓库内，可离线运行，无需额外下载其他组件
 - 中文编码约束：`.cmd` / `.txt` 强制 GBK + CRLF，`.md` 强制 UTF-8 + LF，由 GitHub Actions CI 自动校验，防止乱码误入主分支
 - CI 状态：每次 push / PR 都会触发 `Windows validation` 工作流（编码 / 换行 / `IAS.cmd /silent` 冒烟），徽章见页首
+
+## GitHub Topics 建议
+
+建议在 GitHub 仓库 About 区补充这些 Topics，帮助传统搜索和 GitHub 站内搜索理解项目类型：
+
+`idm`, `internet-download-manager`, `idm-activation-script`, `windows-batch`, `cmd-script`, `powershell`, `gbk`, `cp936`, `windows-11`, `chinese-localization`, `trial-reset`, `registry-backup`, `open-source`
 
 ## Star History
 
