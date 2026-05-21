@@ -17,7 +17,17 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+
+      - name: Guard public repository visibility
+        shell: pwsh
+        run: |
+          $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
+          if ($event.repository.private -eq $true) {
+            Write-Host "::error::This repository must stay public and GPL-3.0 open source. Change repository visibility back to public before merging or releasing."
+            exit 1
+          }
+          Write-Host "Repository visibility guard OK: repository is public."
 
       - name: Run encoding and EOL checks
         shell: pwsh

@@ -18,6 +18,7 @@ This is a Chinese-language fork that wraps the well-known IDM-Activation-Script 
 
 - [README.md](README.md): Main Chinese README — features, system requirements, four entry scripts (`快速激活.cmd` / `普通激活.cmd` / `重置激活.cmd` / `测试脚本.cmd`), FAQ, technical details, registry-backup behavior.
 - [docs/README.md](docs/README.md): Documentation map for maintainers, AI search engines, and new contributors.
+- [OPEN_SOURCE_POLICY.md](OPEN_SOURCE_POLICY.md): Public repository policy, GPL-3.0 open-source rule, and CI visibility guard.
 - [CHANGELOG.md](CHANGELOG.md): Version history (v1.2 → current).
 - [ARCHITECTURE.md](ARCHITECTURE.md): How the script flows internally.
 - [SECURITY.md](SECURITY.md): Threat model, what the script touches, what it doesn't.

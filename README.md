@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
 [![Release](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases)
 
-[简体中文 (current)](README.md) · [llms.txt for AI search](llms.txt) · [Docs](docs/README.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
+[简体中文 (current)](README.md) · [llms.txt for AI search](llms.txt) · [Docs](docs/README.md) · [Open Source Policy](OPEN_SOURCE_POLICY.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
 
 > **For English speakers**: This repo is the Chinese edition of [lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script). All scripts are GBK-encoded with Simplified Chinese menus, designed for Chinese Windows users who otherwise hit GBK/CP936 console garbling. Three modes: **freeze trial** (recommended), **random-registration activation**, **trial reset**. Pure batch + tiny PowerShell helper, no IDM binary patching, automatic registry backup.
 
@@ -50,7 +50,7 @@
 
 **开源原则 / Open-source policy**
 
-本仓库必须保持开源发布，当前许可证为 **GPL-3.0**。后续文档、维护说明、发布资料和派生说明都应默认围绕公开可审查、可复制、可再分发的开源使用场景编写；不应把本仓库描述成私有项目、闭源项目或不可再分发项目。任何二次发布都需要遵循 GPL-3.0 的许可证、版权声明和修改记录要求。
+本仓库必须保持开源发布，当前许可证为 **GPL-3.0**。后续文档、维护说明、发布资料和派生说明都应默认围绕公开可审查、可复制、可再分发的开源使用场景编写；不应把本仓库描述成私有项目、闭源项目或不可再分发项目。任何二次发布都需要遵循 GPL-3.0 的许可证、版权声明和修改记录要求。详细规则见 [`OPEN_SOURCE_POLICY.md`](./OPEN_SOURCE_POLICY.md)。
 
 **限制与注意事项 / Limitations**
 
@@ -110,6 +110,7 @@
 - [文件说明](#文件说明)
 - [更新日志](#更新日志)
 - [维护与贡献](#维护与贡献)
+- [开源保障](#开源保障)
 - [相关链接](#相关链接)
 - [免责声明](#免责声明)
 - [许可证](#许可证)
@@ -414,11 +415,16 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 - 贡献指南：[CONTRIBUTING.md](./CONTRIBUTING.md)
 - 架构 / 结构说明：[ARCHITECTURE.md](./ARCHITECTURE.md)
+- 开源维护策略：[OPEN_SOURCE_POLICY.md](./OPEN_SOURCE_POLICY.md)
 - 维护 / 发布检查清单：[docs/maintenance-checklist.md](./docs/maintenance-checklist.md)
 - Windows 冒烟基线：[docs/reports/smoke-win-baseline.md](./docs/reports/smoke-win-baseline.md)
 - 安全漏洞上报：[SECURITY.md](./SECURITY.md)
 - CI 校验脚本：[tools/validate.ps1](./tools/validate.ps1)（在 GitHub Actions 的 `Windows validation` 工作流中执行）
 - 编码 / 换行约束：[.gitattributes](./.gitattributes)（`*.cmd` / `*.txt` 为 GBK + CRLF；`*.md` / `*.yml` 为 UTF-8 + LF）
+
+## 开源保障
+
+本仓库已经恢复为 GitHub `PUBLIC` 可见性，并在 GitHub Actions 中加入 `Guard public repository visibility` 检查。以后如果仓库再次被改成 private，只要触发 push、PR 或手动 CI，检查就会失败并提示必须改回 public。这个检查是为了避免开源仓库被误改成私有状态后长期没人发现。
 
 ## 🌐 相关链接
 

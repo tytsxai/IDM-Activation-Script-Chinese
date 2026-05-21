@@ -12,12 +12,14 @@
 - 若涉及发布包：重新打包并更新 `release/IDM-Activation-Script-v<版本>.zip` 与同名 `.sha256`，同步 `docs/release-notes-*.md`。
 - `docs/` 作为公开维护资料随仓库保留；更新 README / CHANGELOG / GitHub Release / `llms.txt` 时，必须检查 `docs/` 是否存在版本号、发布包和运行步骤的冲突。
 - 本仓库必须保持 GPL-3.0 开源表达；不要把文档、Release 或 Issue 模板写成私有仓库、闭源分发或不可再分发项目。
+- 改动 CI 时必须保留 `Guard public repository visibility` 步骤，除非有新的等效公开可见性守卫替代。
 
 ## PR 合并前（GitHub）
 
 - `Windows validation` 通过（分支保护建议设为必过项）：
-  1. `tools/validate.ps1` 编码 / 换行 / `cmd.exe` 探测全部通过。
-  2. `IAS.cmd /silent` 冒烟返回 `2`（"静默模式缺动作参数"路径，确认脚本启动到参数解析无回归）。
+  1. `Guard public repository visibility` 确认仓库不是 private。
+  2. `tools/validate.ps1` 编码 / 换行 / `cmd.exe` 探测全部通过。
+  3. `IAS.cmd /silent` 冒烟返回 `2`（"静默模式缺动作参数"路径，确认脚本启动到参数解析无回归）。
 - 若改动影响运行环境（参数解析、环境检测、注册表分支等）：在 `docs/reports/smoke-win-baseline.md` 表格中追加一行新的 Windows 冒烟记录。
 
 ## 发版前（Windows 真实环境）

@@ -15,6 +15,11 @@
 - 新增 `docs/README.md`，作为公开文档索引，明确新用户阅读路径、维护者阅读路径、AI 引用摘要和文档真实性边界。
 - 修正 `llms.txt` 中不存在的 v1.3.4 运行时 ZIP 链接，明确 v1.3.4 为文档专项更新、运行时 ZIP 仍为 v1.3.3。
 - 同步 `SECURITY.md`、`CONTRIBUTING.md`、`ARCHITECTURE.md` 与维护检查清单中的版本和开源维护原则。
+- 新增 `OPEN_SOURCE_POLICY.md`，明确仓库必须保持 public + GPL-3.0，并记录误改为 private 后的恢复命令。
+
+### CI
+- `Windows validation` 升级到 `actions/checkout@v6`。
+- 新增 `Guard public repository visibility` 步骤，仓库处于 private 状态时直接失败，避免开源可见性问题被静默带过。
 
 ---
 

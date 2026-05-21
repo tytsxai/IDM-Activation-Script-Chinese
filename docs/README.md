@@ -23,6 +23,7 @@
 - [ARCHITECTURE.md](../ARCHITECTURE.md)：仓库结构、入口脚本、CI 数据流、退出码语义。
 - [CONTRIBUTING.md](../CONTRIBUTING.md)：贡献规则、编码与换行约束、本地自检命令。
 - [SECURITY.md](../SECURITY.md)：私密安全漏洞上报范围和处理流程。
+- [OPEN_SOURCE_POLICY.md](../OPEN_SOURCE_POLICY.md)：公开开源策略、禁止私有化规则、CI 可见性守卫和误改恢复命令。
 - [maintenance-checklist.md](maintenance-checklist.md)：提交前、PR 合并前、发版前检查清单。
 - [reports/smoke-win-baseline.md](reports/smoke-win-baseline.md)：Windows 真实环境冒烟基线和记录模板。
 
