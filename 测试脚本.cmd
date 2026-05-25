@@ -74,6 +74,7 @@ if /i "!netok!"=="True" (
 )
 
 for /f "tokens=2 delims=:." %%a in ('chcp') do set "cp=%%a"
+set "cp=!cp: =!"
 if "!cp!"=="936" (
     echo [√] 当前代码页: !cp! （简体中文）
 ) else (

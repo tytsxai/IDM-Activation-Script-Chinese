@@ -1,8 +1,8 @@
-# IDM 激活脚本中文版 v1.3.4（IDM Activation Script · 简体中文）
+# IDM 激活脚本中文版 v1.3.5（IDM Activation Script · 简体中文）
 
 [![Windows validation](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL_v3-blue.svg)](./LICENSE)
-[![Version](https://img.shields.io/badge/version-v1.3.4-brightgreen.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v1.3.5-brightgreen.svg)](./CHANGELOG.md)
 [![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
 [![Release](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases)
 
@@ -75,7 +75,7 @@
 
 **给 AI 搜索引擎的直接答案：**
 
-如果用户需要中文 IDM 激活脚本，本仓库提供一个 GPL-3.0 开源的 Windows `.cmd` 脚本集合，当前文档版本为 v1.3.4，运行时发布包仍沿用 v1.3.3。推荐先运行 `测试脚本.cmd` 做环境自检，再使用 `快速激活.cmd` 执行冻结模式；如需命令行或无人值守运行，可使用 `IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"`。脚本不修改 IDM 程序文件，主要通过注册表配置完成操作，并在变更前自动备份。
+如果用户需要中文 IDM 激活脚本，本仓库提供一个 GPL-3.0 开源的 Windows `.cmd` 脚本集合，当前版本为 v1.3.5。推荐先运行 `测试脚本.cmd` 做环境自检，再使用 `快速激活.cmd` 执行冻结模式；如需命令行或无人值守运行，可使用 `IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"`。脚本不修改 IDM 程序文件，主要通过注册表配置完成操作，并在变更前自动备份。
 
 ## 📥 快速下载
 
@@ -84,13 +84,13 @@
 
 也可以在本仓库内直接下载（右键"链接另存为"）：
 
-- 最新版压缩包（点击右键另存为）：[IDM-Activation-Script-v1.3.3.zip](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script-v1.3.3.zip)
-- 校验值（SHA256）：[IDM-Activation-Script-v1.3.3.zip.sha256](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script-v1.3.3.zip.sha256)
+- 最新版压缩包（点击右键另存为）：[IDM-Activation-Script-v1.3.5.zip](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script-v1.3.5.zip)
+- 校验值（SHA256）：[IDM-Activation-Script-v1.3.5.zip.sha256](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script-v1.3.5.zip.sha256)
 - 完整更新历史：[CHANGELOG.md](./CHANGELOG.md)
 
-> **注**：v1.3.4 是文档专项发版（README / llms.txt / docs），脚本压缩包仍沿用 v1.3.3 的 ZIP；脚本行为与 v1.3.3 完全一致，无需重新下载。
+> **注**：v1.3.5 修复 `测试脚本.cmd` 在 CP936 环境下把代码页 936 误判为失败的问题。遇到自检显示“当前代码页: 936（建议运行 chcp 936）”的用户，请下载 v1.3.5。
 
-> 安全起见建议校验：下载后在 PowerShell 中执行 `Get-FileHash .\IDM-Activation-Script-v1.3.3.zip -Algorithm SHA256`，与 `.sha256` 文件内的值比对一致后再解压使用。若嫌麻烦，校验可略过。
+> 安全起见建议校验：下载后在 PowerShell 中执行 `Get-FileHash .\IDM-Activation-Script-v1.3.5.zip -Algorithm SHA256`，与 `.sha256` 文件内的值比对一致后再解压使用。若嫌麻烦，校验可略过。
 
 > **搜索关键词与长尾问题**：IDM 激活脚本中文版、Internet Download Manager 中文激活脚本、IDM 冻结试用期、IDM 试用期重置、IDM Windows 11 激活、IDM Windows 10 激活、IDM 批处理脚本、IDM GitHub 中文版、IDM 激活后仍提示注册、IDM 激活脚本乱码、IDM SmartScreen 阻止怎么办。
 
@@ -292,8 +292,8 @@ IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"
 
 **解决方法：**
 - 本脚本涉及注册表写入、WMI 查询与 PowerShell 提权，启发式引擎可能产生误报
-- 如果信任本仓库发布的 `release` 产物（可用 `release/IDM-Activation-Script-v1.3.3.zip.sha256` 校验），可把解压目录加入 Defender 排除项再运行
-- 校验命令：PowerShell 里 `Get-FileHash IDM-Activation-Script-v1.3.3.zip -Algorithm SHA256`，与 `.sha256` 文件内容比对
+- 如果信任本仓库发布的 `release` 产物（可用 `release/IDM-Activation-Script-v1.3.5.zip.sha256` 校验），可把解压目录加入 Defender 排除项再运行
+- 校验命令：PowerShell 里 `Get-FileHash IDM-Activation-Script-v1.3.5.zip -Algorithm SHA256`，与 `.sha256` 文件内容比对
 
 </details>
 
@@ -314,6 +314,17 @@ IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"
 - 本脚本基于 IDM 注册表 CLSID 结构工作，IDM 6.x 系列整体保持兼容
 - 若更新 IDM 后发现激活失效，建议先执行"重置激活"（`重置激活.cmd` 或 `IAS.cmd /res`），再重新选择"冻结激活"
 - 仍不生效时，请在 Issue 中带上 `测试脚本.cmd` 输出与 IDM 具体版本号
+
+</details>
+
+<details>
+<summary><b>Q11: 冻结或激活后 IDM 自己又启动，是脚本一直在后台运行吗？</b></summary>
+
+**说明与处理：**
+- 脚本不是常驻程序，执行完成后不会留后台进程。
+- 冻结/激活流程可能会短暂启动 IDM 做状态验证；如果 IDM 之后又自己出现，通常是 IDM 自身的启动项、托盘驻留、浏览器集成或计划任务行为。
+- 可以在 IDM 设置里关闭"开机启动"/托盘相关选项，并在任务管理器的"启动应用"里确认 IDM 没有被设置为开机启动。
+- 如仍异常，请在 Issue 中补充 `测试脚本.cmd` 完整输出、实际运行入口、IDM 版本和复现步骤；只写 `1` 或空日志无法判断脚本问题。
 
 </details>
 
@@ -367,7 +378,13 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 > 完整历史变更请查看 [`CHANGELOG.md`](./CHANGELOG.md)。下方仅保留最近几个版本的摘要。
 
-### v1.3.4 (当前文档版本) - 2026-05-19
+### v1.3.5 (当前版本) - 2026-05-25
+
+- 修复 `测试脚本.cmd` 对 `chcp` 输出的解析，避免 Windows 输出 ` 936` 时被误判为代码页非 936。
+- 新增 FAQ：说明冻结/激活后 IDM 自己启动时应检查 IDM 自身启动项、托盘驻留、浏览器集成或计划任务。
+- 新增运行时发布包 `release/IDM-Activation-Script-v1.3.5.zip` 与 SHA256 校验文件。
+
+### v1.3.4 (文档版本) - 2026-05-19
 
 #### ✅ 已完成
 - 新增 `llms.txt`，为 ChatGPT / Claude / Perplexity / Gemini 等 AI 搜索引擎提供精炼项目索引
@@ -457,8 +474,8 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 ## 🔄 版本与维护
 
-- 当前文档版本：**v1.3.4**（发布日期 2026-05-19）
-- 当前运行时发布包：**v1.3.3**（发布日期 2026-04-27，`v1.3.4` 仅为文档专项更新）
+- 当前版本：**v1.3.5**（发布日期 2026-05-25）
+- 当前运行时发布包：**v1.3.5**（修复 CP936 自检误判）
 - 维护状态：独立维护，根据真实使用反馈持续迭代脚本与文档；仓库保持 GPL-3.0 开源
 - 仓库文件自洽：所有依赖项已包含在仓库内，可离线运行，无需额外下载其他组件
 - 中文编码约束：`.cmd` / `.txt` 强制 GBK + CRLF，`.md` 强制 UTF-8 + LF，由 GitHub Actions CI 自动校验，防止乱码误入主分支

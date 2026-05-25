@@ -29,8 +29,9 @@
 
 ## 发布说明
 
-- [release-notes-v1.3.4.md](release-notes-v1.3.4.md)：v1.3.4 文档专项发布说明，脚本 ZIP 仍沿用 v1.3.3。
-- [release-notes-v1.3.3.md](release-notes-v1.3.3.md)：v1.3.3 发布说明，当前运行时 ZIP 仍沿用此版本。
+- [release-notes-v1.3.5.md](release-notes-v1.3.5.md)：v1.3.5 运行时修复说明，修复 CP936 自检误判并更新发布包。
+- [release-notes-v1.3.4.md](release-notes-v1.3.4.md)：v1.3.4 文档专项发布说明，脚本 ZIP 沿用 v1.3.3。
+- [release-notes-v1.3.3.md](release-notes-v1.3.3.md)：v1.3.3 发布说明。
 - [release-notes-v1.3.1.md](release-notes-v1.3.1.md)：v1.3.1 历史发布说明。
 - [release-notes-v1.3.md](release-notes-v1.3.md)：v1.3 历史发布说明。
 
@@ -57,5 +58,5 @@
 - 不写不存在的用户案例、商业背书、性能数据或合作方。
 - 不宣称跨平台运行；本项目只面向 Windows。
 - 不宣称修改 IDM 二进制文件；当前实现是注册表级流程。
-- 不把 v1.3.4 写成新的运行时压缩包；v1.3.4 是文档专项更新，运行时 ZIP 仍为 v1.3.3。
+- v1.3.5 已重新发布运行时压缩包；v1.3.4 是文档专项更新，运行时 ZIP 当时仍为 v1.3.3。
 - 不把本仓库描述为私有项目；后续维护应继续遵循 GPL-3.0 开源发布原则。

@@ -10,16 +10,21 @@
 
 ## main — 未发布
 
-### 文档
-- README 顶部重组为项目速览、适用人群、技术栈、核心入口、开源原则和限制说明，便于传统搜索引擎和 AI 搜索引擎准确识别项目定位。
-- 新增 `docs/README.md`，作为公开文档索引，明确新用户阅读路径、维护者阅读路径、AI 引用摘要和文档真实性边界。
-- 修正 `llms.txt` 中不存在的 v1.3.4 运行时 ZIP 链接，明确 v1.3.4 为文档专项更新、运行时 ZIP 仍为 v1.3.3。
-- 同步 `SECURITY.md`、`CONTRIBUTING.md`、`ARCHITECTURE.md` 与维护检查清单中的版本和开源维护原则。
-- 新增 `OPEN_SOURCE_POLICY.md`，明确仓库必须保持 public + GPL-3.0，并记录误改为 private 后的恢复命令。
+暂无。
 
-### CI
-- `Windows validation` 升级到 `actions/checkout@v6`。
-- 新增 `Guard public repository visibility` 步骤，仓库处于 private 状态时直接失败，避免开源可见性问题被静默带过。
+---
+
+## v1.3.5 — 2026-05-25
+
+### 修复
+- 修复 `测试脚本.cmd` 对 `chcp` 输出的解析：Windows 会在代码页数字前保留空格，导致实际为 936 时仍被误判为"代码页非 936"。现在检测前会去掉空格，避免自检阶段对 CP936 的误报。
+
+### 文档
+- README FAQ 新增"IDM 自己又启动"说明，区分脚本短暂验证、IDM 自身托盘/启动项行为和需要继续补日志排查的情况。
+- 新增 `docs/release-notes-v1.3.5.md`，记录本次运行时修复和验证方式。
+
+### 发布
+- 新增 `release/IDM-Activation-Script-v1.3.5.zip` 与同名 SHA256 校验文件。
 
 ---
 
