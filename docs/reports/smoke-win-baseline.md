@@ -27,3 +27,4 @@
 ## 当前状态
 - v1.3.3 已完成发布包 SHA256 校验；GitHub Actions `Windows validation` 在 `main` 与 `v1.3.3` tag 上均通过，覆盖 `/silent` 最短路径冒烟。
 - 真实 IDM 注册表流程（冻结 / 激活 / 重置）的发布前回归请在 Win10/11 管理员环境完成后补充上表并附异常描述 / 截图（如有）。
+- 2026-05-26：`测试脚本.cmd` 的 IDM 路径自检补充 HKCU `DownloadManager\ExePath` 与默认安装目录兜底，避免只依赖 HKLM `InstallFolder`；仍需在真实 Win11 + IDM 6.42+ 环境补跑路径检测。

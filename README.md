@@ -230,9 +230,10 @@ IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"
 <summary><b>Q2: 提示"IDM 未安装"？</b></summary>
 
 **解决方法：**
-1. 先安装 IDM
-2. 官方下载：https://www.internetdownloadmanager.com/download.html
-3. 安装完成后再运行激活脚本
+1. 先确认 `IDMan.exe` 已存在，常见路径是 `C:\Program Files (x86)\Internet Download Manager\IDMan.exe` 或 `C:\Program Files\Internet Download Manager\IDMan.exe`。
+2. 自检里显示的 `HKLM\SOFTWARE\...\Internet Download Manager` 是 Windows 注册表项名称，不是网络连接；关闭互联网不会改变这个结果。
+3. 如果自检提示"未在注册表找到 IDM 安装路径"，通常是 IDM 安装不完整、绿色版未写注册表，或当前用户下的 `ExePath` 没有写入。请先重新安装官方 IDM，再运行 `测试脚本.cmd`。
+4. 官方下载：https://www.internetdownloadmanager.com/download.html
 
 </details>
 

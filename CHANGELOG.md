@@ -10,7 +10,11 @@
 
 ## main — 未发布
 
-暂无。
+### 修复
+- `测试脚本.cmd` 的 IDM 路径自检补充当前用户 `HKCU\Software\DownloadManager\ExePath` 与默认安装目录兜底，减少已安装 IDM 但 HKLM `InstallFolder` 缺失时的误报。
+
+### 文档
+- README FAQ Q2 补充说明：`Internet Download Manager` 是注册表项/安装目录名称，不是互联网连接；关闭网络不会影响安装路径检测。
 
 ---
 

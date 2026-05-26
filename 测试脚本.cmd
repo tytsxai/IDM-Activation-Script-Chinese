@@ -109,6 +109,18 @@ for /f "skip=2 tokens=3*" %%a in ('reg query "HKLM\SOFTWARE\Internet Download Ma
 if not defined idmPath (
     for /f "skip=2 tokens=3*" %%a in ('reg query "HKLM\SOFTWARE\WOW6432Node\Internet Download Manager" /v InstallFolder 2^>nul') do set "idmPath=%%a %%b"
 )
+if not defined idmPath (
+    set "IDManPath="
+    for /f "tokens=2*" %%a in ('reg query "HKCU\Software\DownloadManager" /v ExePath 2^>nul') do set "IDManPath=%%b"
+    if defined IDManPath if exist "!IDManPath!" (
+        for %%i in ("!IDManPath!") do set "idmPath=%%~dpi"
+        if "!idmPath:~-1!"=="\" set "idmPath=!idmPath:~0,-1!"
+    )
+)
+if not defined idmPath (
+    if exist "%ProgramFiles(x86)%\Internet Download Manager\IDMan.exe" set "idmPath=%ProgramFiles(x86)%\Internet Download Manager"
+    if not defined idmPath if exist "%ProgramFiles%\Internet Download Manager\IDMan.exe" set "idmPath=%ProgramFiles%\Internet Download Manager"
+)
 if defined idmPath (
     if exist "!idmPath!\IDMan.exe" (
         echo [√] 已检测到 IDM 安装路径: !idmPath!
