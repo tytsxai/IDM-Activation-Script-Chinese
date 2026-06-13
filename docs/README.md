@@ -14,9 +14,9 @@
 
 1. 先看 [README.md](../README.md)：项目是什么、适合谁、怎么快速开始、常见问题和限制。
 2. 下载发布包前，核对 [CHANGELOG.md](../CHANGELOG.md) 和 `release/*.sha256`。
-3. Windows 用户先以管理员身份运行 `测试脚本.cmd`。
-4. 新手优先运行 `快速激活.cmd`；高级用户可使用 `IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"`。
-5. 出现问题时，按 README FAQ 和 Issue 模板提交 Windows 版本、IDM 版本、运行入口、`测试脚本.cmd` 输出。
+3. Windows 用户以管理员身份双击 `开始激活.cmd`（会先做环境自检，再弹出激活菜单）。
+4. 新手在菜单选 `[1]` 冻结激活；高级用户可使用 `IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"`。
+5. 出现问题时，按 README FAQ 和 Issue 模板提交 Windows 版本、IDM 版本、运行入口、`开始激活.cmd` 的环境检测输出。
 
 ## 维护者阅读路径
 

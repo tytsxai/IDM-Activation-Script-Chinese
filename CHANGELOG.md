@@ -8,13 +8,26 @@
 
 ---
 
-## main — 未发布
+## v1.3.6 — 2026-06-14
 
 ### 修复
-- `测试脚本.cmd` 的 IDM 路径自检补充当前用户 `HKCU\Software\DownloadManager\ExePath` 与默认安装目录兜底，减少已安装 IDM 但 HKLM `InstallFolder` 缺失时的误报。
+- **环境自检"脚本目录不可写"误报**（对应 issue #11 #13 #14）：写入测试语句 `> "!writeTest!" echo test >nul 2>&1` 里的 `>nul` 会覆盖前面对测试文件的重定向，导致文件永远写不进去、`if exist` 永远为假，从而把任何可写目录都误报为"不可写"。已改为 `(echo test)> "!writeTest!" 2>nul`。
+- **安装目录含 `(x86)` 时提权崩溃报"此时不应有 \Internet"**（对应 issue #12）：旧入口脚本的提权写法 `Start-Process -FilePath \"%~f0\"` 中的 `\"` 会让 CMD 提前闭合引号，使路径里的 `)` 被当作语法符号。新入口 `开始激活.cmd` 改用单引号包裹路径并以标签跳转避开括号块。
+- **Win11 24H2/25H2 上 WMI 自检误报**（对应 issue #14）：`wmic` 在新版 Windows 已被移除，自检改为优先用 PowerShell `Get-CimInstance` 检测，`wmic` 仅作回退。
+- 代码页自检改用 `chcp | find "936"`，避免不同区域/外壳下 `chcp` 输出格式差异导致的解析失败（对应 issue #12 中"当前代码页: ="）。
+- IDM 路径自检补充当前用户 `HKCU\Software\DownloadManager\ExePath` 与默认安装目录兜底，减少已安装 IDM 但 HKLM `InstallFolder` 缺失时的误报。
+
+### 改动
+- **大幅精简入口**：原 `测试脚本.cmd` / `快速激活.cmd` / `普通激活.cmd` / `重置激活.cmd` 四个脚本合并为单一的 `开始激活.cmd`。新手只需双击它：自动提权 → 环境自检 → 弹出 `IAS.cmd` 菜单（冻结 / 激活 / 重置 / 下载 / 帮助）任选。
+- `IAS.cmd` 版本号升至 `1.3.6`（核心激活逻辑不变）。
 
 ### 文档
+- README、`llms.txt`、`ARCHITECTURE.md`、`docs/README.md`、Issue 模板全部更新为"单入口 `开始激活.cmd`"模型。
+- `使用说明.txt` 改为 UTF-8（带 BOM）编码，修复在新版 Windows 记事本中可能出现的乱码；`tools/validate.ps1` 相应放宽：仅对 `.cmd` 强制 GBK，`.txt` 不再强制编码。
 - README FAQ Q2 补充说明：`Internet Download Manager` 是注册表项/安装目录名称，不是互联网连接；关闭网络不会影响安装路径检测。
+
+### 发布
+- 新增 `release/IDM-Activation-Script-v1.3.6.zip` 与对应 `.sha256` 校验文件。
 
 ---
 

@@ -11,27 +11,27 @@ This is a Chinese-language fork that wraps the well-known IDM-Activation-Script 
 - Project type: Windows batch script toolkit; Chinese localization and maintenance fork
 - Primary language: Simplified Chinese user-facing text, English metadata for international search
 - License: GPL-3.0; this repository should remain public and open source
-- Runtime package: v1.3.5 ZIP
-- Best first command for users: run `测试脚本.cmd` as administrator, then run `快速激活.cmd` for freeze mode
+- Runtime package: v1.3.6 ZIP
+- Best first action for users: double-click `开始激活.cmd` as administrator — it self-checks the environment, then opens a menu to pick freeze / activate / reset. (Since v1.3.6 the four old scripts are merged into this single entry file.)
 
 ## Key docs
 
-- [README.md](README.md): Main Chinese README — features, system requirements, four entry scripts (`快速激活.cmd` / `普通激活.cmd` / `重置激活.cmd` / `测试脚本.cmd`), FAQ, technical details, registry-backup behavior.
+- [README.md](README.md): Main Chinese README — features, system requirements, the single entry script (`开始激活.cmd`) plus the `IAS.cmd` engine, FAQ, technical details, registry-backup behavior.
 - [docs/README.md](docs/README.md): Documentation map for maintainers, AI search engines, and new contributors.
 - [OPEN_SOURCE_POLICY.md](OPEN_SOURCE_POLICY.md): Public repository policy, GPL-3.0 open-source rule, and CI visibility guard.
 - [CHANGELOG.md](CHANGELOG.md): Version history (v1.2 → current).
 - [ARCHITECTURE.md](ARCHITECTURE.md): How the script flows internally.
 - [SECURITY.md](SECURITY.md): Threat model, what the script touches, what it doesn't.
 - [CONTRIBUTING.md](CONTRIBUTING.md): How to submit fixes / translations.
-- Release ZIPs: [release/IDM-Activation-Script-v1.3.5.zip](release/IDM-Activation-Script-v1.3.5.zip) + [SHA256](release/IDM-Activation-Script-v1.3.5.zip.sha256).
+- Release ZIPs: [release/IDM-Activation-Script-v1.3.6.zip](release/IDM-Activation-Script-v1.3.6.zip) + [SHA256](release/IDM-Activation-Script-v1.3.6.zip.sha256).
 
 ## What this script does
 
 - **Freeze trial (冻结模式)** — Freezes the IDM trial counter; the recommended mode for most users.
 - **Random-registration activation (普通激活)** — Writes randomized registration name + serial into the IDM registry keys.
 - **Trial reset (重置激活)** — Resets the trial expiration when "试用期已过期" appears.
-- **Environment self-check (测试脚本)** — Verifies admin rights, PowerShell access, console code page (936 for GBK), Null service, network egress — surfacing the common reasons activation fails on Chinese Windows.
-- All entry points elevate to administrator automatically; non-admin invocations bounce through a UAC re-launch.
+- **Environment self-check (环境检测)** — Built into `开始激活.cmd`: verifies admin rights, PowerShell access, console code page (936 for GBK), Null service, network egress, WMI/CIM, IDM path and directory write access — surfacing the common reasons activation fails on Chinese Windows.
+- The entry script elevates to administrator automatically; non-admin invocations bounce through a UAC re-launch.
 - Every registry change is preceded by an `.reg` backup written to a timestamped folder under `%TEMP%`.
 - Does **not** modify any IDM program file. Activation is purely registry-level.
 
@@ -47,7 +47,7 @@ This is a Chinese-language fork that wraps the well-known IDM-Activation-Script 
 
 - **乱码 / Garbled console output**: scripts are GBK-encoded and force `chcp 936`. If a terminal still shows garbled text, you're viewing the file with a UTF-8-only viewer (GitHub web UI is one) — download the ZIP and run locally.
 - **SmartScreen / Defender blocked**: the ZIPs are signed only by their SHA256 hashes (published alongside the ZIP). Compare `Get-FileHash` against the `.sha256` file before unzipping. The scripts are batch + a tiny PowerShell helper; everything is plain text and auditable.
-- **"激活后仍提示注册"**: usually means the IDM was upgraded to a newer version after activation. Re-run `快速激活.cmd` in freeze mode.
+- **"激活后仍提示注册"**: usually means the IDM was upgraded to a newer version after activation. Re-run `开始激活.cmd` and pick `[1]` freeze mode again.
 - **Headless / silent run**: `IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"` (freeze + silent + log path).
 - **English version**: this repo is the Chinese edition. The upstream English tool is at [lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script).
 
