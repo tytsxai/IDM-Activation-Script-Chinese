@@ -15,6 +15,7 @@
 - **安装目录含 `(x86)` 时提权崩溃报"此时不应有 \Internet"**（对应 issue #12）：旧入口脚本的提权写法 `Start-Process -FilePath \"%~f0\"` 中的 `\"` 会让 CMD 提前闭合引号，使路径里的 `)` 被当作语法符号。新入口 `开始激活.cmd` 改用单引号包裹路径并以标签跳转避开括号块。
 - **Win11 24H2/25H2 上 WMI 自检误报**（对应 issue #14）：`wmic` 在新版 Windows 已被移除，自检改为优先用 PowerShell `Get-CimInstance` 检测，`wmic` 仅作回退。
 - 代码页自检改用 `chcp | find "936"`，避免不同区域/外壳下 `chcp` 输出格式差异导致的解析失败（对应 issue #12 中"当前代码页: ="）。
+- **修复激活过程中的中文乱码**：`IAS.cmd` 的 `:_color` / `:_color2` 上色函数在不支持 ANSI 的旧版控制台（勾选"使用旧版控制台"或 `HKCU\Console\ForceV2=0`）下，会用 `powershell write-host '中文'` 输出，GBK 中文作为命令行参数传给 PowerShell 时编码不匹配而乱码。现改为该情况下直接 `echo` 纯文本（丢颜色但中文正确显示）。菜单主体是纯 `echo` 故不受影响。
 - IDM 路径自检补充当前用户 `HKCU\Software\DownloadManager\ExePath` 与默认安装目录兜底，减少已安装 IDM 但 HKLM `InstallFolder` 缺失时的误报。
 
 ### 改动
@@ -22,6 +23,7 @@
 - `IAS.cmd` 版本号升至 `1.3.6`（核心激活逻辑不变）。
 
 ### 文档
+- **推荐项调整**：教程改为优先推荐菜单 `[2]` 激活（直接可用、不需要账号或剩余试用期），`[1]` 冻结激活降为"激活后仍提示未注册时的兜底"。
 - README、`llms.txt`、`ARCHITECTURE.md`、`docs/README.md`、Issue 模板全部更新为"单入口 `开始激活.cmd`"模型。
 - `使用说明.txt` 改为 UTF-8（带 BOM）编码，修复在新版 Windows 记事本中可能出现的乱码；`tools/validate.ps1` 相应放宽：仅对 `.cmd` 强制 GBK，`.txt` 不再强制编码。
 - README FAQ Q2 补充说明：`Internet Download Manager` 是注册表项/安装目录名称，不是互联网连接；关闭网络不会影响安装路径检测。
