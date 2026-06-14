@@ -27,8 +27,8 @@ This is a Chinese-language fork that wraps the well-known IDM-Activation-Script 
 
 ## What this script does
 
-- **Random-registration activation (激活, menu `[2]`)** — Writes registration name + serial into the IDM registry keys; works immediately with no account or remaining trial. Recommended default for most users.
-- **Freeze trial (冻结模式, menu `[1]`)** — Freezes the IDM trial counter without writing a serial; use as a fallback when activation still leaves IDM showing "unregistered" (more robust against fake-serial detection on IDM 6.42+).
+- **Random-registration activation (激活, menu `[2]`)** — Writes registration name + serial into the IDM registry keys; works immediately with no account and without first claiming a trial. The common choice for users who have NOT activated a 30-day trial.
+- **Freeze trial (冻结模式, menu `[1]`)** — Freezes IDM's current 30-day trial counter without writing a serial. The right choice for users who HAVE already claimed/activated the 30-day trial (account + "start trial"); also the fallback when `[2]` activate still leaves IDM showing "unregistered" (more robust against fake-serial detection on IDM 6.42+).
 - **Trial reset (重置激活)** — Resets the trial expiration when "试用期已过期" appears.
 - **Environment self-check (环境检测)** — Built into `开始激活.cmd`: verifies admin rights, PowerShell access, console code page (936 for GBK), Null service, network egress, WMI/CIM, IDM path and directory write access — surfacing the common reasons activation fails on Chinese Windows.
 - The entry script elevates to administrator automatically; non-admin invocations bounce through a UAC re-launch.
