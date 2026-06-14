@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        感谢反馈问题。**提交前请先运行一次 `测试脚本.cmd`（以管理员身份）**，并把结果一并贴出，能大幅缩短排查时间。
+        感谢反馈问题。**提交前请先以管理员身份双击运行一次 `开始激活.cmd`**，把进入菜单前的"环境检测"输出一并贴出，能大幅缩短排查时间。
 
   - type: input
     id: os-version
@@ -31,7 +31,7 @@ body:
     attributes:
       label: 脚本版本
       description: 查看 `IAS.cmd` 第一行的 `@set iasver=...`
-      placeholder: "1.3.3 / 1.3.4"
+      placeholder: "1.3.6"
     validations:
       required: true
 
@@ -40,9 +40,9 @@ body:
     attributes:
       label: 运行的命令 / 入口
       options:
-        - 快速激活.cmd（冻结）
-        - 普通激活.cmd
-        - 重置激活.cmd
+        - 开始激活.cmd → 菜单 [1] 激活（冻结）
+        - 开始激活.cmd → 菜单 [2] 激活
+        - 开始激活.cmd → 菜单 [3] 重置
         - IAS.cmd 菜单交互
         - IAS.cmd /frz
         - IAS.cmd /act
@@ -55,9 +55,9 @@ body:
   - type: textarea
     id: smoke-output
     attributes:
-      label: 测试脚本.cmd 输出
+      label: 开始激活.cmd 环境检测输出
       description: |
-        以**管理员身份**运行 `测试脚本.cmd`，把全部屏幕输出贴在下方（含退出码）。
+        以**管理员身份**双击 `开始激活.cmd`，把进入菜单前的"环境检测"全部屏幕输出贴在下方。
         若无法运行，请说明卡在哪一步。
       render: text
     validations:
@@ -69,7 +69,7 @@ body:
       label: 复现步骤
       description: 请按 1 / 2 / 3 分点描述，越详细越好
       placeholder: |
-        1. 管理员身份双击 `快速激活.cmd`
+        1. 管理员身份双击 `开始激活.cmd`
         2. ...
         3. ...
     validations:
@@ -106,7 +106,7 @@ body:
       options:
         - label: 我已阅读 README 的"常见问题"章节，问题未被覆盖
           required: true
-        - label: 我已以管理员身份运行 `测试脚本.cmd` 并附上了输出
+        - label: 我已以管理员身份运行 `开始激活.cmd` 并附上了环境检测输出
           required: true
         - label: 我已确认没有在 Issue 中贴出任何账号密码、许可证密钥或其他敏感信息
           required: true

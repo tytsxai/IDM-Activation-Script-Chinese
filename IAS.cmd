@@ -1,4 +1,4 @@
-@set iasver=1.3.5
+@set iasver=1.3.6
 @setlocal DisableDelayedExpansion
 @echo off
 
@@ -1008,7 +1008,7 @@ exit /b
 if %_NCS% EQU 1 (
 echo %esc%[%~1%~2%esc%[0m
 ) else (
-%psc% write-host -back '%1' -fore '%2' '%3'
+echo %~3
 )
 exit /b
 
@@ -1017,7 +1017,7 @@ exit /b
 if %_NCS% EQU 1 (
 echo %esc%[%~1%~2%esc%[%~3%~4%esc%[0m
 ) else (
-%psc% write-host -back '%1' -fore '%2' '%3' -NoNewline; write-host -back '%4' -fore '%5' '%6'
+echo %~3%~6
 )
 exit /b
 

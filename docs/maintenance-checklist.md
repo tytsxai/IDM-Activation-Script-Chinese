@@ -24,7 +24,7 @@
 
 ## 发版前（Windows 真实环境）
 
-- 管理员 CMD 下跑一遍 `测试脚本.cmd`，确认 10 项全绿且退出码 `0`。
+- 管理员身份双击 `开始激活.cmd`，确认进入菜单前的环境检测全绿；把脚本放进含 `(x86)` 的目录再试一次，确认不再报"此时不应有 \Internet"。
 - 运行主脚本的一条代表性路径（建议 `IAS.cmd /frz /silent /log="C:\Temp\ias.log"`），确认退出码与日志输出符合预期。
 - 记录 Defender / SmartScreen 提示（如有），并把结论写回 `docs/release-notes-*.md`。
 - 重新计算并核对 `release/*.zip.sha256`：

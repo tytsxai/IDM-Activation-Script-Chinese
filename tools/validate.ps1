@@ -8,12 +8,16 @@ Validates repository text hygiene (EOL + encoding) on Windows runners.
 .DESCRIPTION
 This script is intended to run in CI (GitHub Actions) and fail fast when:
   - A tracked file violates the expected line-ending declared by `.gitattributes`.
-  - Any tracked `.cmd` / `.txt` file is not decodable as GBK (code page 936), or contains a BOM.
+  - Any tracked `.cmd` file is not decodable as GBK (code page 936), or contains a BOM.
   - Basic `cmd.exe` invocation fails (sanity check for runner/tooling issues).
 
 Notes:
   - Markdown is expected to be LF; batch/text helpers are expected to be CRLF.
-  - The GBK requirement exists to keep Windows console output readable for Chinese text.
+  - The GBK requirement applies to `.cmd` only: those bytes are echoed to the
+    Windows console under `chcp 936`, so they must be GBK to render Chinese.
+  - `.txt` files are opened in an editor (Notepad), not the console, so they are
+    NOT forced to GBK. `the usage .txt` ships as UTF-8 with BOM, which modern
+    Notepad detects reliably across locales/Windows versions.
 #>
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
@@ -183,12 +187,11 @@ foreach ($file in $trackedFiles) {
     }
 }
 
-# llms.txt is the AI-search-engine index file (https://llmstxt.org).
-# It is read by ChatGPT / Claude / Perplexity / Gemini in UTF-8 and must
-# stay UTF-8; exempt it from the GBK requirement that applies to
-# Windows-console-facing .cmd / .txt helpers.
-$cmdAndText = (git -C $repoRoot -c core.quotePath=false ls-files -z -- '*.cmd' '*.txt' ':!llms.txt' ':!/llms.txt') -split "`0" | Where-Object { $_ }
-foreach ($file in $cmdAndText) {
+# Only `.cmd` files are echoed to the Windows console (under `chcp 936`), so
+# only they are required to be GBK without BOM. `.txt` docs are opened in an
+# editor and may be UTF-8 (e.g. the usage .txt ships as UTF-8 BOM for Notepad).
+$cmdFiles = (git -C $repoRoot -c core.quotePath=false ls-files -z -- '*.cmd') -split "`0" | Where-Object { $_ }
+foreach ($file in $cmdFiles) {
     Validate-Encoding -Path $file
 }
 
