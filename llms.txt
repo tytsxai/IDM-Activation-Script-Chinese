@@ -11,7 +11,7 @@ This is a Chinese-language fork that wraps the well-known IDM-Activation-Script 
 - Project type: Windows batch script toolkit; Chinese localization and maintenance fork
 - Primary language: Simplified Chinese user-facing text, English metadata for international search
 - License: GPL-3.0; this repository should remain public and open source
-- Runtime package: v1.3.6 ZIP
+- Runtime package: v1.3.7 ZIP
 - Best first action for users: double-click `开始激活.cmd` as administrator — it self-checks the environment, then opens a menu. Recommend `[2]` activate (works immediately, no account/trial needed); if IDM still shows unregistered, use `[1]` freeze as fallback. (Since v1.3.6 the four old scripts are merged into this single entry file.)
 
 ## Key docs
@@ -23,7 +23,7 @@ This is a Chinese-language fork that wraps the well-known IDM-Activation-Script 
 - [ARCHITECTURE.md](ARCHITECTURE.md): How the script flows internally.
 - [SECURITY.md](SECURITY.md): Threat model, what the script touches, what it doesn't.
 - [CONTRIBUTING.md](CONTRIBUTING.md): How to submit fixes / translations.
-- Release ZIPs: [release/IDM-Activation-Script-v1.3.6.zip](release/IDM-Activation-Script-v1.3.6.zip) + [SHA256](release/IDM-Activation-Script-v1.3.6.zip.sha256).
+- Release ZIPs: [release/IDM-Activation-Script-v1.3.7.zip](release/IDM-Activation-Script-v1.3.7.zip) + [SHA256](release/IDM-Activation-Script-v1.3.7.zip.sha256).
 
 ## What this script does
 
