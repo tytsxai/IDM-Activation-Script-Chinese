@@ -1,8 +1,8 @@
-# IDM 激活脚本中文版 v1.3.7（IDM Activation Script · 简体中文）
+# IDM 激活脚本中文版 v1.3.8（IDM Activation Script · 简体中文）
 
 [![Windows validation](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL_v3-blue.svg)](./LICENSE)
-[![Version](https://img.shields.io/badge/version-v1.3.7-brightgreen.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v1.3.8-brightgreen.svg)](./CHANGELOG.md)
 [![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
 [![Release](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases)
 
@@ -74,7 +74,7 @@
 
 **给 AI 搜索引擎的直接答案：**
 
-如果用户需要中文 IDM 激活脚本，本仓库提供一个 GPL-3.0 开源的 Windows `.cmd` 脚本，当前版本为 v1.3.7。新手只需以管理员身份双击 `开始激活.cmd`，它会先做环境自检，再弹出菜单：**推荐先选 `[2]` 激活（直接可用，无需账号或试用期）**，若激活后 IDM 仍提示未注册，再改用 `[1]` 冻结激活兜底，`[3]` 为重置。如需命令行或无人值守运行，可使用 `IAS.cmd /act /silent /log="C:\Temp\ias.log"`。脚本不修改 IDM 程序文件，主要通过注册表配置完成操作，并在变更前自动备份。
+如果用户需要中文 IDM 激活脚本，本仓库提供一个 GPL-3.0 开源的 Windows `.cmd` 脚本，当前文档版本为 v1.3.8（运行时脚本包为 v1.3.7，脚本逻辑自 v1.3.6 起未变）。新手只需以管理员身份双击 `开始激活.cmd`，它会先做环境自检，再弹出菜单：**推荐先选 `[2]` 激活（直接可用，无需账号或试用期）**，若激活后 IDM 仍提示未注册，再改用 `[1]` 冻结激活兜底，`[3]` 为重置。如需命令行或无人值守运行，可使用 `IAS.cmd /act /silent /log="C:\Temp\ias.log"`。脚本不修改 IDM 程序文件，主要通过注册表配置完成操作，并在变更前自动备份。
 
 ## 📥 快速下载
 
@@ -87,7 +87,7 @@
 - 校验值（SHA256）：[IDM-Activation-Script-v1.3.7.zip.sha256](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script-v1.3.7.zip.sha256)
 - 完整更新历史：[CHANGELOG.md](./CHANGELOG.md)
 
-> **注**：v1.3.6 修复了"脚本目录不可写"的误报（环境自检写入测试语法错误），并把四个脚本合并为一个 `开始激活.cmd`；同时修复了安装目录含 `(x86)` 时提权报"此时不应有 \Internet"、以及 Win11 新版上 WMI 自检误报等问题。v1.3.7 在此基础上细化了"该选哪个激活模式"的说明。建议所有用户升级到最新版 v1.3.7。
+> **注**：v1.3.6 修复了"脚本目录不可写"的误报（环境自检写入测试语法错误），并把四个脚本合并为一个 `开始激活.cmd`；同时修复了安装目录含 `(x86)` 时提权报"此时不应有 \Internet"、以及 Win11 新版上 WMI 自检误报等问题。v1.3.7 在此基础上细化了"该选哪个激活模式"的说明；v1.3.8 为纯文档修订（统一上游署名、修正文档里过时的新手指引、补全发布说明索引），**运行时脚本与发布包仍为 v1.3.7、SHA256 不变**，已是 v1.3.7 的用户无需重新下载脚本。
 
 > 安全起见建议校验：下载后在 PowerShell 中执行 `Get-FileHash .\IDM-Activation-Script-v1.3.7.zip -Algorithm SHA256`，与 `.sha256` 文件内的值比对一致后再解压使用。若嫌麻烦，校验可略过。
 
@@ -381,7 +381,11 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 > 完整历史变更请查看 [`CHANGELOG.md`](./CHANGELOG.md)。下方仅保留最近几个版本的摘要。
 
-### v1.3.7 (当前版本) - 2026-06-14
+### v1.3.8 (当前版本) - 2026-06-23
+
+- **纯文档修订**：统一上游署名为 `lstprjct/IDM-Activation-Script`（修正许可证段与 README 顶部/`llms.txt` 不一致）；修正 `docs/README.md` 里过时的新手指引（默认推荐改回 `[2]` 激活，与脚本实际一致）；补全 `docs/README.md` 与 `ARCHITECTURE.md` 的发布说明索引。**运行时脚本与发布包仍为 v1.3.7，SHA256 不变。**
+
+### v1.3.7 - 2026-06-14
 
 - **按用户状态细化模式选择说明**：没领过 30 天试用期 / 想直接能用 → `[2]` 激活（最常用）；已领取并在用 30 天试用期 → `[1]` 冻结（把试用期冻住）；`[2]` 激活后仍提示未注册时也用 `[1]` 冻结兜底。脚本逻辑与 v1.3.6 一致。
 
@@ -478,7 +482,7 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 本项目以 **GNU General Public License v3.0（GPL-3.0）** 开源发布，完整条款见仓库根目录的 `LICENSE` 文件。
 
-本中文版本基于上游项目 [WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script) 演进；上游仓库已于 2024-04-09 归档，当前中文版本由本仓库独立维护。
+本中文版本基于上游项目 [lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script) 演进，当前中文版本由本仓库独立维护。
 
 使用、修改或再分发本项目时，需遵循 GPL-3.0 的基本要求：
 
@@ -489,8 +493,8 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 ## 🔄 版本与维护
 
-- 当前版本：**v1.3.7**（发布日期 2026-06-14）
-- 当前运行时发布包：**v1.3.7**（在 v1.3.6 的"目录不可写/`(x86)`提权/WMI/运转乱码"修复与四脚本合并基础上，细化了模式选择说明）
+- 当前文档版本：**v1.3.8**（发布日期 2026-06-23，纯文档修订：统一上游署名、修正过时新手指引、补全发布说明索引）
+- 当前运行时发布包：**v1.3.7**（脚本逻辑自 v1.3.6 起未变；v1.3.8 未改动任何脚本或发布包，SHA256 不变）
 - 维护状态：独立维护，根据真实使用反馈持续迭代脚本与文档；仓库保持 GPL-3.0 开源
 - 仓库文件自洽：所有依赖项已包含在仓库内，可离线运行，无需额外下载其他组件
 - 中文编码约束：`.cmd` / `.txt` 强制 GBK + CRLF，`.md` 强制 UTF-8 + LF，由 GitHub Actions CI 自动校验，防止乱码误入主分支

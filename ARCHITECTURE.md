@@ -32,6 +32,7 @@
   - ARCHITECTURE：本文件，维护者视角的仓库结构与高风险点。
 - `docs/`
   - `README.md`：公开文档索引，面向新用户、维护者和 AI 搜索引擎说明文档入口与真实性边界。
+  - `release-notes-v1.3.7.md` / `release-notes-v1.3.6.md` / `release-notes-v1.3.5.md`：近期运行时/文档发布说明。
   - `release-notes-v1.3.4.md`：v1.3.4 文档专项发布说明。
   - `release-notes-v1.3.3.md`：v1.3.3 运行时发布说明与回归建议。
   - `release-notes-v1.3.1.md`：v1.3.1 历史发布说明（保留）。

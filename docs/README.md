@@ -15,7 +15,7 @@
 1. 先看 [README.md](../README.md)：项目是什么、适合谁、怎么快速开始、常见问题和限制。
 2. 下载发布包前，核对 [CHANGELOG.md](../CHANGELOG.md) 和 `release/*.sha256`。
 3. Windows 用户以管理员身份双击 `开始激活.cmd`（会先做环境自检，再弹出激活菜单）。
-4. 新手在菜单选 `[1]` 冻结激活；高级用户可使用 `IAS.cmd /frz /silent /log="C:\Temp\ias-frz.log"`。
+4. 新手在菜单选 `[2]` 激活（直接可用，无需账号/试用期，推荐）；若激活后 IDM 仍提示未注册，再选 `[1]` 冻结激活兜底。高级用户可使用 `IAS.cmd /act /silent /log="C:\Temp\ias.log"`。
 5. 出现问题时，按 README FAQ 和 Issue 模板提交 Windows 版本、IDM 版本、运行入口、`开始激活.cmd` 的环境检测输出。
 
 ## 维护者阅读路径
@@ -29,6 +29,9 @@
 
 ## 发布说明
 
+- [release-notes-v1.3.8.md](release-notes-v1.3.8.md)：v1.3.8 纯文档修订，统一上游署名、修正过时的新手指引、补全发布说明索引（运行时脚本与发布包仍为 v1.3.7）。
+- [release-notes-v1.3.7.md](release-notes-v1.3.7.md)：v1.3.7 文档/文案更新，细化"该选哪个激活模式"的说明（脚本逻辑与 v1.3.6 一致）。
+- [release-notes-v1.3.6.md](release-notes-v1.3.6.md)：v1.3.6 运行时修复与入口精简，四个旧脚本合并为单一 `开始激活.cmd`。
 - [release-notes-v1.3.5.md](release-notes-v1.3.5.md)：v1.3.5 运行时修复说明，修复 CP936 自检误判并更新发布包。
 - [release-notes-v1.3.4.md](release-notes-v1.3.4.md)：v1.3.4 文档专项发布说明，脚本 ZIP 沿用 v1.3.3。
 - [release-notes-v1.3.3.md](release-notes-v1.3.3.md)：v1.3.3 发布说明。

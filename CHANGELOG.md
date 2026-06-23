@@ -8,6 +8,18 @@
 
 ---
 
+## v1.3.8 — 2026-06-23
+
+### 文档
+- **统一上游署名**：README 许可证章节原写作 `WindowsAddict/IDM-Activation-Script`，与 README 顶部、`llms.txt`、本 CHANGELOG 中一致使用的 `lstprjct/IDM-Activation-Script` 冲突。已统一为 `lstprjct/IDM-Activation-Script`，并移除无法核实的归档日期，避免传统搜索与 AI 搜索抓到互相矛盾的"事实来源"。
+- **修正新手激活指引**：`docs/README.md` 的"新用户阅读路径"仍写"新手在菜单选 `[1]` 冻结激活"，与 v1.3.6 起脚本实际推荐（默认 `[2]` 激活、`[1]` 冻结仅作兜底）相反。已对齐为 `[2]` 激活优先，命令示例同步改为 `IAS.cmd /act`。
+- **补全文档索引**：`docs/README.md` 的发布说明列表与 `ARCHITECTURE.md` 的 `docs/` 文件枚举此前只列到 v1.3.4/v1.3.5，已补上 v1.3.5–v1.3.7 的发布说明条目，使索引与实际文件一致。
+
+### 兼容性
+- **运行时脚本与发布包零改动**：`IAS.cmd` / `开始激活.cmd` 行为不变，运行时发布包仍为 `release/IDM-Activation-Script-v1.3.7.zip`（SHA256 不变）。本版本为纯文档修订，已是 v1.3.7 运行时的用户**无需重新下载脚本**。
+
+---
+
 ## v1.3.7 — 2026-06-14
 
 ### 文档
