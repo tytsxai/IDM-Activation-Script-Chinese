@@ -13,7 +13,7 @@
 - **打包必须在中文 Windows 上做**（资源管理器右键"压缩"或 `Compress-Archive` 均可）。在 macOS / Linux 上打包会把中文文件名写成 UTF-8 并置 EFS 标志位，与现有发布包的 GBK 文件名约定不同，旧版解压工具可能显示乱码。
 - 改了 `IAS.cmd` 的 `iasver` 时，`CHANGELOG.md` 顶部必须同步出现对应的 `## vX.Y.Z` 标题，否则 `tools/verify-release.ps1` 会直接失败。
 - 在新版 IDM 上实测通过后，同步更新 `IAS.cmd` 头部的 `idmsupport`（主菜单显示的"已适配 IDM 版本"），并在 CHANGELOG 里说明验证环境。没实测就不要往上抬，这个值的意义就是"我们真的验证过"。
-- `docs/` 作为公开维护资料随仓库保留；更新 README / CHANGELOG / GitHub Release / `llms.txt` 时，必须检查 `docs/` 是否存在版本号、发布包和运行步骤的冲突。
+- `docs/` 作为公开维护资料随仓库保留；更新 README / CHANGELOG / GitHub Release 时，必须检查 `docs/` 是否存在版本号、发布包和运行步骤的冲突。
 - 本仓库必须保持 GPL-3.0 开源表达；不要把文档、Release 或 Issue 模板写成私有仓库、闭源分发或不可再分发项目。
 - 改动 CI 时必须保留 `Guard public repository visibility` 步骤，除非有新的等效公开可见性守卫替代。
 
@@ -37,4 +37,4 @@
 - 重新计算并核对 `release/*.zip.sha256`：
   - PowerShell：`Get-FileHash release\IDM-Activation-Script.zip -Algorithm SHA256`
   - macOS / Linux：`shasum -a 256 release/IDM-Activation-Script.zip`
-- 发布后确认 `git status --short` 中只有预期改动；若准备推送，先确认 README、CHANGELOG、`llms.txt`、`docs/` 与 Release 资产版本一致。
+- 发布后确认 `git status --short` 中只有预期改动；若准备推送，先确认 README、CHANGELOG、`docs/` 与 Release 资产版本一致。

@@ -14,7 +14,7 @@
 
 ## 新用户阅读路径
 
-1. 先看 [README.md](../README.md)：项目是什么、适合谁、怎么快速开始、使用场景、常见问题和限制。英文读者看 [README.en.md](../README.en.md)；AI 搜索引擎与 LLM 抓取入口是 [llms.txt](../llms.txt)。
+1. 先看 [README.md](../README.md)：项目是什么、适合谁、怎么快速开始、使用场景、常见问题和限制。
 2. 下载发布包前，核对 [CHANGELOG.md](../CHANGELOG.md) 和 `release/*.sha256`。
 3. Windows 用户以管理员身份双击 `开始激活.cmd`（会先做环境自检，再弹出激活菜单）。
 4. 新手在菜单选 `[2]` 激活（直接可用，无需账号/试用期，推荐）；若激活后 IDM 仍提示未注册，再选 `[1]` 冻结激活兜底；若 IDM 频繁弹更新提示，选 `[4]` 禁用更新提示（`[5]` 恢复）。高级用户可使用 `IAS.cmd /act /silent /log=C:\Temp\ias.log`。

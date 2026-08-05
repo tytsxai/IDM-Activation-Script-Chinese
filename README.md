@@ -1,18 +1,16 @@
 # IDM 激活脚本中文版（IDM Activation Script · 简体中文）
 
-[![Windows validation](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL_v3-blue.svg)](./LICENSE)
-[![Version](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese?label=version&color=brightgreen)](./CHANGELOG.md)
-[![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
-[![Release](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases)
+[![Windows 验证](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
+[![许可证](https://img.shields.io/badge/许可证-GPL--3.0-blue.svg)](./LICENSE)
+[![版本](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese?label=版本&color=brightgreen)](./CHANGELOG.md)
+[![支持平台](https://img.shields.io/badge/支持平台-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
+[![最新发布](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese?label=最新发布)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases)
 
-[简体中文 (current)](README.md) · [English README](README.en.md) · [llms.txt for AI search](llms.txt) · [Docs](docs/README.md) · [Open Source Policy](OPEN_SOURCE_POLICY.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
+[文档](docs/README.md) · [开源策略](OPEN_SOURCE_POLICY.md) · [更新日志](CHANGELOG.md) · [问题反馈](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
 
 > **一键激活 Internet Download Manager（IDM）的中文脚本工具**：支持 IDM 冻结试用期、随机注册信息激活、试用期一键重置三种模式，并可一键禁用 / 恢复 IDM 的自动更新检查（不再反复弹更新窗），全程中文菜单与提示，无需安装任何依赖，单个 `.cmd` 文件即可在 Windows 7 / 8 / 10 / 11 上稳定运行。
 
 **30 秒上手**：[下载 ZIP](#快速下载) → 全部解压 → 双击 `开始激活.cmd` → UAC 点"是" → 菜单里按 `2` 激活。详细步骤见[使用方法](#使用方法)，不确定选哪个模式见[功能说明](#功能说明)。
-
-> **In English**: this is the Simplified Chinese edition of [WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script) — GBK-encoded batch scripts with Chinese menus for Windows users who would otherwise hit CP936 console garbling. Modes: `[2]` activate (recommended), `[1]` freeze trial, `[3]` reset, `[4]`/`[5]` disable/restore IDM's auto-update check. No binary patching, automatic registry backup. Full details: **[English README](README.en.md)**.
 
 ## 项目简介
 
@@ -526,7 +524,6 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 - **项目主页**: https://github.com/tytsxai/IDM-Activation-Script-Chinese
 - **IDM 官网**: https://www.internetdownloadmanager.com
 - **问题反馈**: https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues
-- **AI 搜索索引**: [`llms.txt`](./llms.txt)
 - **文档索引**: [`docs/README.md`](./docs/README.md)
 
 ## 免责声明

@@ -15,7 +15,6 @@
 
 - `*.cmd`：GBK（代码页 936，无 BOM）+ CRLF。这些字节会在 `chcp 936` 的控制台里直接 echo 出来，改成别的编码就是乱码。
 - `*.txt`：CRLF。编码不强制 GBK —— `使用说明.txt` 是在记事本里打开的，不走控制台，所以它按 **UTF-8 + BOM** 保存（各语言版本的 Windows 记事本都能正确识别）。`tools/validate.ps1` 只对 `.cmd` 做 GBK 校验，原因写在脚本头部注释里。
-- `llms.txt`：UTF-8 + LF（面向 AI 检索的跨平台文本，`.gitattributes` 里对 `*.txt` 的 CRLF 规则有单独覆盖）。
 - `*.md`：UTF-8（无 BOM）+ LF
 - `*.ps1`：UTF-8 **带 BOM** + LF。CI 用 `pwsh` 执行，但带 BOM 能保证 Windows PowerShell 5.1 也按 UTF-8 解码脚本里的中文，不会在英文区域的机器上变乱码。
 

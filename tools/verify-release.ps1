@@ -6,8 +6,8 @@ Set-StrictMode -Version Latest
 校验 release/ 发布包与仓库工作树是否一致，以及版本号是否自洽。
 
 .DESCRIPTION
-发布包用的是固定文件名 `IDM-Activation-Script.zip`，README / README.en.md /
-llms.txt 里的下载链接永远指向它。好处是链接不用改，代价是「只改了仓库、忘了
+发布包用的是固定文件名 `IDM-Activation-Script.zip`，README 里的
+下载链接永远指向它。好处是链接不用改，代价是「只改了仓库、忘了
 重新打包」不会有任何征兆 —— 用户下载到的仍然是旧脚本，而 CI 一路绿灯。
 
 本脚本在 CI 里守住四件事：

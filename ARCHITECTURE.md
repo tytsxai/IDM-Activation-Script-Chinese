@@ -36,7 +36,7 @@
   - `release-notes-<版本>.md`：每次发版新增一份发布说明，与 GitHub Release 正文对应。
   - `maintenance-checklist.md`：维护/发布检查清单。
   - `reports/smoke-win-baseline.md`：当前版本 Windows 冒烟基线模板。
-  - 维护约束：`docs/` 作为公开维护资料随仓库保留；发版时应同步 README / CHANGELOG / llms.txt 中的用户可见信息，避免公开文档互相矛盾。
+  - 维护约束：`docs/` 作为公开维护资料随仓库保留；发版时应同步 README / CHANGELOG 中的用户可见信息，避免公开文档互相矛盾。
 - `release/`
   - 发布产物：`IDM-Activation-Script.zip` 与同名 `.sha256` 校验文件（固定文件名、不带版本号；目录内只保留最新一份，历史版本从对应 tag 的 Release Assets 取）。约定见 `release/README.md`。
 - `.gitignore`
@@ -64,7 +64,7 @@
 
 ## 发布包一致性守卫
 
-发布包用固定文件名 `release/IDM-Activation-Script.zip`，README / `README.en.md` / `llms.txt` 的下载链接永远指向它。好处是链接一次写死，代价是「只改了仓库、忘了重新打包」不会有任何征兆——用户下载到的还是旧脚本，CI 却一路绿灯。`tools/verify-release.ps1` 守住四点：
+发布包用固定文件名 `release/IDM-Activation-Script.zip`，README 的下载链接永远指向它。好处是链接一次写死，代价是「只改了仓库、忘了重新打包」不会有任何征兆——用户下载到的还是旧脚本，CI 却一路绿灯。`tools/verify-release.ps1` 守住四点：
 
 1. `.sha256` 记录值与 zip 实际哈希一致，否则 README 里教用户做的校验就是假的；
 2. 包内**会被执行**的文件（`IAS.cmd`、`开始激活.cmd`、`使用说明.txt`）与仓库逐字节一致 —— 不一致直接失败；

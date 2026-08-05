@@ -1,4 +1,4 @@
-name: Windows validation
+name: Windows 验证
 
 on:
   push:
