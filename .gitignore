@@ -1,0 +1,37 @@
+# 只覆盖「开发或运行这个仓库时真的会掉出来的东西」，不照搬通用模板。
+#
+# 重要：release/IDM-Activation-Script.zip 与 .sha256 是对外交付物，必须保持被
+# 跟踪。所以这里刻意不写 *.zip / release 一类会误伤它们的规则；新增规则前请先
+# 跑 git check-ignore -v $(git ls-files) 确认没有命中已跟踪文件。
+
+# --- 脚本运行产物 ---
+# 开始激活.cmd 的「脚本目录可写」自检文件：正常路径会自删，用户中断时会残留。
+.__ias_write_test.tmp
+# IAS.cmd 日志：默认写到 %SystemRoot%\Temp，但 /log=PATH 可以指进仓库目录。
+IAS-*.log
+*.log
+
+# --- 编辑与备份临时文件 ---
+*.bak
+*.orig
+*.rej
+*.tmp
+*.swp
+*~
+
+# --- macOS（维护侧） ---
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# --- Windows（使用侧） ---
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# --- 编辑器 / IDE ---
+.vscode/
+.idea/
+start-entry.cmd

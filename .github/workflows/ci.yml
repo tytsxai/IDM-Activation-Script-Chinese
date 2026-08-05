@@ -1,0 +1,334 @@
+name: Windows validation
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Guard public repository visibility
+        shell: pwsh
+        run: |
+          $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
+          if ($event.repository.private -eq $true) {
+            Write-Host "::error::This repository must stay public and GPL-3.0 open source. Change repository visibility back to public before merging or releasing."
+            exit 1
+          }
+          Write-Host "Repository visibility guard OK: repository is public."
+
+      - name: Run encoding and EOL checks
+        shell: pwsh
+        run: ./tools/validate.ps1
+
+      - name: Smoke probe — IAS.cmd /silent without action (expect exit 2)
+        shell: cmd
+        run: |
+          chcp 936 >nul
+          call IAS.cmd /silent
+          if %errorlevel% NEQ 2 (
+            echo ::error::IAS.cmd /silent should exit with 2 when no action flag is supplied, got %errorlevel%
+            exit /b 1
+          )
+          echo Smoke probe OK: IAS.cmd /silent exited with 2 as expected.
+          exit /b 0
+
+      - name: Smoke probe — IAS.cmd /noupd /silent without IDM installed (expect exit 1)
+        shell: cmd
+        run: |
+          chcp 936 >nul
+          call IAS.cmd /noupd /silent
+          if %errorlevel% NEQ 1 (
+            echo ::error::IAS.cmd /noupd /silent should exit with 1 when IDM is not installed, got %errorlevel%
+            exit /b 1
+          )
+          echo Smoke probe OK: IAS.cmd /noupd /silent exited with 1 as expected.
+          exit /b 0
+
+      # /act 与 /frz 在检查完 IDM 是否安装之前不碰注册表、不联网，
+      # 所以在没装 IDM 的 runner 上跑到"未检测到 IDM 安装"就会退出，是安全的。
+      - name: Smoke probe — IAS.cmd /act and /frz without IDM installed (expect exit 1)
+        shell: cmd
+        run: |
+          chcp 936 >nul
+          call IAS.cmd /act /silent
+          if %errorlevel% NEQ 1 (
+            echo ::error::IAS.cmd /act /silent should exit with 1 when IDM is not installed, got %errorlevel%
+            exit /b 1
+          )
+          call IAS.cmd /frz /silent
+          if %errorlevel% NEQ 1 (
+            echo ::error::IAS.cmd /frz /silent should exit with 1 when IDM is not installed, got %errorlevel%
+            exit /b 1
+          )
+          echo Smoke probe OK: /act and /frz both exited with 1 as expected.
+          exit /b 0
+
+      - name: Smoke probe — logging (/log= custom path and default log file)
+        shell: cmd
+        run: |
+          chcp 936 >nul
+          del /f /q "%SystemRoot%\Temp\IAS-*.log" >nul 2>&1
+          del /f /q "C:\ias-ci-custom.log" >nul 2>&1
+          call IAS.cmd /noupd /silent /log=C:\ias-ci-custom.log
+          if %errorlevel% NEQ 1 (
+            echo ::error::IAS.cmd /noupd /silent /log=... should exit with 1, got %errorlevel%
+            exit /b 1
+          )
+          if not exist "C:\ias-ci-custom.log" (
+            echo ::error::/log=PATH did not create the log file; the documented /log=PATH form is broken again.
+            exit /b 1
+          )
+          call IAS.cmd /noupd /silent
+          if %errorlevel% NEQ 1 (
+            echo ::error::IAS.cmd /noupd /silent should exit with 1, got %errorlevel%
+            exit /b 1
+          )
+          echo Smoke probe OK: both /log=PATH and the default log path produced a log file.
+          exit /b 0
+
+      # 回归守卫：日志文件名生成如果被搬回 if(...) 代码块里，%_logstamp% 会在整块
+      # 解析时一次性展开，文件名退化成字面量 IAS-%_logstamp%.log，所有静默运行
+      # 都追加到同一个文件。这里断言默认日志名里确实带上了时间戳。
+      - name: Assert default log file name carries a real timestamp
+        shell: pwsh
+        run: |
+          $logs = @(Get-ChildItem -Path "$env:SystemRoot\Temp\IAS-*.log" -ErrorAction SilentlyContinue)
+          if ($logs.Count -eq 0) {
+            Write-Host "::error::No default log file was produced in %SystemRoot%\Temp."
+            exit 1
+          }
+          foreach ($log in $logs) {
+            if ($log.Name -like '*_logstamp*') {
+              Write-Host "::error::Log file name degraded to a literal: $($log.Name). The %_logstamp% expansion regressed."
+              exit 1
+            }
+          }
+          Write-Host "Log file name OK: $($logs[0].Name)"
+
+      # 交互菜单是绝大多数用户唯一会看到的界面。菜单前后有 IDM 版本探测，
+      # 批处理语法写错的话所有交互用户第一屏就会报错。
+      # -qedit 跳过 QuickEdit 的 conhost 重入（否则脚本会另开窗口并退出），
+      # 管道喂入 0 让菜单选"退出"。菜单退出返回的是 choice 的 errorlevel，
+      # 不代表失败，所以这一步只负责抓输出，断言交给下一步。
+      - name: Smoke probe — interactive main menu renders
+        shell: cmd
+        run: |
+          chcp 936 >nul
+          echo 0| call IAS.cmd -qedit > menu-smoke.txt 2>&1
+          type menu-smoke.txt
+          exit /b 0
+
+      - name: Assert main menu printed the IDM version banner
+        shell: pwsh
+        run: |
+          [System.Text.Encoding]::RegisterProvider([System.Text.CodePagesEncodingProvider]::Instance)
+          $path = Join-Path $PWD 'menu-smoke.txt'
+          if (-not (Test-Path -LiteralPath $path)) {
+            Write-Host "::error::menu-smoke.txt was not produced; the interactive menu probe did not run."
+            exit 1
+          }
+          $text = [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::GetEncoding(936))
+          $iasver = (Select-String -LiteralPath 'IAS.cmd' -Pattern '^@set iasver=(.+)$' -Encoding ascii | Select-Object -First 1).Matches[0].Groups[1].Value.Trim()
+          $idmsupport = (Select-String -LiteralPath 'IAS.cmd' -Pattern '^@set idmsupport=(.+)$' -Encoding ascii | Select-Object -First 1).Matches[0].Groups[1].Value.Trim()
+          $banner = "脚本 $iasver | 已适配 IDM $idmsupport"
+          if ($text -notlike "*$banner*") {
+            Write-Host "::error::Main menu did not print the version banner '$banner'."
+            exit 1
+          }
+          # runner 上没有装 IDM，应当走"未检测到"分支
+          if ($text -notlike '*本机未检测到 IDM*') {
+            Write-Host "::error::Main menu did not print the 'IDM not detected' line on a runner without IDM."
+            exit 1
+          }
+          # 批处理块语法写错时的典型报错，出现即视为回归
+          foreach ($bad in @('此时不应有', '命令语法不正确', '不是内部或外部命令', '系统找不到指定的批处理标签')) {
+            if ($text -like "*$bad*") {
+              Write-Host "::error::Main menu output contains a batch syntax error: $bad"
+              exit 1
+            }
+          }
+          Write-Host "Main menu smoke OK: $banner"
+
+      # 上一条只覆盖"未检测到 IDM"的分支。这里用 notepad.exe 冒充 IDMan.exe 并写
+      # HKCU 的 ExePath，把版本探测那条 PowerShell 也跑一遍，断言真的读出了文件
+      # 版本号、并打出"与已适配版本不同"的提示。放在所有激活相关冒烟之后，跑完
+      # 立刻清理，避免影响其它步骤。
+      - name: Smoke probe — menu detects an installed IDM (faked IDMan.exe)
+        shell: cmd
+        run: |
+          chcp 936 >nul
+          md "%ProgramFiles(x86)%\Internet Download Manager" 2>nul
+          copy /y "%SystemRoot%\System32\notepad.exe" "%ProgramFiles(x86)%\Internet Download Manager\IDMan.exe" >nul
+          reg add "HKCU\Software\DownloadManager" /v ExePath /t REG_SZ /d "%ProgramFiles(x86)%\Internet Download Manager\IDMan.exe" /f >nul
+          echo 0| call IAS.cmd -qedit > menu-smoke-idm.txt 2>&1
+          type menu-smoke-idm.txt
+          reg delete "HKCU\Software\DownloadManager" /v ExePath /f >nul 2>&1
+          del /f /q "%ProgramFiles(x86)%\Internet Download Manager\IDMan.exe" >nul 2>&1
+          rd "%ProgramFiles(x86)%\Internet Download Manager" >nul 2>&1
+          exit /b 0
+
+      - name: Assert main menu reported the detected IDM version
+        shell: pwsh
+        run: |
+          [System.Text.Encoding]::RegisterProvider([System.Text.CodePagesEncodingProvider]::Instance)
+          $path = Join-Path $PWD 'menu-smoke-idm.txt'
+          if (-not (Test-Path -LiteralPath $path)) {
+            Write-Host "::error::menu-smoke-idm.txt was not produced."
+            exit 1
+          }
+          $text = [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::GetEncoding(936))
+          $line = ($text -split "`r?`n" | Where-Object { $_ -like '*本机检测到的 IDM*' } | Select-Object -First 1)
+          if (-not $line) {
+            Write-Host "::error::Main menu did not print the detected IDM version line even though IDMan.exe exists."
+            exit 1
+          }
+          if ($line -notmatch '\d+\.\d+') {
+            Write-Host "::error::Detected IDM version line carries no version number: $line"
+            exit 1
+          }
+          # 假的 IDMan.exe 版本必然与 idmsupport 不同，应当打出提示行
+          if ($text -notlike '*与已适配版本不同*') {
+            Write-Host "::error::Main menu did not warn about the version mismatch."
+            exit 1
+          }
+          Write-Host "Detected-version smoke OK: $($line.Trim())"
+
+      # 开始激活.cmd 是 README 指引用户双击的主入口，此前完全没有冒烟覆盖 ——
+      # 它里面的环境自检有好几层嵌套括号块，批处理语法写错的话所有用户第一屏就报错，
+      # 而只跑 IAS.cmd 的冒烟一个都抓不到。这里伪造一个已安装的 IDM（notepad.exe 冒充
+      # IDMan.exe，外加浏览器集成开关键），把自检的"检测到 IDM"分支整条走一遍。
+      # runner 本身是管理员，fltmc 检查会直接放行，不会触发提权分支。
+      # 入口文件名是中文，而 Actions 把 cmd 步骤的 run: 内容按 UTF-8 写进临时 .cmd，
+      # cmd.exe 却按 OEM 代码页解析 —— 步骤里的中文在脚本自己的 chcp 936 生效前就已经
+      # 坏掉了（表现为 '"开始激?cmd"' is not recognized）。所以先用 pwsh 复制出一个
+      # 纯 ASCII 名的副本，cmd 步骤里只出现 ASCII。副本与原文件同目录，脚本内部靠
+      # %~dp0 找 IAS.cmd，不受改名影响。
+      - name: Stage an ASCII-named copy of the entry script
+        shell: pwsh
+        run: Copy-Item -LiteralPath '开始激活.cmd' -Destination 'start-entry.cmd' -Force
+
+      - name: Smoke probe — entry script runs its environment checks
+        shell: cmd
+        run: |
+          chcp 936 >nul
+          md "%ProgramFiles(x86)%\Internet Download Manager" 2>nul
+          copy /y "%SystemRoot%\System32\notepad.exe" "%ProgramFiles(x86)%\Internet Download Manager\IDMan.exe" >nul
+          reg add "HKLM\SOFTWARE\WOW6432Node\Internet Download Manager" /v AdvIntDriverEnabled2 /t REG_DWORD /d 1 /f >nul
+          echo 0| call start-entry.cmd -qedit > start-smoke.txt 2>&1
+          type start-smoke.txt
+          reg delete "HKLM\SOFTWARE\WOW6432Node\Internet Download Manager" /v AdvIntDriverEnabled2 /f >nul 2>&1
+          del /f /q "%ProgramFiles(x86)%\Internet Download Manager\IDMan.exe" >nul 2>&1
+          rd "%ProgramFiles(x86)%\Internet Download Manager" >nul 2>&1
+          del /f /q start-entry.cmd >nul 2>&1
+          exit /b 0
+
+      - name: Assert the entry script printed its checks without batch errors
+        shell: pwsh
+        run: |
+          [System.Text.Encoding]::RegisterProvider([System.Text.CodePagesEncodingProvider]::Instance)
+          $path = Join-Path $PWD 'start-smoke.txt'
+          if (-not (Test-Path -LiteralPath $path)) {
+            Write-Host "::error::start-smoke.txt was not produced; the entry-script probe did not run."
+            exit 1
+          }
+          $text = [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::GetEncoding(936))
+          foreach ($needle in @('已获取管理员权限', '已找到 IAS.cmd', '已检测到 IDM 安装路径')) {
+            if ($text -notlike "*$needle*") {
+              Write-Host "::error::Environment check line missing from the entry script output: $needle"
+              exit 1
+            }
+          }
+          # 浏览器集成开关自检：上一步写了 AdvIntDriverEnabled2=1，应当读出并报告已开启
+          if ($text -notlike '*IDM 浏览器集成开关已开启*') {
+            Write-Host "::error::The entry script did not report the browser-integration switch even though AdvIntDriverEnabled2=1 was set."
+            exit 1
+          }
+          # 嵌套括号块写坏时的典型报错，出现即视为回归
+          foreach ($bad in @('此时不应有', '命令语法不正确', '不是内部或外部命令', '系统找不到指定的批处理标签', '语法错误')) {
+            if ($text -like "*$bad*") {
+              Write-Host "::error::Entry script output contains a batch syntax error: $bad"
+              exit 1
+            }
+          }
+          Write-Host "Entry script smoke OK: environment checks rendered, integration switch reported."
+
+      # 回归守卫：注册表扫描那段 PowerShell 不是 cmd 执行的，而是靠
+      # [io.file]::ReadAllText 把 IAS.cmd 自身读出来、按成对标记切开后交给 iex。
+      # 两个坑都真实发生过，各自对应一条断言：
+      #   1) ReadAllText 的单参数重载在文件无 BOM 时按 UTF-8 解码，而 IAS.cmd 是
+      #      无 BOM 的 GBK —— 整段中文会解成替换字符，用户看到一屏乱码。
+      #   2) 分割用的正则是 ':regscan\:.*'，任何地方（包括注释）出现该标记字面量
+      #      都会多切一刀，$f[1] 就不再是 PowerShell 代码，iex 直接失败。
+      - name: Assert the embedded PowerShell segment decodes and splits correctly
+        shell: pwsh
+        run: |
+          [System.Text.Encoding]::RegisterProvider([System.Text.CodePagesEncodingProvider]::Instance)
+          $gbk = [System.Text.Encoding]::GetEncoding(936)
+          $text = [System.IO.File]::ReadAllText((Join-Path $PWD 'IAS.cmd'), $gbk)
+
+          # 每一处读取本文件的调用都必须显式带上 936，否则中文必然乱码
+          $bare = ([regex]::Matches($text, [regex]::Escape("[io.file]::ReadAllText('!_batp!')"))).Count
+          if ($bare -gt 0) {
+            Write-Host "::error::Found $bare ReadAllText call(s) without an explicit encoding. The GBK script would be decoded as UTF-8 and every Chinese string in the embedded segment turns into mojibake."
+            exit 1
+          }
+
+          $parts = $text -split ':regscan\:.*'
+          if ($parts.Count -ne 3) {
+            Write-Host "::error::Splitting on the regscan marker produced $($parts.Count) parts, expected 3. Something (often a comment quoting the marker verbatim) introduced an extra split point; the extracted text is no longer the PowerShell body."
+            exit 1
+          }
+          $seg = $parts[1]
+          if ($seg -notmatch '\$finalValues\s*=') {
+            Write-Host "::error::The extracted segment does not start with the expected PowerShell body."
+            exit 1
+          }
+          if ($seg.Contains([char]0xFFFD)) {
+            Write-Host "::error::The extracted segment contains U+FFFD replacement characters — it was decoded with the wrong encoding."
+            exit 1
+          }
+          foreach ($needle in @('正在扫描', '正在锁定 IDM CLSID 注册表键', '由于锁定被跳过')) {
+            if (-not $seg.Contains($needle)) {
+              Write-Host "::error::Expected Chinese string '$needle' missing from the extracted segment."
+              exit 1
+            }
+          }
+          Write-Host "Embedded segment OK: decoded as GBK, split into 3 parts, Chinese strings intact."
+
+      # 发布包校验放在所有脚本冒烟之后：一个过期的发布包不应该掩盖脚本本身的
+      # 冒烟结果。前面全绿、只有这一步红，就等于「代码是好的，但包没重新打」。
+      - name: Verify release bundle matches the repository
+        shell: pwsh
+        run: ./tools/verify-release.ps1
+
+      # 必须排在校验之后：先跑打包会把 release/ 刷成最新，校验就永远是假绿。
+      # if: always() 是为了在校验失败时也产出一份打好的包 —— 维护者（可能在
+      # macOS 上，没法生成 GBK 条目名的 zip）直接下载这个 artifact 放回
+      # release/ 提交即可，不用再去找一台 Windows。
+      - name: Rebuild release bundle for maintainers
+        if: always()
+        shell: pwsh
+        run: ./tools/pack-release.ps1
+
+      - name: Upload rebuilt release bundle
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-bundle-rebuilt
+          path: |
+            release/IDM-Activation-Script.zip
+            release/IDM-Activation-Script.zip.sha256
+          if-no-files-found: error

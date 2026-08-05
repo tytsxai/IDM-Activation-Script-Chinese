@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 先看常见问题（README FAQ）
+    url: https://github.com/tytsxai/IDM-Activation-Script-Chinese#-常见问题
+    about: 管理员权限、IDM 未安装、乱码、网络、PowerShell 策略、Win11 24H2、Defender 拦截等大多数问题已有解答。
+  - name: 📝 完整更新日志
+    url: https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/CHANGELOG.md
+    about: 如果你在某个版本之后遇到新问题，先比对 CHANGELOG.md 是否命中已知变更。
+  - name: 🔐 安全漏洞（请勿公开提交）
+    url: https://github.com/tytsxai/IDM-Activation-Script-Chinese/security/advisories/new
+    about: 安全问题请走 GitHub Security Advisory 私密通道，参见 SECURITY.md。

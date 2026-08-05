@@ -1,0 +1,32 @@
+# Keep batch scripts runnable on Windows (IAS.cmd expects CRLF)
+*.cmd text eol=crlf
+
+# Keep plain-text helpers aligned with Windows editors
+*.txt text eol=crlf
+
+# llms.txt is read by AI search engines (https://llmstxt.org) in UTF-8 + LF;
+# override the *.txt rule above so this single file stays cross-platform.
+llms.txt text eol=lf
+
+# Normalize Markdown for GitHub
+*.md text eol=lf
+
+# GitHub Actions / Issue templates (YAML must be LF)
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# CI helper scripts (run via pwsh, LF is fine and keeps diffs clean)
+*.ps1 text eol=lf
+
+# Release bundle: never let any EOL/text heuristic touch these bytes, or the
+# published SHA256 stops matching what users download.
+*.zip binary
+*.sha256 text eol=lf
+
+# Extensionless text files need an explicit rule too. Without one, a Windows
+# checkout with core.autocrlf=true (the default on GitHub's Windows runners)
+# rewrites LICENSE to CRLF, so the release bundle's contents would depend on
+# which machine packed it.
+LICENSE text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
