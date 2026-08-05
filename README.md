@@ -12,11 +12,11 @@
 
 **30 秒上手**：[下载 ZIP](#快速下载) → 全部解压 → 双击 `开始激活.cmd` → UAC 点"是" → 菜单里按 `2` 激活。详细步骤见[使用方法](#使用方法)，不确定选哪个模式见[功能说明](#功能说明)。
 
-> **In English**: this is the Simplified Chinese edition of [lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script) — GBK-encoded batch scripts with Chinese menus for Windows users who would otherwise hit CP936 console garbling. Modes: `[2]` activate (recommended), `[1]` freeze trial, `[3]` reset, `[4]`/`[5]` disable/restore IDM's auto-update check. No binary patching, automatic registry backup. Full details: **[English README](README.en.md)**.
+> **In English**: this is the Simplified Chinese edition of [WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script) — GBK-encoded batch scripts with Chinese menus for Windows users who would otherwise hit CP936 console garbling. Modes: `[2]` activate (recommended), `[1]` freeze trial, `[3]` reset, `[4]`/`[5]` disable/restore IDM's auto-update check. No binary patching, automatic registry backup. Full details: **[English README](README.en.md)**.
 
 ## 项目简介
 
-**IDM 激活脚本中文版**（IDM Activation Script）是 [lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script) 的简体中文维护分支：全中文菜单、GBK/CP936 控制台编码、一键入口，把 Internet Download Manager（IDM）的**试用期冻结、随机注册信息激活、试用状态重置、关闭自动更新检查**封装成一个双击即用的批处理工具。不修改 IDM 程序文件，每次改注册表前自动备份，运行时只依赖 Windows 自带组件（CMD / PowerShell / 注册表），不安装、不下载任何第三方程序。
+**IDM 激活脚本中文版**（IDM Activation Script）是 [WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script) 的简体中文维护分支：全中文菜单、GBK/CP936 控制台编码、一键入口，把 Internet Download Manager（IDM）的**试用期冻结、随机注册信息激活、试用状态重置、关闭自动更新检查**封装成一个双击即用的批处理工具。不修改 IDM 程序文件，每次改注册表前自动备份，运行时只依赖 Windows 自带组件（CMD / PowerShell / 注册表），不安装、不下载任何第三方程序。
 
 | 项目 | 说明 |
 | --- | --- |
@@ -543,7 +543,9 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 本项目以 **GNU General Public License v3.0（GPL-3.0）** 开源发布，完整条款见仓库根目录的 `LICENSE` 文件。
 
-本中文版本基于上游项目 [lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script) 演进，当前中文版本由本仓库独立维护。
+本中文版本基于上游项目 [WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script) 演进，当前中文版本由本仓库独立维护。
+
+> 上游状态：原始项目 `WindowsAddict/IDM-Activation-Script` 已于 2024-04 归档，不再接受更新；早期文档里引用过的 `lstprjct/IDM-Activation-Script` 镜像仓库已从 GitHub 移除（访问返回 404）。因此本仓库的问题反馈与修复请直接提到本仓库的 [Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)，不要去上游提。
 
 使用、修改或再分发本项目时，需遵循 GPL-3.0 的基本要求：
 

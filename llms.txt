@@ -88,7 +88,7 @@ Poor fit: managed corporate or school devices (WDAC / AppLocker block unsigned s
 - **Which IDM version is supported?**: the main menu shows `脚本 <script version> | 已适配 IDM <version>` and the IDM version detected on the machine (also printed by `开始激活.cmd`'s environment check). The "adapted version" is the `idmsupport` variable at the top of `IAS.cmd`; older IDM 6.x builds normally work too.
 - **IDM keeps asking to update**: run `开始激活.cmd` and pick `[4] 禁用 IDM 更新提示` (or `IAS.cmd /noupd`); `[5]` / `IAS.cmd /reupd` restores it. See FAQ Q15 in the Chinese README.
 - **Headless / silent run**: `IAS.cmd /act /silent /log=C:\Temp\ias.log` (activate + silent + log path); swap `/act` for `/frz` to freeze, `/noupd` to disable the update check.
-- **English version**: this repo is the Chinese edition. The upstream English tool is at [lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script).
+- **English version**: this repo is the Chinese edition. The upstream English tool is at [WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script).
 
 ## Repository
 
@@ -96,7 +96,7 @@ Poor fit: managed corporate or school devices (WDAC / AppLocker block unsigned s
 - License: GPL-3.0 (inherited from upstream)
 - Platforms: Windows 7 / 8 / 8.1 / 10 / 11 (incl. 24H2)
 - Encoding: GBK (script source), Simplified Chinese (all UI strings)
-- Author: tytsxai (Chinese localization fork; original tool: lstprjct/IDM-Activation-Script)
+- Author: tytsxai (Chinese localization fork; original tool: WindowsAddict/IDM-Activation-Script)
 
 ## Legal and scope
 

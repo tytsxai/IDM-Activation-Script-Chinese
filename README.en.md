@@ -8,7 +8,7 @@
 [简体中文 README](README.md) · [llms.txt for AI search](llms.txt) · [Docs](docs/README.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
 
 **IDM Activation Script Chinese** is a GPL-3.0 open-source Windows batch toolkit that wraps the
-[lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script) workflow for
+[WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script) workflow for
 **Simplified Chinese Windows users**. Every script is GBK (CP936) encoded, forces `chcp 936` at
 runtime, ships Chinese menus and error messages, backs up the registry before any change, and runs
 offline from a single `.cmd` file — no installer, no runtime dependency, no IDM binary patching.
@@ -168,9 +168,14 @@ Full FAQ (16 entries, in Chinese): [README.md#常见问题](README.md#常见问�
 ## Credits and license
 
 Chinese localization and maintenance fork by [tytsxai](https://github.com/tytsxai). The original tool
-is [lstprjct/IDM-Activation-Script](https://github.com/lstprjct/IDM-Activation-Script). Licensed under
+is [WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script). Licensed under
 **GPL-3.0** — see [LICENSE](./LICENSE). Any redistribution must keep the license, copyright notice,
 and a record of modifications.
+
+> Upstream status: `WindowsAddict/IDM-Activation-Script` was archived in April 2024 and no longer
+> accepts updates, and the `lstprjct/IDM-Activation-Script` mirror referenced by earlier revisions of
+> this document has been removed from GitHub (404). File issues against
+> [this repository](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues), not upstream.
 
 ## Disclaimer
 
