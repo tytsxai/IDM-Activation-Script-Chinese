@@ -574,6 +574,16 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 - **AI / LLM 结构化摘要**: [`llms.txt`](./llms.txt)（中英双语，含项目定位、功能、限制与文档地图）
 - **上游原版（已归档）**: https://github.com/WindowsAddict/IDM-Activation-Script
 
+## 搜索关键词 / Search Keywords
+
+**中文**：IDM 激活脚本中文版、IDM 冻结试用期、IDM 试用期重置、IDM 一键激活、IDM 注册信息、IDM 关闭更新提示、Internet Download Manager 激活、IDM Windows 11 / 24H2、GBK 中文批处理。
+
+**English**: IDM Activation Script Chinese, Internet Download Manager trial freeze, IDM trial reset, IDM activation batch, Windows CMD GBK, IDM update check disable, open-source IDM script.
+
+**GitHub About 建议**：`Simplified Chinese IDM Activation Script — freeze trial, activate, reset, disable update prompts; GBK menus for Windows 7–11.`
+
+**Topics 建议**：`idm` `internet-download-manager` `idm-activation-script` `windows-batch` `cmd-script` `powershell` `gbk` `cp936` `windows-11` `chinese-localization`
+
 ## 免责声明
 
 > **本脚本仅供学习和测试使用！**
