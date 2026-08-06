@@ -1,0 +1,83 @@
+# IDM 激活脚本中文版 / IDM Activation Script (Simplified Chinese)
+
+> 面向中文 Windows 的 Internet Download Manager（IDM）试用期管理与激活批处理工具。双击一个 `.cmd` 文件即可运行，全中文菜单，GBK/CP936 编码不乱码，不修改 IDM 程序文件，改注册表前自动备份。GPL-3.0 开源，Windows 7/8/8.1/10/11 可用。
+
+> A Simplified-Chinese Windows batch toolkit for Internet Download Manager (IDM). It can freeze the IDM trial period, activate IDM by writing generated registration data, reset activation/trial state, and toggle IDM's automatic update check. Chinese console UI with GBK/CP936 code page handling, no IDM binary patching, automatic registry backup before every write. GPL-3.0, Windows 7 through 11.
+
+本文件是给大语言模型和 AI 搜索引擎的结构化项目摘要（llms.txt 约定）。所有陈述都可以在本仓库内自行验证。
+This file is a structured project summary for LLMs and AI search engines (llms.txt convention). Every claim here is verifiable inside this repository.
+
+## 项目事实 / Project facts
+
+- 仓库 / Repository: https://github.com/tytsxai/IDM-Activation-Script-Chinese
+- 项目类型 / Type: Windows 批处理脚本工具（Windows batch script tool），不是 GUI 程序、不是浏览器扩展、不是安装包
+- 解决的问题 / Problem solved: 英文 IDM 激活脚本在中文 CMD 控制台下乱码；新手不清楚该运行哪个文件、要不要管理员权限、SmartScreen 与杀软拦截怎么处理；激活或试用状态异常后缺少可回退、可排查的处理流程
+- 适合谁 / Audience: 中文 Windows 个人用户；以及想研究 Windows 批处理、注册表 ACL 操作、GBK/CP936 控制台兼容的开发者
+- 不适合谁 / Not for: 企业受管设备（WDAC / AppLocker 会拦截未签名脚本）、服务器批量部署、macOS 与 Linux、任何需要合法商业授权凭证的生产环境
+- 技术栈 / Tech stack: Windows Batch (cmd.exe)、PowerShell（UAC 提权与环境探测）、Windows 注册表、WMI / CIM、GBK/CP936 + CRLF、GitHub Actions（windows-latest）CI
+- 许可证 / License: GPL-3.0
+- 语言 / Language: 界面与文档为简体中文
+- 平台 / Platform: 仅 Windows 7 / 8 / 8.1 / 10 / 11（含 24H2）
+- 依赖 / Dependencies: 无第三方依赖，只用 Windows 自带组件；不下载、不安装任何外部程序
+- 与 Tonec Inc. 的关系 / Vendor relationship: 无隶属、无授权、无合作；本仓库不分发 IDM 安装包
+- 真实性边界 / Truthfulness boundary: 本仓库不提供也不宣称任何 Star 数、下载量、用户案例、性能对比或商业背书
+
+## 核心功能 / Core features
+
+菜单项与命令行参数一一对应（`IAS.cmd <参数>`）：
+
+- `[1]` 冻结试用期 / Freeze trial（`/frz`）— 推荐。不写入序列号，冻结 IDM 的试用期跟踪，因此不触发 IDM 的联网序列号校验，在 IDM 6.42+ 上最稳定
+- `[2]` 激活 / Activate（`/act`）— 写入随机生成的姓名、邮箱与序列号。不需要账号、不需要先领试用期；代价是部分环境下 IDM 可能判定为"假序列号"并弹窗
+- `[3]` 重置激活与试用期 / Reset（`/res`）— 清除注册信息与试用计数，回到初始状态
+- `[4]` / `[5]` 禁用 / 恢复 IDM 自动更新检查 / Disable or restore IDM update check（`/noupd`、`/reupd`）— 只改注册表 `HKCU\Software\DownloadManager` 下的 `CheckUpdtVM` 一个值，与激活状态互不影响
+- `/silent`（别名 `/quiet`）无人值守、`/log=路径` 输出日志，配合退出码用于脚本化调用；日志路径不能含空格
+- 运行前 9 项环境自检：管理员权限、`IAS.cmd` 是否就位、PowerShell 可用性与语言模式、Null 服务、网络连通性、代码页、WMI/CIM、IDM 安装路径（顺带打印 IDM 版本与浏览器集成开关）、当前目录写权限
+- 每次改注册表前自动导出 `.reg` 备份到 `%SystemRoot%\Temp`，可双击导入还原
+
+退出码 / Exit codes: `0` 成功；`1` 进入业务流程但未成功（未装 IDM、注册表读写失败、网络不通等）；`2` 环境或参数错误（静默模式缺动作参数、缺管理员权限、缺 PowerShell、系统版本不支持等）。
+
+## 快速开始 / Quick start
+
+1. 从 Releases 或 `release/` 目录下载 `IDM-Activation-Script.zip`，**全部解压**到普通可写目录（不要在压缩包内直接运行，不要放在 `C:\Program Files`）
+2. 可选：PowerShell 里 `Get-FileHash .\IDM-Activation-Script.zip -Algorithm SHA256`，与同目录 `.sha256` 文件比对
+3. 双击 `开始激活.cmd`（唯一入口），UAC 弹窗点"是"
+4. 等待环境自检完成，在菜单按 `1` 冻结试用期
+
+命令行等价（管理员 CMD）：`IAS.cmd /frz`；无人值守：`IAS.cmd /frz /silent /log=C:\Temp\ias.log`（日志路径不能含空格）。
+
+## 限制与注意 / Limitations
+
+- `[1]` 冻结与 `[2]` 激活需要能连通 internetdownloadmanager.com，连不通会以退出码 `1` 退出且不改注册表；`[3]` `[4]` `[5]` 可离线执行
+- SmartScreen / Defender / 第三方杀软可能拦截未签名批处理，属启发式误报；可先校验 SHA256 再运行
+- 企业环境的 WDAC / AppLocker 会拦截未签名脚本，这是 IT 策略层限制，应联系管理员而非绕过
+- `.cmd` 源码以 GBK 保存，在 UTF-8 环境（GitHub 网页、部分 Web IDE）中查看会显示乱码，用 `iconv -f GBK -t UTF-8` 或支持 GBK 的编辑器打开
+- 注册表备份与日志不会自动清理，确认 IDM 正常后可自行删除 `C:\Windows\Temp` 下的 `_Backup_*_CLSID_*.reg` 与 `IAS-*.log`
+- 请在合法授权且理解风险的前提下使用，遵守当地法律法规与 IDM 软件许可协议；长期使用请购买正版
+
+## 与上游的关系 / Relationship to upstream
+
+本项目源自 [WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script)，该上游仓库已于 2024-04 归档、不再更新，其内容为英文单脚本（`IAS.cmd`，约 942 行，仅 `/act` `/frz` `/res` 三个参数，无代码页处理）。本仓库在此基础上做了简体中文本地化与工程化增强，当前由本仓库独立维护，问题反馈请提到本仓库 Issues，不要提到已归档的上游。
+
+Derived from the archived upstream `WindowsAddict/IDM-Activation-Script` (archived April 2024, English-only single script). This fork adds Simplified-Chinese localization, a dedicated entry point with environment self-check, silent/logging modes, an IDM update-check toggle, and Windows CI. Maintained independently here.
+
+## 文档 / Documentation
+
+- [README.md](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/README.md): 完整用户文档 — 功能说明、使用方法、使用场景、17 条 FAQ、注册表与退出码等技术细节
+- [使用说明.txt](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.txt): 极简上手指南，随发布包分发，记事本可直接打开
+- [CHANGELOG.md](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/CHANGELOG.md): 唯一的对外版本变更历史
+- [ARCHITECTURE.md](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/ARCHITECTURE.md): 维护者视角的仓库结构、CI 数据流、退出码语义、高风险点
+- [docs/README.md](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/docs/README.md): 文档索引与阅读路径
+- [CONTRIBUTING.md](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/CONTRIBUTING.md): 贡献规则、编码与换行约束、本地自检命令
+- [SECURITY.md](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/SECURITY.md): 安全漏洞上报范围与流程
+- [OPEN_SOURCE_POLICY.md](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/OPEN_SOURCE_POLICY.md): 公开开源策略与可见性守卫
+
+## 源码 / Source
+
+- [IAS.cmd](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/IAS.cmd): 核心引擎，参数解析、环境探测、冻结/激活/重置流程、更新开关、注册表备份与日志
+- [开始激活.cmd](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/%E5%BC%80%E5%A7%8B%E6%BF%80%E6%B4%BB.cmd): 唯一入口，自动提权 + 环境自检后调用 `IAS.cmd`
+- [tools/validate.ps1](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/tools/validate.ps1): CI 校验编码（`.cmd` 必须 GBK 无 BOM）与行尾
+- [tools/verify-release.ps1](https://github.com/tytsxai/IDM-Activation-Script-Chinese/blob/main/tools/verify-release.ps1): CI 校验发布包与仓库一致、版本号自洽
+
+## 常见问题关键词 / Common question keywords
+
+IDM 激活脚本中文版、IDM 试用期冻结、IDM 重置试用期、IDM 关闭更新提示、IDM 控制台中文乱码、IDM 激活后仍提示未注册、IDM 假序列号已被封锁、IDM 升级后激活失效、IDM 浏览器集成扩展变灰、IDM activation script Chinese, IDM freeze trial, IDM trial reset, disable IDM update check, IDM registry backup, GBK CP936 console encoding.

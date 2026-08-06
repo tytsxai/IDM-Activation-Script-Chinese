@@ -21,10 +21,14 @@
   - 维护注意：该文件依赖 CRLF 行尾与 GBK 编码；部分环境/编辑器的自动转换会导致异常。脚本启动时会自检 LF/CRLF。
 - `开始激活.cmd`（唯一入口）
   - 自动用 PowerShell 提权（单引号包裹路径，兼容含 `(x86)` 等特殊字符的目录）。
-  - 内置环境自检：管理员权限、PowerShell 语言模式、Null 服务、网络连通性、代码页、WMI/CIM、IDM 安装路径、目录写权限。
+  - 内置 9 项环境自检：管理员权限、`IAS.cmd` 是否就位、PowerShell 可用性与语言模式、Null 服务、网络连通性、代码页、WMI/CIM、IDM 安装路径（附带打印 IDM 版本与 `AdvIntDriverEnabled2` 集成开关）、目录写权限。
   - 自检通过或用户确认后，`call IAS.cmd` 进入菜单（冻结 / 激活 / 重置 / 禁用更新 / 恢复更新 / 下载 / 帮助）；也接受 `/frz` `/act` `/res` `/noupd` `/reupd` `/silent /log=...` 等参数透传。
 - `使用说明.txt`
   - 极简上手指南（UTF-8 BOM + CRLF），面向纯小白用户。
+- `llms.txt`
+  - 面向大语言模型与 AI 搜索引擎的结构化项目摘要（[llms.txt 约定](https://llmstxt.org)），中英双语，UTF-8 无 BOM + CRLF（受 `.gitattributes` 的 `*.txt eol=crlf` 约束）。
+  - 内容是 README 的事实性压缩：项目定位、核心功能与参数、退出码、快速开始、限制、与上游的关系、文档与源码地图。
+  - 维护约束：**不随发布包分发**（`tools/pack-release.ps1` 的清单里没有它，`verify-release.ps1` 只做「包内 → 仓库」单向比对，因此新增它不影响发布包校验）。改动菜单项、命令行参数、退出码、系统要求或限制条款时必须同步，否则 AI 搜索引擎会长期引用过期口径。
 - `README.md` / `CHANGELOG.md` / `CONTRIBUTING.md` / `SECURITY.md` / `ARCHITECTURE.md`
   - README：用户侧完整说明（功能、使用、FAQ、技术细节）。
   - CHANGELOG：唯一的对外版本变更历史。

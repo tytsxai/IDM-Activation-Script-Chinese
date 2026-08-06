@@ -6,9 +6,11 @@
 [![支持平台](https://img.shields.io/badge/支持平台-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
 [![最新发布](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese?label=最新发布)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases)
 
-[文档](docs/README.md) · [开源策略](OPEN_SOURCE_POLICY.md) · [更新日志](CHANGELOG.md) · [问题反馈](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
+[文档](docs/README.md) · [AI 摘要 llms.txt](llms.txt) · [开源策略](OPEN_SOURCE_POLICY.md) · [更新日志](CHANGELOG.md) · [问题反馈](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
 
-> **一键激活 Internet Download Manager（IDM）的中文脚本工具**：支持 IDM 冻结试用期、随机注册信息激活、试用期一键重置三种模式，并可一键禁用 / 恢复 IDM 的自动更新检查（不再反复弹更新窗），全程中文菜单与提示，无需安装任何依赖，单个 `.cmd` 文件即可在 Windows 7 / 8 / 10 / 11 上稳定运行。
+> **面向中文 Windows 的 Internet Download Manager（IDM）试用期管理与激活脚本**：冻结试用期、写入注册信息激活、重置试用状态、一键关闭 IDM 更新提示。全中文菜单、GBK 编码不乱码、不修改 IDM 程序文件、改注册表前自动备份，双击即用，无需任何依赖。
+
+**English** — A Simplified-Chinese Windows **batch toolkit for Internet Download Manager (IDM)**: freeze the trial period, activate by writing generated registration data, reset activation/trial state, and toggle IDM's automatic update check. Chinese console UI with proper GBK/CP936 code-page handling, no IDM binary patching, and an automatic registry backup before every write. Windows 7–11, zero dependencies, GPL-3.0. A structured summary for LLMs and AI search engines lives in [llms.txt](./llms.txt).
 
 **30 秒上手**：[下载 ZIP](#快速下载) → 全部解压 → 双击 `开始激活.cmd` → UAC 点"是" → 菜单里按 `1` 冻结试用期。详细步骤见[使用方法](#使用方法)，不确定选哪个模式见[功能说明](#功能说明)。
 
@@ -65,6 +67,7 @@
 - [项目简介](#项目简介)
 - [快速下载](#快速下载)
 - [功能特性](#功能特性)
+- [与上游原版的区别](#与上游原版的区别)
 - [系统要求](#系统要求)
 - [使用方法](#使用方法)
 - [功能说明](#功能说明)
@@ -82,16 +85,35 @@
 ## 功能特性
 
 - ✅ **IDM 6.x 常见版本兼容** - 基于现有注册表结构维护，更新 IDM 后可重新运行冻结或重置流程
-- ✅ **三种激活模式** - `[1]` 冻结激活、`[2]` 普通激活、`[3]` 重置，随时可互相切换
-- ✅ **可关闭 IDM 更新弹窗** - 一键禁用/恢复 IDM 自动更新检查，顺带避免升级后激活失效
+- ✅ **三种处理模式** - `[1]` 冻结试用期、`[2]` 激活（写入注册信息）、`[3]` 重置，随时可互相切换
+- ✅ **可关闭 IDM 更新弹窗** - `[4]`/`[5]` 一键禁用或恢复 IDM 自动更新检查，顺带避免升级后激活失效
 - ✅ **中文显示优化** - 全部批处理/文本使用 GBK 编码，运行时强制 `chcp 936`，避免控制台乱码
-- ✅ **自动备份** - 安全备份注册表，随时可恢复
-- ✅ **智能检测** - 自动检测系统环境和 IDM 状态
-- ✅ **环境自检** - 附带环境检测脚本（管理员/PowerShell/Null 服务/网络/代码页）
-- ✅ **无需破解** - 不修改 IDM 程序文件
-- ✅ **开源可审查** - GPL-3.0 许可，脚本和发布说明均可公开审查
+- ✅ **注册表自动备份** - 每次改写前把相关分支导出为 `%SystemRoot%\Temp` 下的 `.reg`，双击即可导入还原
+- ✅ **环境自检** - 进菜单前依次检查 9 项（管理员权限 / `IAS.cmd` 就位 / PowerShell 与语言模式 / Null 服务 / 网络 / 代码页 / WMI-CIM / IDM 安装路径与版本 / 目录写权限），失败时直接指出是哪一项
+- ✅ **可脚本化调用** - `/silent` 无人值守、`/log=路径` 落盘日志，退出码 `0`/`1`/`2` 区分成功、业务失败与环境错误
+- ✅ **无需破解** - 不修改 IDM 程序文件，只读写 IDM 相关注册表键
+- ✅ **开源可审查** - GPL-3.0 许可，脚本与发布说明均可公开审查，发布包附 SHA256 校验值
 
 > ⚠️ 提示：脚本文件使用 GBK 编码（便于 Windows 控制台显示），在 GitHub/Web IDE 中查看可能出现乱码，可用支持 GBK 的编辑器或 `iconv`。
+
+## 与上游原版的区别
+
+本项目源自 [WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script)。**该上游仓库已于 2024-04 归档、不再更新**，下表对比的是它归档时的最终状态（仓库内仅 `IAS.cmd`、`README.md`、`.gitattributes`、`.Rhistory` 四个文件）。
+
+| 对比项 | 上游原版（已归档） | 本仓库（持续维护） |
+|--------|--------------------|--------------------|
+| 界面语言 | 英文 | 简体中文 |
+| 控制台编码 | 不做代码页处理，中文 Windows 下易乱码 | GBK 保存 + 运行时 `chcp 936`，中文正常显示 |
+| 入口 | 直接运行 `IAS.cmd` | 独立入口 `开始激活.cmd`，自动提权 + 9 项环境自检后再进菜单 |
+| 命令行参数 | `/act` `/frz` `/res` | 上述三项，外加 `/noupd` `/reupd` `/silent` `/log=` |
+| IDM 更新提示开关 | 无 | `[4]` / `[5]` 一键禁用或恢复（`CheckUpdtVM`） |
+| 无人值守 / 日志 | 无 | `/silent` + `/log=路径`，配合退出码 `0` / `1` / `2` 供脚本判断 |
+| 系统信息探测 | 旧版 WMI（`Get-WmiObject`） | 优先 `Get-CimInstance`，失败才回退，规避新版 Windows 上的卡死 |
+| 自动化校验 | 无 CI | GitHub Actions（`windows-latest`）校验编码、行尾、脚本冒烟、发布包哈希一致性 |
+| 发布产物 | 无 | 固定文件名 zip + `.sha256`，CI 守住"改了仓库忘了重新打包" |
+| 脚本规模 | 约 942 行 | 约 1264 行 |
+
+核心的注册表操作思路继承自上游，冻结（`/frz`）与激活（`/act`）的原理一致；本仓库的增量集中在中文化、可用性、可排查性和工程守卫上。上游已归档，因此**问题反馈请提到本仓库的 [Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)**，提到上游不会有人处理。
 
 ## 系统要求
 
@@ -107,7 +129,7 @@
 ## 使用方法
 
 > 懒人两步：解压后双击 `开始激活.cmd` → 在弹出的"是"窗口里授予管理员权限 → 它会先自检环境，再弹出菜单，**按数字选 `[1]` 冻结试用期（推荐，最稳）** 即可；若你从未领过 30 天试用期、想让 IDM 直接可用，再改选 `[2]` 激活。  
-> 小贴士：`开始激活.cmd` 进菜单前会一次检查管理员权限、PowerShell 语言模式、Null 服务、网络连通性、代码页、WMI、IDM 路径与当前目录写权限，全程仅需本仓库文件。
+> 小贴士：`开始激活.cmd` 进菜单前会一次检查 9 项 —— 管理员权限、`IAS.cmd` 是否就位、PowerShell 可用性与语言模式、Null 服务、网络连通性、代码页、WMI/CIM、IDM 安装路径（顺带打印 IDM 版本与浏览器集成开关）与当前目录写权限，全程仅需本仓库文件。
 
 > ### ⚠️ 第一次运行前必看
 >
@@ -164,7 +186,7 @@ IAS.cmd /reupd
 IAS.cmd /act /silent /log=C:\Temp\ias.log
 ```
 
-> 说明：`/silent` 抑制菜单与等待；未带 `/frz` `/act` `/res` `/noupd` `/reupd` 即开启静默将返回码 2。同时给 `/noupd` 和 `/reupd` 时以 `/noupd` 为准。
+> 说明：`/silent`（等价别名 `/quiet`）抑制菜单与等待；未带 `/frz` `/act` `/res` `/noupd` `/reupd` 即开启静默将返回码 2。同时给 `/noupd` 和 `/reupd` 时以 `/noupd` 为准。
 >
 > 日志：
 > - `/log` 不带路径 → 写到 `%SystemRoot%\Temp\IAS-<时间戳>.log`，脚本启动时会把完整路径打印出来；
@@ -215,7 +237,7 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 |----------|----------|
 | 刚装好 IDM，只想让它能用 | 菜单 `[1]` 冻结试用期；从未领过试用期、想跳过它直接可用则选 `[2]` 激活 |
 | 已经用 IDM 账号领了 30 天试用期，想把它固定住 | 菜单 `[1]` 冻结试用期 |
-| 用 `[2]` 激活后 IDM 弹"未注册 / 假序列号" | 先 `[3]` 重置，再 `[1]` 冻结（见 [Q13](#常见问题)） |
+| 用 `[2]` 激活后 IDM 弹"未注册 / 假序列号" | 先 `[3]` 重置，再 `[1]` 冻结（见 [Q13](#q13)） |
 | 升级 IDM 后激活失效 | `[3]` 重置 → 重新 `[1]` 冻结（或 `[2]` 激活），再用 `[4]` 关掉自动更新 |
 | IDM 反复弹"发现新版本" | 菜单 `[4]` 禁用更新提示，需要时 `[5]` 恢复 |
 | 自己有多台机器，想免交互执行 | `IAS.cmd /frz /silent /log=C:\Temp\ias.log`，按退出码判断结果 |
@@ -226,6 +248,7 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 ## 常见问题
 
+<a id="q1"></a>
 <details>
 <summary><b>Q1: 提示"需要管理员权限"怎么办？</b></summary>
 
@@ -236,8 +259,9 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q2"></a>
 <details>
-<summary><b>Q2: 提示"IDM 未安装"？</b></summary>
+<summary><b>Q2: 提示"IDM 未安装"/未找到 IDM 安装路径？</b></summary>
 
 **解决方法：**
 1. 先确认 `IDMan.exe` 已存在，常见路径是 `C:\Program Files (x86)\Internet Download Manager\IDMan.exe` 或 `C:\Program Files\Internet Download Manager\IDMan.exe`。
@@ -247,18 +271,20 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q3"></a>
 <details>
-<summary><b>Q3: 激活后仍提示注册？</b></summary>
+<summary><b>Q3: IDM 激活后仍提示"未注册"怎么办？</b></summary>
 
 **解决方法：**
-1. 改用 `[1]` "激活（冻结）"选项——它不写序列号，最不容易被 IDM 判定为"假序列号"而重复弹注册窗
+1. 改用 `[1]` "冻结试用期"选项——它不写序列号，最不容易被 IDM 判定为"假序列号"而重复弹注册窗
 2. 或先选 `[3]` "重置激活"，再重新选 `[2]` 激活
 3. 完全卸载 IDM 后重新安装，再激活
 
 </details>
 
+<a id="q4"></a>
 <details>
-<summary><b>Q4: 中文显示为乱码？</b></summary>
+<summary><b>Q4: 运行脚本时中文菜单显示为乱码？</b></summary>
 
 **解决方法：**
 1. 菜单与提示均为 GBK + `chcp 936`，正常中文系统不会乱码。旧版控制台（"使用旧版控制台"勾选时）下，个别带颜色的提示会以无颜色的纯文本显示，中文仍然正确。
@@ -267,6 +293,7 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q5"></a>
 <details>
 <summary><b>Q5: 提示"无法连接到 internetdownloadmanager.com"？</b></summary>
 
@@ -278,8 +305,9 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q6"></a>
 <details>
-<summary><b>Q6: PowerShell 被组织策略禁用？</b></summary>
+<summary><b>Q6: PowerShell 被组织策略禁用或处于受限语言模式？</b></summary>
 
 **解决方法：**
 - 联系本机/域管理员解除限制
@@ -288,6 +316,7 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q7"></a>
 <details>
 <summary><b>Q7: Windows 11 24H2 上脚本是否可用？</b></summary>
 
@@ -298,6 +327,7 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q8"></a>
 <details>
 <summary><b>Q8: Windows Defender / 第三方杀软拦截脚本？</b></summary>
 
@@ -308,6 +338,7 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q9"></a>
 <details>
 <summary><b>Q9: 企业环境启用了 WDAC / AppLocker，脚本直接拒绝执行？</b></summary>
 
@@ -318,17 +349,19 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q10"></a>
 <details>
 <summary><b>Q10: IDM 6.42 / 6.43 等较新版本是否兼容？</b></summary>
 
 **解决方法：**
 - 本脚本基于 IDM 注册表 CLSID 结构工作，IDM 6.x 系列整体保持兼容
 - **主菜单会直接标出"已适配 IDM `<版本>`"和"本机检测到的 IDM `<版本>`"**（`开始激活.cmd` 的环境自检里也会打印本机 IDM 版本），不再是模糊的"支持最新版"；两者不一致时菜单会给出提示，但不代表一定不能用——IDM 6.x 之间差异通常很小，可以照常尝试
-- 若更新 IDM 后发现激活失效，建议先在菜单选 `[3]` 执行"重置激活"（或 `IAS.cmd /res`），再重新选择 `[2]` "激活"；若激活后仍提示未注册，改用 `[1]` "冻结激活"
+- 若更新 IDM 后发现激活失效，建议先在菜单选 `[3]` 执行"重置激活"（或 `IAS.cmd /res`），再重新选择 `[2]` "激活"；若激活后仍提示未注册，改用 `[1]` "冻结试用期"
 - 仍不生效时，请在 Issue 中带上 `开始激活.cmd` 的环境检测输出与 IDM 具体版本号
 
 </details>
 
+<a id="q11"></a>
 <details>
 <summary><b>Q11: 冻结或激活后 IDM 自己又启动，是脚本一直在后台运行吗？</b></summary>
 
@@ -340,6 +373,7 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q12"></a>
 <details>
 <summary><b>Q12: 脚本一直卡在"正在初始化…"不动怎么办？</b></summary>
 
@@ -353,18 +387,20 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q13"></a>
 <details>
 <summary><b>Q13: 用 [2] 激活后弹出"假序列号已被封锁 / 请购买 IDM / 剩余 0 天"怎么办？</b></summary>
 
 **原因：** `[2]` 激活会写入一个随机序列号；IDM 联网校验后可能把它判定为"假序列号"，从而弹出提示并回落到试用/购买页面。这是随机序列号方式的固有风险，并非脚本出错。
 
 **解决方法：**
-1. 改用 `[1]` **激活（冻结）**：它**不写入任何序列号**，而是冻结 IDM 的试用期跟踪，不会触发联网序列号校验，因此不会再被判"假序列号"，在 IDM 6.42+ 上最稳定。
+1. 改用 `[1]` **冻结试用期**：它**不写入任何序列号**，而是冻结 IDM 的试用期跟踪，不会触发联网序列号校验，因此不会再被判"假序列号"，在 IDM 6.42+ 上最稳定。
 2. 切换前先选 `[3]` **重置激活**清掉旧的随机序列号，再选 `[1]` 冻结。
 3. 若之前已领取并在用 30 天试用期，直接用 `[1]` 冻结把试用期固定住即可。
 
 </details>
 
+<a id="q14"></a>
 <details>
 <summary><b>Q14: 激活后浏览器打不开某些网页（如 1panel 面板/内网管理页），重置后恢复正常？</b></summary>
 
@@ -377,6 +413,7 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q15"></a>
 <details>
 <summary><b>Q15: IDM 老是弹"发现新版本/请更新"，能不能关掉？</b></summary>
 
@@ -390,6 +427,7 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q16"></a>
 <details>
 <summary><b>Q16: Edge / Chrome 里的 IDM 扩展图标变灰、右下角带红叉，不能接管下载？</b></summary>
 
@@ -404,14 +442,15 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 **按顺序排查：**
 1. **先确认 IDM 正在运行**。激活 / 冻结 / 重置流程的最后一步会结束 `IDMan.exe`，脚本跑完 IDM 是关着的。手动启动 IDM，再刷新网页并重新加载扩展。
-2. **确认扩展和 IDM 版本匹配**。商店里的 IDM Integration Module 会自动更新，一旦扩展比本机 IDM 新（或本机 IDM 太旧），扩展就会显示灰色报错。把 IDM 升级到与扩展相近的版本，或从 IDM 安装目录里手动加载扩展。升级 IDM 后激活可能失效，重新跑一次脚本即可；不想被自动升级打扰可以用菜单 `[4]`（见 Q15）。
+2. **确认扩展和 IDM 版本匹配**。商店里的 IDM Integration Module 会自动更新，一旦扩展比本机 IDM 新（或本机 IDM 太旧），扩展就会显示灰色报错。把 IDM 升级到与扩展相近的版本，或从 IDM 安装目录里手动加载扩展。升级 IDM 后激活可能失效，重新跑一次脚本即可；不想被自动升级打扰可以用菜单 `[4]`（见 [Q15](#q15)）。
 3. **确认 IDM 里的集成开关是开的**：IDM → 选项 → 常规 → 勾选对应浏览器（Edge / Chrome）的集成，保存后**完全退出浏览器**（含托盘和后台进程）再打开。
-4. **确认 IDM 处于正常注册状态**。IDM 判定"假序列号"后会限制自身功能，扩展也会跟着报错。若 IDM 主界面弹注册窗或提示序列号被封锁，先按 Q13 用 `[3]` 重置 + `[1]` 冻结，再看扩展。
+4. **确认 IDM 处于正常注册状态**。IDM 判定"假序列号"后会限制自身功能，扩展也会跟着报错。若 IDM 主界面弹注册窗或提示序列号被封锁，先按 [Q13](#q13) 用 `[3]` 重置 + `[1]` 冻结，再看扩展。
 5. **确认装 IDM 的 Windows 账户和用扩展的账户是同一个**。集成信息写在 `HKCU` 下，用另一个账户装的 IDM 在当前账户里集成不上；换回原账户或以当前账户重装 IDM。
 6. 上面都试过仍是灰色报错，属于 IDM 自身的集成问题（通常重装 IDM 可修复）。若要在本仓库反馈，请附上**扩展图标点开后的完整报错文字**、IDM 版本号（运行 `开始激活.cmd` 时会打印）、浏览器与扩展版本，只写"灰色报错"无法定位。
 
 </details>
 
+<a id="q17"></a>
 <details>
 <summary><b>Q17: 环境检测全绿后清屏，一闪而过「拒绝访问。」进不了菜单？</b></summary>
 
@@ -499,6 +538,7 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 | `使用说明.txt` | 极简上手指南（UTF-8，Windows 记事本即可查看） |
 | `README.md` | 当前完整图文说明 |
 | `CHANGELOG.md` | 全部历史版本的详细变更记录 |
+| `llms.txt` | 面向大语言模型与 AI 搜索引擎的结构化项目摘要（[llms.txt 约定](https://llmstxt.org)），中英双语，不随发布包分发 |
 
 ## 更新日志
 
@@ -521,6 +561,7 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 - 维护 / 发布检查清单：[docs/maintenance-checklist.md](./docs/maintenance-checklist.md)
 - Windows 冒烟基线：[docs/reports/smoke-win-baseline.md](./docs/reports/smoke-win-baseline.md)
 - 安全漏洞上报：[SECURITY.md](./SECURITY.md)
+- AI / LLM 摘要：[llms.txt](./llms.txt) —— 改动菜单项、命令行参数、退出码、系统要求或限制条款时，需同步这里，否则 AI 搜索引擎会引用到过期口径
 - CI 校验脚本：[tools/validate.ps1](./tools/validate.ps1)（在 GitHub Actions 的 `Windows validation` 工作流中执行）
 - 换行约束：[.gitattributes](./.gitattributes)（`*.cmd` / `*.txt` 为 CRLF；`*.md` / `*.yml` 为 LF）。编码由 [tools/validate.ps1](./tools/validate.ps1) 在 CI 中校验：`.cmd` 必须是无 BOM 的 GBK
 
@@ -530,6 +571,8 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 - **IDM 官网**: https://www.internetdownloadmanager.com
 - **问题反馈**: https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues
 - **文档索引**: [`docs/README.md`](./docs/README.md)
+- **AI / LLM 结构化摘要**: [`llms.txt`](./llms.txt)（中英双语，含项目定位、功能、限制与文档地图）
+- **上游原版（已归档）**: https://github.com/WindowsAddict/IDM-Activation-Script
 
 ## 免责声明
 

@@ -2,6 +2,8 @@
 
 本目录收纳 IDM 激活脚本中文版（IDM Activation Script Chinese）的维护资料、发布说明和 Windows 冒烟验证记录。仓库本身以 **GPL-3.0** 开源发布，文档也按公开可审查、可引用、可维护的原则编写。
 
+> 只想拿一份结构化的项目摘要（给大语言模型或 AI 搜索引擎用）？直接读仓库根目录的 [llms.txt](../llms.txt)，中英双语，涵盖项目定位、核心功能、快速开始、限制与文档地图。
+
 ## 项目定位
 
 - 项目类型：Windows `.cmd` 批处理工具集 / Windows batch script toolkit
@@ -11,6 +13,7 @@
 - 开源策略：GPL-3.0，保持公开可审查、可再分发
 - 关系声明：Internet Download Manager 是 Tonec Inc. 的商业产品，本仓库与其无任何隶属或合作关系，也不分发 IDM 本体
 - 真实性边界：文档只写仓库里能验证的内容，不提供 Star 数、下载量、用户案例、性能对比或商业背书
+- 与上游的关系：源自已于 2024-04 归档的 [WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script)（英文单脚本），本仓库在其基础上做中文本地化与工程化增强并独立维护，逐项对比见 [README 的「与上游原版的区别」](../README.md#与上游原版的区别)
 
 ## 新用户阅读路径
 
