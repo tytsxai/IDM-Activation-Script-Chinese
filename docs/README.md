@@ -34,5 +34,4 @@
 
 ## 发布说明
 
-每次发版会在本目录新增一份 `release-notes-<版本>.md`，与对应 GitHub Release 的正文一致。
-当前为首个版本，完整变更见 [CHANGELOG.md](../CHANGELOG.md)。
+发布说明的唯一载体是 [CHANGELOG.md](../CHANGELOG.md)，GitHub Release 的正文直接取自其中对应版本的段落，本目录**不再单独保存一份副本** —— 同一份内容存两处必然互相漂移。历史版本的发布说明见对应 tag 的 [Release 页面](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases)。

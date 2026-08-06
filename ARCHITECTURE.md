@@ -37,7 +37,6 @@
   - ARCHITECTURE：本文件，维护者视角的仓库结构与高风险点。
 - `docs/`
   - `README.md`：公开文档索引，面向新用户、维护者和 AI 搜索引擎说明文档入口与真实性边界。
-  - `release-notes-<版本>.md`：每次发版新增一份发布说明，与 GitHub Release 正文对应。
   - `maintenance-checklist.md`：维护/发布检查清单。
   - `reports/smoke-win-baseline.md`：当前版本 Windows 冒烟基线模板。
   - 维护约束：`docs/` 作为公开维护资料随仓库保留；发版时应同步 README / CHANGELOG 中的用户可见信息，避免公开文档互相矛盾。

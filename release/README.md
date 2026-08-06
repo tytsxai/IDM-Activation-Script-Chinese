@@ -14,7 +14,7 @@
 版本号并没有消失，由这几处标识：
 
 - Git tag 与对应的 [GitHub Release](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases) 标题；
-- [`CHANGELOG.md`](../CHANGELOG.md) 与 `docs/release-notes-<版本>.md`；
+- [`CHANGELOG.md`](../CHANGELOG.md) 中对应版本的段落（GitHub Release 正文即取自此处）；
 - `IAS.cmd` 里的 `iasver`，脚本运行时会显示在窗口标题和菜单上方。
 
 ## 历史版本去哪儿了
