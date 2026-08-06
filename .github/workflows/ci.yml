@@ -162,6 +162,49 @@ jobs:
           }
           Write-Host "Main menu smoke OK: $banner"
 
+      # 回归守卫：:_color / :_color2 的非 ANSI 分支曾经取错参数位（文案在 %2 / %2%4，
+      # 却分别读成 %3 和 %3%6）。后果只在不支持 ANSI 转义的控制台上出现 ——
+      # Windows 7/8/8.1（winbuild < 10586），或用户把 HKCU\Console\ForceV2 关掉 ——
+      # 表现为满屏 "ECHO is on." 和颜色码字面量，提示文案全部丢失。
+      # runner 永远走 ANSI 分支，前面所有冒烟一个都抓不到，所以这里显式把
+      # ForceV2 置 0 让脚本自己把 _NCS 判成 0，真正跑一遍回退分支，跑完立刻还原。
+      - name: Smoke probe — main menu on a non-ANSI console (_NCS=0)
+        shell: cmd
+        run: |
+          chcp 936 >nul
+          reg add "HKCU\Console" /v ForceV2 /t REG_DWORD /d 0 /f >nul
+          echo 0| call IAS.cmd -qedit > menu-noansi.txt 2>&1
+          type menu-noansi.txt
+          reg delete "HKCU\Console" /v ForceV2 /f >nul 2>&1
+          exit /b 0
+
+      - name: Assert the non-ANSI fallback still prints its text
+        shell: pwsh
+        run: |
+          [System.Text.Encoding]::RegisterProvider([System.Text.CodePagesEncodingProvider]::Instance)
+          $path = Join-Path $PWD 'menu-noansi.txt'
+          if (-not (Test-Path -LiteralPath $path)) {
+            Write-Host "::error::menu-noansi.txt was not produced; the non-ANSI probe did not run."
+            exit 1
+          }
+          $text = [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::GetEncoding(936))
+          # :_color2 的文案（主菜单提示行）必须照常出现
+          if ($text -notlike '*在键盘上输入你的选项*') {
+            Write-Host "::error::The non-ANSI console lost the menu prompt text — a :_color2 fallback branch is reading the wrong argument position again."
+            exit 1
+          }
+          # echo 收到空参数时 cmd 会打印 'ECHO is on.'，这正是取错参数位的特征
+          if ($text -match 'ECHO is (on|off)' -or $text -like '*处于打开状态*') {
+            Write-Host "::error::The non-ANSI console printed an 'ECHO is on' line — a :_color/:_color2 fallback branch echoed an empty argument."
+            exit 1
+          }
+          # 回退分支不该再吐出 ANSI 转义序列或裸颜色码
+          if ($text -match "$([char]0x1B)\[") {
+            Write-Host "::error::The non-ANSI console still emitted ANSI escape sequences."
+            exit 1
+          }
+          Write-Host "Non-ANSI fallback OK: prompt text rendered, no empty-echo and no escape codes."
+
       # 上一条只覆盖"未检测到 IDM"的分支。这里用 notepad.exe 冒充 IDMan.exe 并写
       # HKCU 的 ExePath，把版本探测那条 PowerShell 也跑一遍，断言真的读出了文件
       # 版本号、并打出"与已适配版本不同"的提示。放在所有激活相关冒烟之后，跑完

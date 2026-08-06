@@ -1,4 +1,4 @@
-@set iasver=1.0.0
+@set iasver=1.0.1
 ::  本脚本最后实际验证过的 IDM 版本（主菜单据此显示"已适配版本"，发版时同步更新）
 @set idmsupport=6.43
 @setlocal DisableDelayedExpansion
@@ -492,8 +492,8 @@ echo:                本机未检测到 IDM，请先安装 IDM 再激活
 )
 echo:            ___________________________________________________
 echo:
-echo:               [1] 激活（冻结）
-echo:               [2] 激活
+echo:               [1] 冻结试用期（推荐）
+echo:               [2] 激活（写入注册信息）
 echo:               [3] 重置激活/试用期
 echo:               _____________________________________________
 echo:
@@ -556,7 +556,7 @@ call :add_key
 echo:
 echo %line%
 echo:
-call :_color %Green% "IDM 重置功能已完成。"
+call :_color %Green% "IDM 重置已完成。"
 
 goto done
 
@@ -722,9 +722,9 @@ if %frz%==0 if %_unattended%==0 (
 echo:
 echo %line%
 echo:
-echo      警告：对某些用户而言（设置），IDM 可能会显示假阳性序列号提示。
+echo      提示：部分环境下，激活后 IDM 可能弹出虚假序列号窗口。
 echo:
-call :_color2 %_White% "     " %_Green% "请你使用冻结激活选项。"
+call :_color2 %_White% "     " %_Green% "更稳的做法是返回菜单改选 [1] 冻结试用期。"
 echo %line%
 echo:
 choice /C:19 /N /M ">    [1] 返回 [9] 继续 : "
@@ -798,9 +798,9 @@ echo:
 echo %line%
 echo:
 if %frz%==0 (
-call :_color %Green% "IDM 激活功能已完成。"
+call :_color %Green% "IDM 激活已完成。"
 echo:
-call :_color %Gray% "如果你遇到假阳性序列号的话，请使用冻结激活选项。"
+call :_color %Gray% "若 IDM 弹出虚假序列号窗口，请回到菜单改选 [1] 冻结试用期。"
 ) else (
 call :_color %Green% "IDM 的 30 天试用期已成功设置冻结。"
 echo:
@@ -1247,7 +1247,7 @@ exit /b
 if %_NCS% EQU 1 (
 echo %esc%[%~1%~2%esc%[0m
 ) else (
-echo %~3
+echo %~2
 )
 exit /b
 
@@ -1256,7 +1256,7 @@ exit /b
 if %_NCS% EQU 1 (
 echo %esc%[%~1%~2%esc%[%~3%~4%esc%[0m
 ) else (
-echo %~3%~6
+echo %~2%~4
 )
 exit /b
 
