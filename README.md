@@ -3,7 +3,7 @@
 [![Windows 验证](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
 [![许可证](https://img.shields.io/badge/许可证-GPL--3.0-blue.svg)](./LICENSE)
 [![版本](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese?label=版本&color=brightgreen)](./CHANGELOG.md)
-[![支持平台](https://img.shields.io/badge/支持平台-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
+[![支持平台](https://img.shields.io/badge/支持平台-Windows%207%20%7C%208%20%7C%208.1%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
 [![最新发布](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese?label=最新发布)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases)
 
 [文档](docs/README.md) · [AI 摘要 llms.txt](llms.txt) · [开源策略](OPEN_SOURCE_POLICY.md) · [更新日志](CHANGELOG.md) · [问题反馈](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
