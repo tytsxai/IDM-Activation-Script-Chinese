@@ -162,12 +162,16 @@ jobs:
           }
           Write-Host "Main menu smoke OK: $banner"
 
-      # 回归守卫：:_color / :_color2 的非 ANSI 分支曾经取错参数位（文案在 %2 / %2%4，
-      # 却分别读成 %3 和 %3%6）。后果只在不支持 ANSI 转义的控制台上出现 ——
-      # Windows 7/8/8.1（winbuild < 10586），或用户把 HKCU\Console\ForceV2 关掉 ——
-      # 表现为满屏 "ECHO is on." 和颜色码字面量，提示文案全部丢失。
-      # runner 永远走 ANSI 分支，前面所有冒烟一个都抓不到，所以这里显式把
-      # ForceV2 置 0 让脚本自己把 _NCS 判成 0，真正跑一遍回退分支，跑完立刻还原。
+      # 回归守卫：:_color / :_color2 的两个分支读的参数位**不一样**，这不是笔误。
+      # 颜色变量有两套定义：_NCS=1（支持 ANSI）时是单个 token（Red="41;97m"），
+      # _NCS=0 时是两个 token（Red="Red" "white"，即 back + fore）。于是同一处
+      # `call :_color %Red% "文案"` 在前者里文案落在 %2、后者落在 %3；:_color2 同理
+      # 是 %2%4 与 %3%6。把回退分支"顺手对齐"成 ANSI 分支的参数位，就会让文案变成
+      # 空 echo（"ECHO is on."）或裸颜色名（"GrayBlack"）。
+      # 这类改动只在不支持 ANSI 的控制台上暴露 —— Windows 7/8/8.1（winbuild < 10586），
+      # 或用户关掉了 HKCU\Console\ForceV2 —— 而 runner 永远走 ANSI 分支，前面所有冒烟
+      # 一个都抓不到。所以这里显式把 ForceV2 置 0 让脚本自己把 _NCS 判成 0，
+      # 真正跑一遍回退分支，跑完立刻还原。
       - name: Smoke probe — main menu on a non-ANSI console (_NCS=0)
         shell: cmd
         run: |

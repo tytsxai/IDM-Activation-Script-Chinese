@@ -1247,7 +1247,7 @@ exit /b
 if %_NCS% EQU 1 (
 echo %esc%[%~1%~2%esc%[0m
 ) else (
-echo %~2
+echo %~3
 )
 exit /b
 
@@ -1256,7 +1256,7 @@ exit /b
 if %_NCS% EQU 1 (
 echo %esc%[%~1%~2%esc%[%~3%~4%esc%[0m
 ) else (
-echo %~2%~4
+echo %~3%~6
 )
 exit /b
 
