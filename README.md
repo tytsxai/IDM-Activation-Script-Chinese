@@ -1,18 +1,23 @@
-# IDM 激活脚本中文版（IDM Activation Script · 简体中文）
+# IDM 激活脚本中文版 — Internet Download Manager 试用期冻结与激活工具
 
-[![Windows 验证](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
-[![许可证](https://img.shields.io/badge/许可证-GPL--3.0-blue.svg)](./LICENSE)
-[![版本](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese?label=版本&color=brightgreen)](./CHANGELOG.md)
-[![支持平台](https://img.shields.io/badge/支持平台-Windows%207%20%7C%208%20%7C%208.1%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
-[![最新发布](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese?label=最新发布)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases)
+[![Windows CI](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](./LICENSE)
+[![Version](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese?label=version&color=brightgreen)](./CHANGELOG.md)
+[![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%208.1%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
 
-[文档](docs/README.md) · [AI 摘要 llms.txt](llms.txt) · [开源策略](OPEN_SOURCE_POLICY.md) · [更新日志](CHANGELOG.md) · [问题反馈](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
+[文档](docs/README.md) · [AI 摘要 (llms.txt)](llms.txt) · [更新日志](CHANGELOG.md) · [问题反馈](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues) · [开源策略](OPEN_SOURCE_POLICY.md)
 
-> **面向中文 Windows 的 Internet Download Manager（IDM）试用期管理与激活脚本**：冻结试用期、写入注册信息激活、重置试用状态、一键关闭 IDM 更新提示。全中文菜单、GBK 编码不乱码、不修改 IDM 程序文件、改注册表前自动备份，双击即用，无需任何依赖。
+面向中文 Windows 的 **IDM（Internet Download Manager）试用期管理与激活批处理脚本**。一键冻结试用期、写入注册信息激活、重置试用状态、关闭 IDM 更新提示。全中文菜单，GBK 编码在中文控制台不乱码，不修改 IDM 程序文件，每次改注册表前自动备份可还原。双击 `开始激活.cmd` 即用，无需安装任何依赖。
 
-**English** — A Simplified-Chinese Windows **batch toolkit for Internet Download Manager (IDM)**: freeze the trial period, activate by writing generated registration data, reset activation/trial state, and toggle IDM's automatic update check. Chinese console UI with proper GBK/CP936 code-page handling, no IDM binary patching, and an automatic registry backup before every write. Windows 7–11, zero dependencies, GPL-3.0. A structured summary for LLMs and AI search engines lives in [llms.txt](./llms.txt).
+### Quick Start (30 秒上手)
 
-**30 秒上手**：[下载 ZIP](#快速下载) → 全部解压 → 双击 `开始激活.cmd` → UAC 点"是" → 菜单里按 `1` 冻结试用期。详细步骤见[使用方法](#使用方法)，不确定选哪个模式见[功能说明](#功能说明)。
+[下载 ZIP](#快速下载) → 全部解压 → 双击 `开始激活.cmd` → UAC 点"是" → 菜单里按 `1` 冻结试用期。
+
+详细步骤见[使用方法](#使用方法)，不确定选哪个模式见[功能说明](#功能说明)。
+
+### English Summary
+
+A Simplified-Chinese Windows **batch toolkit for Internet Download Manager (IDM)**: freeze the trial period, activate by writing generated registration data, reset activation/trial state, and toggle IDM's automatic update check. Chinese console UI with proper GBK/CP936 code-page handling, no IDM binary patching, automatic registry backup before every write. Works on Windows 7 through 11, zero external dependencies, open-source under GPL-3.0. For a machine-readable project summary, see [llms.txt](./llms.txt).
 
 ## 项目简介
 
@@ -78,6 +83,7 @@
 - [更新日志](#更新日志)
 - [维护与贡献](#维护与贡献)
 - [相关链接](#相关链接)
+- [搜索引擎与 AI 索引信息](#搜索引擎与-ai-索引信息)
 - [免责声明](#免责声明)
 - [许可证](#许可证)
 - [版本与维护](#版本与维护)
@@ -463,6 +469,32 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 
 </details>
 
+<a id="q18"></a>
+<details>
+<summary><b>Q18: 激活/冻结后过一两天又弹「免费试用已到期」或「请注册」？</b></summary>
+
+**原因：** IDM 会周期性联网校验注册状态。`[2]` 激活写入的随机序列号被 IDM 服务器判定为无效后，会重新弹出试用到期或注册窗口；`[1]` 冻结锁住的 CLSID 键也可能在 IDM 自动更新后被重写。
+
+**解决方法：**
+1. 先运行 `[3]` **重置激活**，清掉旧状态。
+2. 改用 `[1]` **冻结试用期**（不写序列号，不触发联网校验，最稳）。
+3. 同时选 `[4]` **禁用 IDM 更新提示**，防止 IDM 自动升级后覆盖冻结状态。
+4. 若仍然复发，完全卸载 IDM → 重装 → `[3]` 重置 → `[1]` 冻结 → `[4]` 禁用更新。
+
+</details>
+
+<a id="q19"></a>
+<details>
+<summary><b>Q19: 环境检测全部通过后黑屏卡死，任务管理器里 powershell.exe 一直不退出？</b></summary>
+
+**原因：** `IAS.cmd` 中 `powershell.exe` 的调用缺少 `-NoProfile -Command` 参数。在真实控制台（stdin 为控制台设备）下，裸 `powershell.exe "..."` 不会执行引号内的命令，而是进入交互模式永久等待输入，导致黑屏卡死。`开始激活.cmd` 的环境检测已带 `-NoProfile -Command`，所以能正常通过，问题只出现在进入 `IAS.cmd` 之后。
+
+**解决方法：**
+1. 更新到最新版本（此问题已在 `IAS.cmd` 中修复）。
+2. 临时绕过：管理员 CMD 进入脚本目录后执行 `IAS.cmd -qedit`。
+
+</details>
+
 ## 技术细节
 
 ### 工作原理
@@ -539,6 +571,7 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 | `README.md` | 当前完整图文说明 |
 | `CHANGELOG.md` | 全部历史版本的详细变更记录 |
 | `llms.txt` | 面向大语言模型与 AI 搜索引擎的结构化项目摘要（[llms.txt 约定](https://llmstxt.org)），中英双语，不随发布包分发 |
+| `llms-full.txt` | llms.txt 的扩展版，包含完整功能列表、工作原理、FAQ 速查、文件清单等技术参考，同样不随发布包分发 |
 
 ## 更新日志
 
@@ -561,28 +594,30 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 - 维护 / 发布检查清单：[docs/maintenance-checklist.md](./docs/maintenance-checklist.md)
 - Windows 冒烟基线：[docs/reports/smoke-win-baseline.md](./docs/reports/smoke-win-baseline.md)
 - 安全漏洞上报：[SECURITY.md](./SECURITY.md)
-- AI / LLM 摘要：[llms.txt](./llms.txt) —— 改动菜单项、命令行参数、退出码、系统要求或限制条款时，需同步这里，否则 AI 搜索引擎会引用到过期口径
+- AI / LLM 摘要：[llms.txt](./llms.txt) 与 [llms-full.txt](./llms-full.txt) —— 改动菜单项、命令行参数、退出码、系统要求或限制条款时，需同步这两个文件，否则 AI 搜索引擎会引用到过期口径
 - CI 校验脚本：[tools/validate.ps1](./tools/validate.ps1)（在 GitHub Actions 的 `Windows validation` 工作流中执行）
 - 换行约束：[.gitattributes](./.gitattributes)（`*.cmd` / `*.txt` 为 CRLF；`*.md` / `*.yml` 为 LF）。编码由 [tools/validate.ps1](./tools/validate.ps1) 在 CI 中校验：`.cmd` 必须是无 BOM 的 GBK
 
 ## 相关链接
 
-- **项目主页**: https://github.com/tytsxai/IDM-Activation-Script-Chinese
-- **IDM 官网**: https://www.internetdownloadmanager.com
-- **问题反馈**: https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues
-- **文档索引**: [`docs/README.md`](./docs/README.md)
-- **AI / LLM 结构化摘要**: [`llms.txt`](./llms.txt)（中英双语，含项目定位、功能、限制与文档地图）
-- **上游原版（已归档）**: https://github.com/WindowsAddict/IDM-Activation-Script
+| 链接 | 说明 |
+| --- | --- |
+| [项目主页 / Repository](https://github.com/tytsxai/IDM-Activation-Script-Chinese) | IDM 激活脚本中文版 GitHub 仓库 |
+| [最新版本下载 / Releases](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases/latest) | 下载 IDM-Activation-Script.zip |
+| [问题反馈 / Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues) | Bug 报告与使用帮助 |
+| [文档索引 / Docs](./docs/README.md) | 用户与维护者文档入口 |
+| [AI / LLM 结构化摘要](./llms.txt) | 面向 AI 搜索引擎的项目摘要（中英双语） |
+| [IDM 官网](https://www.internetdownloadmanager.com) | Internet Download Manager 官方网站 |
+| [上游原版（已归档）](https://github.com/WindowsAddict/IDM-Activation-Script) | 英文原始项目，2024-04 归档不再更新 |
 
-## 搜索关键词 / Search Keywords
+## 搜索引擎与 AI 索引信息
 
-**中文**：IDM 激活脚本中文版、IDM 冻结试用期、IDM 试用期重置、IDM 一键激活、IDM 注册信息、IDM 关闭更新提示、Internet Download Manager 激活、IDM Windows 11 / 24H2、GBK 中文批处理。
+本项目提供面向 AI 搜索引擎的结构化摘要，遵循 [llms.txt 约定](https://llmstxt.org)：
 
-**English**: IDM Activation Script Chinese, Internet Download Manager trial freeze, IDM trial reset, IDM activation batch, Windows CMD GBK, IDM update check disable, open-source IDM script.
+- [llms.txt](./llms.txt) — 项目摘要（中英双语），适合快速索引
+- [llms-full.txt](./llms-full.txt) — 完整技术参考，包含功能列表、工作原理、FAQ、文件清单
 
-**GitHub About 建议**：`Simplified Chinese IDM Activation Script — freeze trial, activate, reset, disable update prompts; GBK menus for Windows 7–11.`
-
-**Topics 建议**：`idm` `internet-download-manager` `idm-activation-script` `windows-batch` `cmd-script` `powershell` `gbk` `cp936` `windows-11` `chinese-localization`
+**推荐 GitHub Topics**：`idm` `internet-download-manager` `idm-activation-script` `idm-trial-freeze` `windows-batch` `cmd-script` `powershell` `gbk` `cp936` `windows-11` `chinese-localization` `registry-tool`
 
 ## 免责声明
 

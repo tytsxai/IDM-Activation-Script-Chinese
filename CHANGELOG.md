@@ -10,6 +10,16 @@
 
 ## 未发布（Unreleased）
 
+### 修复
+- **IAS.cmd 裸 powershell.exe 调用导致黑屏卡死** — `set psc=powershell.exe` 改为 `set "psc=powershell.exe -NoProfile -Command"`。在真实控制台下裸 `powershell.exe "..."` 会进入交互模式而非执行命令，导致环境检测通过后清屏黑屏、窗口永久无响应（[#4](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues/4)）。
+
+### 文档
+- **FAQ 新增 Q18/Q19** — Q18 覆盖「激活/冻结后过一两天又弹试用到期」（[#2](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues/2)、[#5](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues/5)）；Q19 覆盖「环境检测通过后黑屏卡死」（[#4](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues/4)）。
+
+---
+
+## 文档更新 — 2026-08-06（无脚本变更）
+
 仅文档与仓库元信息，**未改动任何脚本行为**，脚本版本仍为 `v1.0.1`。本次目标是让搜索引擎与 AI 搜索引擎能准确识别项目定位、功能边界与使用方式。
 
 ### 新增

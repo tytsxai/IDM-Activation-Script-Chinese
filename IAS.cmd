@@ -1,33 +1,33 @@
 @set iasver=1.0.1
-::  ±¾½Å±¾×îºóÊµ¼ÊÑéÖ¤¹ýµÄ IDM °æ±¾£¨Ö÷²Ëµ¥¾Ý´ËÏÔÊ¾"ÒÑÊÊÅä°æ±¾"£¬·¢°æÊ±Í¬²½¸üÐÂ£©
+::  ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ IDM ï¿½æ±¾ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ý´ï¿½ï¿½ï¿½Ê¾"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ±¾"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½
 @set idmsupport=6.43
 @setlocal DisableDelayedExpansion
 @echo off
 
-::  Ç¿ÖÆÉèÖÃ´úÂëÒ³Îª 936 (GBK/¼òÌåÖÐÎÄ)
+::  Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½Ò³Îª 936 (GBK/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 chcp 936 >nul 2>&1
 
 
 ::============================================================================
 ::
-::   IDM ¼¤»î½Å±¾ (IAS)
+::   IDM ï¿½ï¿½ï¿½ï¿½Å±ï¿½ (IAS)
 ::
-::   ÏîÄ¿Ö÷Ò³: https://github.com/tytsxai/IDM-Activation-Script-Chinese
-::   ÎÊÌâ·´À¡: https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues
-::   Ðí¿ÉÖ¤  : GPL-3.0£¨Ïê¼û²Ö¿â¸ùÄ¿Â¼ LICENSE£©
+::   ï¿½ï¿½Ä¿ï¿½ï¿½Ò³: https://github.com/tytsxai/IDM-Activation-Script-Chinese
+::   ï¿½ï¿½ï¿½â·´ï¿½ï¿½: https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues
+::   ï¿½ï¿½ï¿½ï¿½Ö¤  : GPL-3.0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½Ä¿Â¼ LICENSEï¿½ï¿½
 ::
-::   ----- ´úÂëµ¼º½£¨±ãÓÚºóÐøÎ¬»¤£© -----
-::   001-047 ÐÐ : Í·²¿ÔªÐÅÏ¢¡¢´úÂëÒ³ÉèÖÃ¡¢Ä¬ÈÏ¿ª¹Ø£¨iasver ½Å±¾°æ±¾ / idmsupport ÒÑÊÊÅä IDM °æ±¾£©
-::   047-117 ÐÐ : PATH ÉèÖÃ¡¢Sysnative / SysArm32 ¼Ü¹¹ÖØÈë¡¢²ÎÊý½âÎö£¨/act /frz /res /noupd /reupd /silent /log[=Â·¾¶]£©
-::   117-152 ÐÐ : ÈÕÖ¾³õÊ¼»¯¡¢¾²Ä¬Ä£Ê½Ð£Ñé¡¢Null ·þÎñ¼ì²â
-::   152-445 ÐÐ : »·¾³Ì½²â£¨¹ÜÀíÔ±È¨ÏÞ¡¢IDM °²×°Â·¾¶¡¢CLSID ×¢²á±íÏî¡¢ÍøÂçÁ¬Í¨ÐÔ£©
-::   447-510 ÐÐ : IDM °æ±¾Ì½²â + Ö÷²Ëµ¥£¨¶³½á / ¼¤»î / ÖØÖÃ / ¸üÐÂ¿ª¹Ø / ÏÂÔØ / °ïÖú£©£¬½»»¥·ÖÅÉ
-::   512-610 ÐÐ : ÖØÖÃÁ÷³ÌÓë×¢²á±íÉ¾³ý¶ÓÁÐ
-::   615-694 ÐÐ : ½ûÓÃ / »Ö¸´ IDM ×Ô¶¯¸üÐÂ¼ì²é£¨CheckUpdtVM£©
-::   696-945 ÐÐ : ¼¤»îÓë¶³½áºËÐÄÁ÷³Ì¡¢×¢²á±í±¸·Ý¡¢Ëæ»ú×¢²áÐÅÏ¢×¢Èë¡¢ÊÕÎ²Êä³ö
-::   948-1126 ÐÐ: CLSID É¨Ãè£¨PowerShell ÄÚÇ¶¶Î£©
-::   1128-1250 ÐÐ: ÍË³öÂë¼ÇÕË¡¢½ø³ÌÓëÊäÈë×Ó³ÌÐò£¨:kill_idm / :flush_input£©¡¢
-::                ÈÕÖ¾×Ó³ÌÐò£¨:extract_logpath / :init_log / :log£©¡¢×ÅÉ«Êä³ö
+::   ----- ï¿½ï¿½ï¿½ëµ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½Î¬ï¿½ï¿½ï¿½ï¿½ -----
+::   001-047 ï¿½ï¿½ : Í·ï¿½ï¿½Ôªï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½Ã¡ï¿½Ä¬ï¿½Ï¿ï¿½ï¿½Ø£ï¿½iasver ï¿½Å±ï¿½ï¿½æ±¾ / idmsupport ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IDM ï¿½æ±¾ï¿½ï¿½
+::   047-117 ï¿½ï¿½ : PATH ï¿½ï¿½ï¿½Ã¡ï¿½Sysnative / SysArm32 ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ë¡¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/act /frz /res /noupd /reupd /silent /log[=Â·ï¿½ï¿½]ï¿½ï¿½
+::   117-152 ï¿½ï¿½ : ï¿½ï¿½Ö¾ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬Ä£Ê½Ð£ï¿½é¡¢Null ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+::   152-445 ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½Ì½ï¿½â£¨ï¿½ï¿½ï¿½ï¿½Ô±È¨ï¿½Þ¡ï¿½IDM ï¿½ï¿½×°Â·ï¿½ï¿½ï¿½ï¿½CLSID ×¢ï¿½ï¿½ï¿½ï¿½î¡¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½Ô£ï¿½
+::   447-510 ï¿½ï¿½ : IDM ï¿½æ±¾Ì½ï¿½ï¿½ + ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+::   512-610 ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+::   615-694 ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ / ï¿½Ö¸ï¿½ IDM ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Â¼ï¿½é£¨CheckUpdtVMï¿½ï¿½
+::   696-945 ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ï¿½ë¶³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¡ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½Ï¢×¢ï¿½ë¡¢ï¿½ï¿½Î²ï¿½ï¿½ï¿½
+::   948-1126 ï¿½ï¿½: CLSID É¨ï¿½è£¨PowerShell ï¿½ï¿½Ç¶ï¿½Î£ï¿½
+::   1128-1250 ï¿½ï¿½: ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½:kill_idm / :flush_inputï¿½ï¿½ï¿½ï¿½
+::                ï¿½ï¿½Ö¾ï¿½Ó³ï¿½ï¿½ï¿½:extract_logpath / :init_log / :logï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½
 ::
 ::============================================================================
 
@@ -112,9 +112,9 @@ if /i "%%A"=="/log" set _log=1
 )
 )
 
-::  /log=Â·¾¶ µÄÂ·¾¶Òªµ¥¶ÀÌáÈ¡£¬²»ÄÜ¿¿ÉÏÃæµÄ for Ñ­»·£ºfor %%A in (...) µÄ
-::  ¼¯ºÏ½âÎö°Ñ = Ò²µ±·Ö¸ô·û£¬"/log=C:\x.log" ÔÚÄÇÀïÒÑ¾­±»²ð³É "/log" ºÍ
-::  "C:\x.log" Á½¸ö token£¬±È½ÏµÃµ½µÄÖ»»áÊÇ "/log"¡£ËùÒÔÖ±½Ó´ÓÍêÕû²ÎÊý´®ÀïÈ¡¡£
+::  /log=Â·ï¿½ï¿½ ï¿½ï¿½Â·ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ü¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ for Ñ­ï¿½ï¿½ï¿½ï¿½for %%A in (...) ï¿½ï¿½
+::  ï¿½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ = Ò²ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½"/log=C:\x.log" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ "/log" ï¿½ï¿½
+::  "C:\x.log" ï¿½ï¿½ï¿½ï¿½ tokenï¿½ï¿½ï¿½È½ÏµÃµï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ "/log"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ó´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½
 set "_logpath="
 if defined _args echo %_args%| find /i "/log=" >nul 2>&1 && call :extract_logpath
 
@@ -130,13 +130,13 @@ call :init_log
 set _log_enabled=1
 )
 if %_log_enabled%==1 (
-call :log "IAS %iasver% Æô¶¯£¬²ÎÊý: %_args%"
-call :log "ÈÕÖ¾Êä³ö: %log_file%"
-if %_silent%==0 echo ÈÕÖ¾ÎÄ¼þ: %log_file%
+call :log "IAS %iasver% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: %_args%"
+call :log "ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½: %log_file%"
+if %_silent%==0 echo ï¿½ï¿½Ö¾ï¿½Ä¼ï¿½: %log_file%
 )
 
 if %_silent%==1 if %_activate%==0 if %_freeze%==0 if %_reset%==0 if %_noupd%==0 if %_reupd%==0 (
-call :set_exit 2 "¾²Ä¬Ä£Ê½È±ÉÙ²Ù×÷²ÎÊý£¬ÍË³ö"
+call :set_exit 2 "ï¿½ï¿½Ä¬Ä£Ê½È±ï¿½Ù²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½"
 goto done2
 )
 
@@ -144,12 +144,12 @@ goto done2
 
 sc query Null | find /i "RUNNING" >nul 2>&1
 if %errorlevel% NEQ 0 (
-call :log "¾¯¸æ: Null ·þÎñÎ´ÔËÐÐ£¬¿ÉÄÜµ¼ÖÂ½Å±¾³ö´í"
+call :log "ï¿½ï¿½ï¿½ï¿½: Null ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½Üµï¿½ï¿½Â½Å±ï¿½ï¿½ï¿½ï¿½ï¿½"
 echo:
-echo Null ·þÎñÎ´ÔËÐÐ£¬½Å±¾¿ÉÄÜ»á³ö´í...
+echo Null ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½Ð£ï¿½ï¿½Å±ï¿½ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½ï¿½...
 echo:
 echo:
-echo °ïÖú - %mas%
+echo ï¿½ï¿½ï¿½ï¿½ - %mas%
 echo:
 echo:
 if %_silent%==1 (ping 127.0.0.1 -n 2 >nul) else ping 127.0.0.1 -n 10
@@ -162,9 +162,9 @@ chcp 936 >nul 2>&1
 pushd "%~dp0"
 >nul findstr /v "$" "%~nx0" && (
 echo:
-echo ´íÎó: ½Å±¾°üº¬LF»»ÐÐ·û»ò½Å±¾Ä©Î²È±ÉÙ¿ÕÐÐ¡£
+echo ï¿½ï¿½ï¿½ï¿½: ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½LFï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½Å±ï¿½Ä©Î²È±ï¿½Ù¿ï¿½ï¿½Ð¡ï¿½
 echo:
-call :set_exit 2 "´íÎó: ¼ì²âµ½ LF »»ÐÐ·û»òÈ±ÉÙÄ©Î²¿ÕÐÐ"
+call :set_exit 2 "ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½âµ½ LF ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½È±ï¿½ï¿½Ä©Î²ï¿½ï¿½ï¿½ï¿½"
 if %_silent%==1 (ping 127.0.0.1 -n 2 >nul) else ping 127.0.0.1 -n 6 >nul
 popd
 exit /b %exit_code%
@@ -176,7 +176,7 @@ popd
 cls
 chcp 936 >nul 2>&1
 color 07
-title  IDM ¼¤»î½Å±¾ %iasver%
+title  IDM ï¿½ï¿½ï¿½ï¿½Å±ï¿½ %iasver%
 
 ::========================================================================================================================================
 
@@ -185,7 +185,7 @@ set "nul2=2>nul"
 set "nul6=2^>nul"
 set "nul=>nul 2>&1"
 
-set psc=powershell.exe
+set "psc=powershell.exe -NoProfile -Command"
 set winbuild=1
 for /f "tokens=6 delims=[]. " %%G in ('ver') do set winbuild=%%G
 
@@ -221,16 +221,16 @@ set "_buf={$W=$Host.UI.RawUI.WindowSize;$B=$Host.UI.RawUI.BufferSize;$W.Height=3
 
 if %winbuild% LSS 7600 (
 %nceline%
-echo ¼ì²âµ½²»Ö§³ÖµÄ²Ù×÷ÏµÍ³°æ±¾ [%winbuild%].
-echo ´Ë½Å±¾Ö§³Ö Windows 7/8/8.1/10/11 ¼°ÆäºóÐø°æ±¾¡£
-call :set_exit 2 "²»Ö§³ÖµÄ²Ù×÷ÏµÍ³°æ±¾ [%winbuild%]"
+echo ï¿½ï¿½âµ½ï¿½ï¿½Ö§ï¿½ÖµÄ²ï¿½ï¿½ï¿½ÏµÍ³ï¿½æ±¾ [%winbuild%].
+echo ï¿½Ë½Å±ï¿½Ö§ï¿½ï¿½ Windows 7/8/8.1/10/11 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ±¾ï¿½ï¿½
+call :set_exit 2 "ï¿½ï¿½Ö§ï¿½ÖµÄ²ï¿½ï¿½ï¿½ÏµÍ³ï¿½æ±¾ [%winbuild%]"
 goto done2
 )
 
 for %%# in (powershell.exe) do @if "%%~$PATH:#"=="" (
 %nceline%
-echo ÏµÍ³ÖÐÕÒ²»µ½ powershell.exe¡£
-call :set_exit 2 "ÏµÍ³ÖÐÕÒ²»µ½ powershell.exe"
+echo ÏµÍ³ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ powershell.exeï¿½ï¿½
+call :set_exit 2 "ÏµÍ³ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ powershell.exe"
 goto done2
 )
 
@@ -257,11 +257,11 @@ setlocal EnableDelayedExpansion
 echo "!_batf!" | find /i "!_ttemp!" %nul1% && (
 if /i not "!_work!"=="!_ttemp!" (
 %eline%
-echo ½Å±¾´ÓÁÙÊ±ÎÄ¼þ¼ÐÖÐÔËÐÐ¡£
-echo Äã¿ÉÄÜ´ÓÑ¹ËõÎÄ¼þ²é¿´Æ÷ÖÐÔËÐÐ½Å±¾¡£
+echo ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½
+echo ï¿½ï¿½ï¿½ï¿½Ü´ï¿½Ñ¹ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½é¿´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½Å±ï¿½ï¿½ï¿½
 echo:
-echo Çë½âÑ¹Ñ¹ËõÎÄ¼þ£¬È»ºó´Ó½âÑ¹ºóµÄÎÄ¼þ¼ÐÖÐÔËÐÐ½Å±¾¡£
-call :set_exit 2 "½Å±¾´ÓÁÙÊ±ÎÄ¼þ¼ÐÔËÐÐ£¬±»×èÖ¹"
+echo ï¿½ï¿½ï¿½Ñ¹Ñ¹ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½È»ï¿½ï¿½Ó½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½Å±ï¿½ï¿½ï¿½
+call :set_exit 2 "ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹"
 goto done2
 )
 )
@@ -276,11 +276,11 @@ REM :PowerShellTest: $ExecutionContext.SessionState.LanguageMode :PowerShellTest
 %eline%
 %psc% $ExecutionContext.SessionState.LanguageMode
 echo:
-echo PowerShell ÎÞ·¨Õý³£¹¤×÷£¬½ø³Ì±»×èÖ¹...
-echo ÄãµÄ×éÖ¯¿ÉÄÜ½ûÓÃÁË Powershell Ó¦ÓÃ£¬ÒÔ·ÀÖ¹ÕâÐ©Çé¿ö¡£
+echo PowerShell ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì±ï¿½ï¿½ï¿½Ö¹...
+echo ï¿½ï¿½ï¿½ï¿½ï¿½Ö¯ï¿½ï¿½ï¿½Ü½ï¿½ï¿½ï¿½ï¿½ï¿½ Powershell Ó¦ï¿½Ã£ï¿½ï¿½Ô·ï¿½Ö¹ï¿½ï¿½Ð©ï¿½ï¿½ï¿½ï¿½ï¿½
 echo:
-echo ²é¿´ÍøÒ³ÒÔ»ñÈ¡°ïÖú£º%mas%
-call :set_exit 2 "PowerShell ÔËÐÐ±»×èÖ¹"
+echo ï¿½é¿´ï¿½ï¿½Ò³ï¿½Ô»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%mas%
+call :set_exit 2 "PowerShell ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½Ö¹"
 goto done2
 )
 
@@ -291,9 +291,9 @@ goto done2
 %nul1% fltmc || (
 if not defined _elev %psc% "start cmd.exe -arg '/c \"!_PSarg!\"' -verb runas" && exit /b
 %eline%
-echo ´Ë½Å±¾ÐèÒª¹ÜÀíÔ±È¨ÏÞ¡£
-echo ÇëÓÒ¼ü´Ë½Å±¾£¬Ñ¡Ôñ"ÒÔ¹ÜÀíÔ±Éí·ÝÔËÐÐ"¡£
-call :set_exit 2 "È±ÉÙ¹ÜÀíÔ±È¨ÏÞ"
+echo ï¿½Ë½Å±ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ô±È¨ï¿½Þ¡ï¿½
+echo ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½Ë½Å±ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½"ï¿½Ô¹ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½
+call :set_exit 2 "È±ï¿½Ù¹ï¿½ï¿½ï¿½Ô±È¨ï¿½ï¿½"
 goto done2
 )
 
@@ -327,13 +327,13 @@ set "d3=$t.DefinePInvokeMethod('SetConsoleMode', 'kernel32.dll', 22, 1, [Boolean
 set "d4=$k=$t.CreateType(); $b=$k::SetConsoleMode($k::GetStdHandle(-10), 0x0080);"
 
 if defined quedit goto :skipQE
-::  conhost ÖØÈëÓÃÓÚ¹Ø±Õ QuickEdit£»Èô start ±»¾Ü¾ø£¨°²È«Èí¼þ/²ßÂÔ£©£¬»ØÍËµ½µ±Ç°´°¿Ú¼ÌÐø£¬±ÜÃâÖ»ÏÔÊ¾¡°¾Ü¾ø·ÃÎÊ¡£¡±ºóÉÁÍË
-::  ×¢Òâ£º²»ÒªÓÃ if (...) °ü×¡ start ÐÐ¡ª¡ªd1-d4 Õ¹¿ªºóº¬´óÁ¿À¨ºÅ£¬»á½Ø¶Ï´úÂë¿é¡£
+::  conhost ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹Ø±ï¿½ QuickEditï¿½ï¿½ï¿½ï¿½ start ï¿½ï¿½ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½Ô£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½Ê¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+::  ×¢ï¿½â£ºï¿½ï¿½Òªï¿½ï¿½ if (...) ï¿½ï¿½×¡ start ï¿½Ð¡ï¿½ï¿½ï¿½d1-d4 Õ¹ï¿½ï¿½ï¿½óº¬´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½Ø¶Ï´ï¿½ï¿½ï¿½é¡£
 if %winbuild% LSS 17763 goto :qeLegacy
 start "" conhost.exe %psc% "%d1% %d2% %d3% %d4% & cmd.exe '/c' '!_PSarg! -qedit'"
 if not errorlevel 1 exit /b
 echo:
-echo [¾¯¸æ] ÎÞ·¨Æô¶¯ conhost ¿ØÖÆÌ¨£¨¾Ü¾ø·ÃÎÊ»ò±»°²È«Èí¼þÀ¹½Ø£©£¬½«ÔÚµ±Ç°´°¿Ú¼ÌÐø...
+echo [ï¿½ï¿½ï¿½ï¿½] ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ conhost ï¿½ï¿½ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½Ê»ò±»°ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½Ç°ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½...
 echo:
 %psc% "%d1% %d2% %d3% %d4%" >nul 2>&1
 goto :skipQE
@@ -349,8 +349,8 @@ exit /b
 set old=
 if not %_unattended%==1 (
 echo ________________________________________________
-echo µ±Ç°°æ±¾£º%iasver% £¨±¾µØ²Ö¿â°æ±¾£©
-echo ÈçÐè¼ì²é¸üÐÂ£¬Çë·ÃÎÊÏîÄ¿Ö÷Ò³£º%mas%
+echo ï¿½ï¿½Ç°ï¿½æ±¾ï¿½ï¿½%iasver% ï¿½ï¿½ï¿½ï¿½ï¿½Ø²Ö¿ï¿½æ±¾ï¿½ï¿½
+echo ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ò³ï¿½ï¿½%mas%
 echo ________________________________________________
 echo:
 )
@@ -359,28 +359,28 @@ echo:
 
 cls
 chcp 936 >nul 2>&1
-title  IDM ¼¤»î½Å±¾ %iasver%
+title  IDM ï¿½ï¿½ï¿½ï¿½Å±ï¿½ %iasver%
 
 echo:
-echo ÕýÔÚ³õÊ¼»¯...
+echo ï¿½ï¿½ï¿½Ú³ï¿½Ê¼ï¿½ï¿½...
 
-::  Check WMI£¨ÓÅÏÈ CIM£¬Ê§°ÜÔÙ»ØÍË¾É°æ WMI£»ÐÂ°æ Windows ÉÏ Get-WmiObject µÄ DCOM Â·¾¶¿ÉÄÜ¿¨ËÀ£©
+::  Check WMIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ CIMï¿½ï¿½Ê§ï¿½ï¿½ï¿½Ù»ï¿½ï¿½Ë¾É°ï¿½ WMIï¿½ï¿½ï¿½Â°ï¿½ Windows ï¿½ï¿½ Get-WmiObject ï¿½ï¿½ DCOM Â·ï¿½ï¿½ï¿½ï¿½ï¿½Ü¿ï¿½ï¿½ï¿½ï¿½ï¿½
 
-echo   - ¼ì²âÏµÍ³ÐÅÏ¢ (WMI/CIM)...
+echo   - ï¿½ï¿½ï¿½ÏµÍ³ï¿½ï¿½Ï¢ (WMI/CIM)...
 %psc% "$c=$null;try{$c=Get-CimInstance Win32_ComputerSystem -EA Stop}catch{};if(-not $c){try{$c=Get-WmiObject Win32_ComputerSystem -EA Stop}catch{}};$c.CreationClassName" %nul2% | find /i "computersystem" %nul1% || (
 %eline%
 %psc% "$c=$null;try{$c=Get-CimInstance Win32_ComputerSystem -EA Stop}catch{};if(-not $c){try{$c=Get-WmiObject Win32_ComputerSystem -EA Stop}catch{}};$c.CreationClassName"
 echo:
-echo WMI ÎÞ·¨Õý³£¹¤×÷£¬½ø³Ì±»×èÖ¹...
+echo WMI ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì±ï¿½ï¿½ï¿½Ö¹...
 echo:
-echo ²é¿´ÍøÒ³ÒÔ»ñÈ¡°ïÖú£º%mas%
-call :set_exit 2 "WMI ²éÑ¯Ê§°Ü"
+echo ï¿½é¿´ï¿½ï¿½Ò³ï¿½Ô»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%mas%
+call :set_exit 2 "WMI ï¿½ï¿½Ñ¯Ê§ï¿½ï¿½"
 goto done2
 )
 
 ::  Check user account SID
 
-echo   - »ñÈ¡ÓÃ»§ÕË»§ SID...
+echo   - ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½Ë»ï¿½ SID...
 set _sid=
 for /f "delims=" %%a in ('%psc% "$c=$null;try{$c=Get-CimInstance Win32_ComputerSystem -EA Stop}catch{$c=Get-WmiObject Win32_ComputerSystem};([System.Security.Principal.NTAccount]$c.UserName).Translate([System.Security.Principal.SecurityIdentifier]).Value" %nul6%') do (set _sid=%%a)
 
@@ -392,10 +392,10 @@ reg query HKU\%_sid%\Software %nul% || (
 %eline%
 echo:
 echo [%_sid%]
-echo Î´ÕÒµ½ÓÃ»§ÕÊ»§ SID£¬½ø³Ì±»×èÖ¹...
+echo Î´ï¿½Òµï¿½ï¿½Ã»ï¿½ï¿½Ê»ï¿½ SIDï¿½ï¿½ï¿½ï¿½ï¿½Ì±ï¿½ï¿½ï¿½Ö¹...
 echo:
-echo ²é¿´ÍøÒ³ÒÔ»ñÈ¡°ïÖú£º%mas%
-call :set_exit 2 "Î´ÄÜ»ñÈ¡µ±Ç°ÓÃ»§ SID"
+echo ï¿½é¿´ï¿½ï¿½Ò³ï¿½Ô»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%mas%
+call :set_exit 2 "Î´ï¿½Ü»ï¿½È¡ï¿½ï¿½Ç°ï¿½Ã»ï¿½ SID"
 goto done2
 )
 
@@ -442,14 +442,14 @@ set "idmcheck=tasklist /fi "imagename eq idman.exe" | findstr /i "idman.exe" %nu
 
 ::  Check CLSID registry access
 
-echo   - Ð£Ñé×¢²á±í·ÃÎÊÈ¨ÏÞ...
+echo   - Ð£ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½...
 %nul% reg add %CLSID2%\IAS_TEST
 %nul% reg query %CLSID2%\IAS_TEST || (
 %eline%
-echo ÎÞ·¨Ð´Èë %CLSID2%
+echo ï¿½Þ·ï¿½Ð´ï¿½ï¿½ %CLSID2%
 echo:
-echo ²é¿´ÍøÒ³ÒÔ»ñÈ¡°ïÖú£º%mas%
-call :set_exit 2 "ÎÞ·¨Ð´Èë %CLSID2%"
+echo ï¿½é¿´ï¿½ï¿½Ò³ï¿½Ô»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%mas%
+call :set_exit 2 "ï¿½Þ·ï¿½Ð´ï¿½ï¿½ %CLSID2%"
 goto done2
 )
 
@@ -463,8 +463,8 @@ if %_reupd%==1 goto :_restoreupd
 if %_activate%==1 (set frz=0&goto :_activate)
 if %_freeze%==1 (set frz=1&goto :_activate)
 
-::  Ì½²â±¾»úÒÑ°²×°µÄ IDM °æ±¾ºÅ£¬Ö»¶ÁÈ¡ IDMan.exe µÄÎÄ¼þ°æ±¾ÐÅÏ¢£¬²»Ð´ÈÎºÎ×¢²á±í¡£
-::  Ö÷²Ëµ¥¾Ý´ËÏÔÊ¾"ÒÑÊÊÅä°æ±¾ / ±¾»ú°æ±¾"£¬±ÜÃâ"Ö§³Ö×îÐÂ°æ"ÕâÖÖÄ£ºýËµ·¨¡£
+::  Ì½ï¿½â±¾ï¿½ï¿½ï¿½Ñ°ï¿½×°ï¿½ï¿½ IDM ï¿½æ±¾ï¿½Å£ï¿½Ö»ï¿½ï¿½È¡ IDMan.exe ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½æ±¾ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½Ð´ï¿½Îºï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½
+::  ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ý´ï¿½ï¿½ï¿½Ê¾"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ±¾ / ï¿½ï¿½ï¿½ï¿½ï¿½æ±¾"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"Ö§ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½"ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½
 
 set "idmfound="
 set "idmmm="
@@ -472,41 +472,41 @@ if exist "!IDMan!" (
 for /f "delims=" %%a in ('%psc% "$v=(Get-Item -LiteralPath '!IDMan!').VersionInfo; if ($v.ProductVersion) {$v.ProductVersion.Trim()} else {$v.FileVersion}" %nul6%') do set "idmfound=%%a"
 )
 if defined idmfound for /f "tokens=1,2 delims=., " %%a in ("!idmfound!") do set "idmmm=%%a.%%b"
-call :log "IDM °æ±¾¼ì²â: [!idmfound!] ½Å±¾ÒÑÊÊÅä %idmsupport%"
+call :log "IDM ï¿½æ±¾ï¿½ï¿½ï¿½: [!idmfound!] ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ %idmsupport%"
 
 :MainMenu
 
 cls
 chcp 936 >nul 2>&1
-title  IDM ¼¤»î½Å±¾ %iasver%
+title  IDM ï¿½ï¿½ï¿½ï¿½Å±ï¿½ %iasver%
 if not defined terminal mode 75, 31
 
 echo:
 echo:
-echo:                ½Å±¾ %iasver% ^| ÒÑÊÊÅä IDM %idmsupport% ¼°Ö®Ç°µÄ 6.x °æ±¾
+echo:                ï¿½Å±ï¿½ %iasver% ^| ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IDM %idmsupport% ï¿½ï¿½Ö®Ç°ï¿½ï¿½ 6.x ï¿½æ±¾
 if defined idmmm (
-echo:                ±¾»ú¼ì²âµ½µÄ IDM£º!idmfound!
-if not "!idmmm!"=="%idmsupport%" echo:                ×¢Òâ£ºÓëÒÑÊÊÅä°æ±¾²»Í¬£¬Òì³£Ê±¼û README µÄ Q10
+echo:                ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½âµ½ï¿½ï¿½ IDMï¿½ï¿½!idmfound!
+if not "!idmmm!"=="%idmsupport%" echo:                ×¢ï¿½â£ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ±¾ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ì³£Ê±ï¿½ï¿½ README ï¿½ï¿½ Q10
 ) else (
-echo:                ±¾»úÎ´¼ì²âµ½ IDM£¬ÇëÏÈ°²×° IDM ÔÙ¼¤»î
+echo:                ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½âµ½ IDMï¿½ï¿½ï¿½ï¿½ï¿½È°ï¿½×° IDM ï¿½Ù¼ï¿½ï¿½ï¿½
 )
 echo:            ___________________________________________________
 echo:
-echo:               [1] ¶³½áÊÔÓÃÆÚ£¨ÍÆ¼ö£©
-echo:               [2] ¼¤»î£¨Ð´Èë×¢²áÐÅÏ¢£©
-echo:               [3] ÖØÖÃ¼¤»î/ÊÔÓÃÆÚ
+echo:               [1] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½
+echo:               [2] ï¿½ï¿½ï¿½î£¨Ð´ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½
+echo:               [3] ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 echo:               _____________________________________________
 echo:
-echo:               [4] ½ûÓÃ IDM ¸üÐÂÌáÊ¾
-echo:               [5] »Ö¸´ IDM ¸üÐÂÌáÊ¾
+echo:               [4] ï¿½ï¿½ï¿½ï¿½ IDM ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
+echo:               [5] ï¿½Ö¸ï¿½ IDM ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 echo:               _____________________________________________
 echo:
-echo:               [6] ÏÂÔØ IDM
-echo:               [7] °ïÖú
-echo:               [0] ÍË³ö
+echo:               [6] ï¿½ï¿½ï¿½ï¿½ IDM
+echo:               [7] ï¿½ï¿½ï¿½ï¿½
+echo:               [0] ï¿½Ë³ï¿½
 echo:            ___________________________________________________
 echo:
-call :_color2 %_White% "        " %_Green% "ÔÚ¼üÅÌÉÏÊäÈëÄãµÄÑ¡Ïî [1,2,3,4,5,6,7,0]"
+call :_color2 %_White% "        " %_Green% "ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ [1,2,3,4,5,6,7,0]"
 choice /C:12345670 /N
 set _erl=%errorlevel%
 
@@ -524,7 +524,7 @@ goto :MainMenu
 
 :_reset
 
-call :log "¿ªÊ¼Ö´ÐÐÖØÖÃÁ÷³Ì"
+call :log "ï¿½ï¿½Ê¼Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
 cls
 chcp 936 >nul 2>&1
 if not %HKCUsync%==1 (
@@ -541,12 +541,12 @@ set _time=
 for /f %%a in ('%psc% "(Get-Date).ToString('yyyyMMdd-HHmmssfff')"') do set _time=%%a
 
 echo:
-echo ÕýÔÚ±¸·Ý CLSID ×¢²á±íµ½ %SystemRoot%\Temp
+echo ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ CLSID ×¢ï¿½ï¿½ï¿½ï¿½ï¿½ %SystemRoot%\Temp
 
 reg export %CLSID% "%SystemRoot%\Temp\_Backup_HKCU_CLSID_%_time%.reg"
 if not %HKCUsync%==1 reg export %CLSID2% "%SystemRoot%\Temp\_Backup_HKU-%_sid%_CLSID_%_time%.reg"
-call :log "ÒÑ±¸·Ý×¢²á±í: _Backup_HKCU_CLSID_%_time%.reg"
-if not %HKCUsync%==1 call :log "ÒÑ±¸·Ý×¢²á±í: _Backup_HKU-%_sid%_CLSID_%_time%.reg"
+call :log "ï¿½Ñ±ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½: _Backup_HKCU_CLSID_%_time%.reg"
+if not %HKCUsync%==1 call :log "ï¿½Ñ±ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½: _Backup_HKU-%_sid%_CLSID_%_time%.reg"
 
 call :delete_queue
 %psc% "$sid = '%_sid%'; $HKCUsync = %HKCUsync%; $lockKey = $null; $deleteKey = 1; $f=[io.file]::ReadAllText('!_batp!',[Text.Encoding]::GetEncoding(936)) -split ':regscan\:.*';iex ($f[1])"
@@ -556,16 +556,16 @@ call :add_key
 echo:
 echo %line%
 echo:
-call :_color %Green% "IDM ÖØÖÃÒÑÍê³É¡£"
+call :_color %Green% "IDM ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½"
 
 goto done
 
 :delete_queue
 
 echo:
-echo ÕýÔÚÉ¾³ý IDM ×¢²á±í¼ü...
+echo ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ IDM ×¢ï¿½ï¿½ï¿½ï¿½ï¿½...
 echo:
-call :log "¿ªÊ¼É¾³ý IDM ×¢²á±í¼ü"
+call :log "ï¿½ï¿½Ê¼É¾ï¿½ï¿½ IDM ×¢ï¿½ï¿½ï¿½ï¿½ï¿½"
 
 for %%# in (
 ""HKCU\Software\DownloadManager" "/v" "FName""
@@ -606,65 +606,65 @@ reg delete %reg% /f %nul%
 
 if "%errorlevel%"=="0" (
 set "reg=%reg:"=%"
-echo ÒÑÉ¾³ý - !reg!
-call :log "ÒÑÉ¾³ý - !reg!"
+echo ï¿½ï¿½É¾ï¿½ï¿½ - !reg!
+call :log "ï¿½ï¿½É¾ï¿½ï¿½ - !reg!"
 ) else (
 set "reg=%reg:"=%"
-call :_color2 %Red% "Ê§°Ü - !reg!"
-call :set_exit 1 "É¾³ýÊ§°Ü - !reg!"
+call :_color2 %Red% "Ê§ï¿½ï¿½ - !reg!"
+call :set_exit 1 "É¾ï¿½ï¿½Ê§ï¿½ï¿½ - !reg!"
 )
 
 exit /b
 
 ::========================================================================================================================================
 
-::  ½ûÓÃ / »Ö¸´ IDM µÄ×Ô¶¯¸üÐÂ¼ì²é
+::  ï¿½ï¿½ï¿½ï¿½ / ï¿½Ö¸ï¿½ IDM ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½
 ::
-::  Ô­Àí£ºHKCU\Software\DownloadManager ÏÂµÄ CheckUpdtVM Îª 0 Ê±£¬IDM ²»ÔÙ
-::  ×Ô¶¯¼ì²éÐÂ°æ±¾£¬Ò²¾Í²»»á·´¸´µ¯³ö"·¢ÏÖÐÂ°æ±¾ / Çë¸üÐÂ"µÄÌáÊ¾´°¿Ú¡£
-::  ¸ÃÖµÖ»Ó°Ïì¸üÐÂ¼ì²éÐÐÎª£¬²»Ð´ÐòÁÐºÅ¡¢²»¶¯ CLSID£¬ËæÊ±¿ÉÓÃ²Ëµ¥ [5] ¸Ä»Ø¡£
-::  Ë³´øµÄºÃ´¦£ºIDM ×Ô¶¯Éý¼¶µ½ÐÂ°æºó¼¤»î³£³£Ê§Ð§£¬¹Øµô¸üÐÂ¼ì²é¿ÉÒÔÎÈ×¡µ±Ç°×´Ì¬¡£
+::  Ô­ï¿½ï¿½ï¿½ï¿½HKCU\Software\DownloadManager ï¿½Âµï¿½ CheckUpdtVM Îª 0 Ê±ï¿½ï¿½IDM ï¿½ï¿½ï¿½ï¿½
+::  ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½Â°æ±¾ï¿½ï¿½Ò²ï¿½Í²ï¿½ï¿½á·´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½ï¿½Â°æ±¾ / ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ú¡ï¿½
+::  ï¿½ï¿½ÖµÖ»Ó°ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ÐºÅ¡ï¿½ï¿½ï¿½ï¿½ï¿½ CLSIDï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ã²Ëµï¿½ [5] ï¿½Ä»Ø¡ï¿½
+::  Ë³ï¿½ï¿½ï¿½ÄºÃ´ï¿½ï¿½ï¿½IDM ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½ó¼¤»î³£ï¿½ï¿½Ê§Ð§ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¡ï¿½ï¿½Ç°×´Ì¬ï¿½ï¿½
 
 :_noupdate
 
 set "_updval=0"
-set "_updact=½ûÓÃ"
+set "_updact=ï¿½ï¿½ï¿½ï¿½"
 goto :_updapply
 
 :_restoreupd
 
 set "_updval=1"
-set "_updact=»Ö¸´"
+set "_updact=ï¿½Ö¸ï¿½"
 
 :_updapply
 
-call :log "¿ªÊ¼%_updact% IDM ×Ô¶¯¸üÐÂ¼ì²é£¬CheckUpdtVM=%_updval%"
+call :log "ï¿½ï¿½Ê¼%_updact% IDM ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Â¼ï¿½é£¬CheckUpdtVM=%_updval%"
 cls
 chcp 936 >nul 2>&1
 if not defined terminal mode 100, 30
 
 echo:
 if not exist "%IDMan%" (
-call :_color %Red% "IDM [Internet Download Manager] Î´°²×°¡£"
-echo Äã¿ÉÒÔ´Ó´ËÍøÖ·ÏÂÔØ: https://www.internetdownloadmanager.com/download.html
-call :set_exit 1 "Î´¼ì²âµ½ IDM °²×°"
+call :_color %Red% "IDM [Internet Download Manager] Î´ï¿½ï¿½×°ï¿½ï¿½"
+echo ï¿½ï¿½ï¿½ï¿½Ô´Ó´ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½: https://www.internetdownloadmanager.com/download.html
+call :set_exit 1 "Î´ï¿½ï¿½âµ½ IDM ï¿½ï¿½×°"
 goto done
 )
 
-echo ÕýÔÚ%_updact% IDM µÄ×Ô¶¯¸üÐÂ¼ì²é...
+echo ï¿½ï¿½ï¿½ï¿½%_updact% IDM ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½...
 echo:
 
 set "_updold="
 for /f "tokens=3" %%a in ('reg query "HKCU\Software\DownloadManager" /v CheckUpdtVM %nul6%') do set "_updold=%%a"
 if defined _updold (
-echo ±ä¸üÇ° CheckUpdtVM = !_updold!
-call :log "±ä¸üÇ° CheckUpdtVM = !_updold!"
+echo ï¿½ï¿½ï¿½Ç° CheckUpdtVM = !_updold!
+call :log "ï¿½ï¿½ï¿½Ç° CheckUpdtVM = !_updold!"
 ) else (
-echo ±ä¸üÇ°Î´ÉèÖÃ CheckUpdtVM£¬IDM Ä¬ÈÏ»á×Ô¶¯¼ì²é¸üÐÂ
-call :log "±ä¸üÇ° CheckUpdtVM ²»´æÔÚ"
+echo ï¿½ï¿½ï¿½Ç°Î´ï¿½ï¿½ï¿½ï¿½ CheckUpdtVMï¿½ï¿½IDM Ä¬ï¿½Ï»ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+call :log "ï¿½ï¿½ï¿½Ç° CheckUpdtVM ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
 )
 
-%idmcheck% && (echo: & echo ÕýÔÚ¹Ø±Õ IDM ÒÔ±ãÉèÖÃÉúÐ§... & call :kill_idm)
+%idmcheck% && (echo: & echo ï¿½ï¿½ï¿½Ú¹Ø±ï¿½ IDM ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§... & call :kill_idm)
 
 echo:
 set "reg="HKCU\Software\DownloadManager" /v "CheckUpdtVM" /t REG_DWORD /d "%_updval%"" & call :_updset
@@ -676,14 +676,14 @@ echo:
 echo %line%
 echo:
 if "%_updval%"=="0" (
-call :_color %Green% "ÒÑ½ûÓÃ IDM µÄ×Ô¶¯¸üÐÂ¼ì²é£¬¸üÐÂµ¯´°²»»áÔÙ³öÏÖ¡£"
+call :_color %Green% "ï¿½Ñ½ï¿½ï¿½ï¿½ IDM ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Â¼ï¿½é£¬ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù³ï¿½ï¿½Ö¡ï¿½"
 echo:
-call :_color %Gray% "ÈçÐè»Ö¸´£¬ÇëÔÚÖ÷²Ëµ¥Ñ¡Ôñ [5] »Ö¸´ IDM ¸üÐÂÌáÊ¾¡£"
-call :_color %Gray% "ÌáÐÑ£ºÍ£ÁôÔÚµ±Ç°°æ±¾¿É±ÜÃâ¸üÐÂºó¼¤»îÊ§Ð§£¬µ«Ò²²»ÔÙ»ñµÃ¹Ù·½ÐÞ¸´¡£"
+call :_color %Gray% "ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½Ñ¡ï¿½ï¿½ [5] ï¿½Ö¸ï¿½ IDM ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½"
+call :_color %Gray% "ï¿½ï¿½ï¿½Ñ£ï¿½Í£ï¿½ï¿½ï¿½Úµï¿½Ç°ï¿½æ±¾ï¿½É±ï¿½ï¿½ï¿½ï¿½ï¿½Âºó¼¤»ï¿½Ê§Ð§ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ù»ï¿½Ã¹Ù·ï¿½ï¿½Þ¸ï¿½ï¿½ï¿½"
 ) else (
-call :_color %Green% "ÒÑ»Ö¸´ IDM µÄ×Ô¶¯¸üÐÂ¼ì²é¡£"
+call :_color %Green% "ï¿½Ñ»Ö¸ï¿½ IDM ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Â¼ï¿½é¡£"
 echo:
-call :_color %Gray% "ÌáÐÑ£ºIDM ¸üÐÂµ½ÐÂ°æ±¾ºó¼¤»î¿ÉÄÜÊ§Ð§£¬½ìÊ±ÖØÐÂÔËÐÐ±¾½Å±¾¼´¿É¡£"
+call :_color %Gray% "ï¿½ï¿½ï¿½Ñ£ï¿½IDM ï¿½ï¿½ï¿½Âµï¿½ï¿½Â°æ±¾ï¿½ó¼¤»ï¿½ï¿½ï¿½ï¿½Ê§Ð§ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½Å±ï¿½ï¿½ï¿½ï¿½É¡ï¿½"
 )
 
 goto done
@@ -694,12 +694,12 @@ reg add %reg% /f %nul%
 
 if "%errorlevel%"=="0" (
 set "reg=%reg:"=%"
-echo ÒÑÐ´Èë - !reg!
-call :log "ÒÑÐ´Èë - !reg!"
+echo ï¿½ï¿½Ð´ï¿½ï¿½ - !reg!
+call :log "ï¿½ï¿½Ð´ï¿½ï¿½ - !reg!"
 ) else (
 set "reg=%reg:"=%"
-call :_color2 %Red% "Ê§°Ü - !reg!"
-call :set_exit 1 "Ð´ÈëÊ§°Ü - !reg!"
+call :_color2 %Red% "Ê§ï¿½ï¿½ - !reg!"
+call :set_exit 1 "Ð´ï¿½ï¿½Ê§ï¿½ï¿½ - !reg!"
 )
 
 exit /b
@@ -708,7 +708,7 @@ exit /b
 
 :_activate
 
-if %frz%==1 (call :log "¿ªÊ¼¶³½áÊÔÓÃÆÚÁ÷³Ì") else (call :log "¿ªÊ¼¼¤»îÁ÷³Ì")
+if %frz%==1 (call :log "ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½") else (call :log "ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
 cls
 chcp 936 >nul 2>&1
 if not %HKCUsync%==1 (
@@ -722,12 +722,12 @@ if %frz%==0 if %_unattended%==0 (
 echo:
 echo %line%
 echo:
-echo      ÌáÊ¾£º²¿·Ö»·¾³ÏÂ£¬¼¤»îºó IDM ¿ÉÄÜµ¯³öÐé¼ÙÐòÁÐºÅ´°¿Ú¡£
+echo      ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IDM ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐºÅ´ï¿½ï¿½Ú¡ï¿½
 echo:
-call :_color2 %_White% "     " %_Green% "¸üÎÈµÄ×ö·¨ÊÇ·µ»Ø²Ëµ¥¸ÄÑ¡ [1] ¶³½áÊÔÓÃÆÚ¡£"
+call :_color2 %_White% "     " %_Green% "ï¿½ï¿½ï¿½Èµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ø²Ëµï¿½ï¿½ï¿½Ñ¡ [1] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¡ï¿½"
 echo %line%
 echo:
-choice /C:19 /N /M ">    [1] ·µ»Ø [9] ¼ÌÐø : "
+choice /C:19 /N /M ">    [1] ï¿½ï¿½ï¿½ï¿½ [9] ï¿½ï¿½ï¿½ï¿½ : "
 if !errorlevel!==1 goto :MainMenu
 cls
 chcp 936 >nul 2>&1
@@ -735,9 +735,9 @@ chcp 936 >nul 2>&1
 
 echo:
 if not exist "%IDMan%" (
-call :_color %Red% "IDM [Internet Download Manager] Î´°²×°¡£"
-echo Äã¿ÉÒÔ´Ó´ËÍøÖ·ÏÂÔØ: https://www.internetdownloadmanager.com/download.html
-call :set_exit 1 "Î´¼ì²âµ½ IDM °²×°"
+call :_color %Red% "IDM [Internet Download Manager] Î´ï¿½ï¿½×°ï¿½ï¿½"
+echo ï¿½ï¿½ï¿½ï¿½Ô´Ó´ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½: https://www.internetdownloadmanager.com/download.html
+call :set_exit 1 "Î´ï¿½ï¿½âµ½ IDM ï¿½ï¿½×°"
 goto done
 )
 
@@ -748,11 +748,11 @@ for /f "delims=[] tokens=2" %%# in ('ping -n 1 internetdownloadmanager.com') do 
 
 if not defined _int (
 %psc% "$t = New-Object Net.Sockets.TcpClient;try{$t.Connect("""internetdownloadmanager.com""", 80)}catch{};$t.Connected" | findstr /i "true" %nul1% || (
-call :_color %Red% "ÎÞ·¨Á¬½Óµ½ internetdownloadmanager.com£¬½ø³Ì±»×èÖ¹..."
-call :set_exit 1 "ÎÞ·¨Á¬½Óµ½ internetdownloadmanager.com"
+call :_color %Red% "ï¿½Þ·ï¿½ï¿½ï¿½ï¿½Óµï¿½ internetdownloadmanager.comï¿½ï¿½ï¿½ï¿½ï¿½Ì±ï¿½ï¿½ï¿½Ö¹..."
+call :set_exit 1 "ï¿½Þ·ï¿½ï¿½ï¿½ï¿½Óµï¿½ internetdownloadmanager.com"
 goto done
 )
-call :_color %Gray% "Ping ²âÊÔµ½ internetdownloadmanager.com Ê§°Ü"
+call :_color %Gray% "Ping ï¿½ï¿½ï¿½Ôµï¿½ internetdownloadmanager.com Ê§ï¿½ï¿½"
 echo:
 )
 
@@ -761,8 +761,8 @@ for /f "skip=2 tokens=2*" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Cont
 for /f "tokens=6-7 delims=[]. " %%i in ('ver') do if "%%j"=="" (set fullbuild=%%i) else (set fullbuild=%%i.%%j)
 for /f "tokens=2*" %%a in ('reg query "HKU\%_sid%\Software\DownloadManager" /v idmvers %nul6%') do set "IDMver=%%b"
 
-echo ¼ì²âµ½ÐÅÏ¢ - [%regwinos% ^| %fullbuild% ^| %regarch% ^| IDM: %IDMver%]
-call :log "¼ì²âµ½ÐÅÏ¢ - [%regwinos% | %fullbuild% | %regarch% | IDM: %IDMver%]"
+echo ï¿½ï¿½âµ½ï¿½ï¿½Ï¢ - [%regwinos% ^| %fullbuild% ^| %regarch% ^| IDM: %IDMver%]
+call :log "ï¿½ï¿½âµ½ï¿½ï¿½Ï¢ - [%regwinos% | %fullbuild% | %regarch% | IDM: %IDMver%]"
 
 %idmcheck% && (echo: & call :kill_idm)
 
@@ -770,7 +770,7 @@ set _time=
 for /f %%a in ('%psc% "(Get-Date).ToString('yyyyMMdd-HHmmssfff')"') do set _time=%%a
 
 echo:
-echo ÕýÔÚ±¸·Ý CLSID ×¢²á±íµ½ %SystemRoot%\Temp
+echo ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ CLSID ×¢ï¿½ï¿½ï¿½ï¿½ï¿½ %SystemRoot%\Temp
 
 reg export %CLSID% "%SystemRoot%\Temp\_Backup_HKCU_CLSID_%_time%.reg"
 if not %HKCUsync%==1 reg export %CLSID2% "%SystemRoot%\Temp\_Backup_HKU-%_sid%_CLSID_%_time%.reg"
@@ -785,10 +785,10 @@ if %frz%==0 call :register_IDM
 call :download_files
 if not defined _fileexist (
 %eline%
-echo ´íÎó: ÎÞ·¨Í¨¹ý IDM ÏÂÔØÎÄ¼þ¡£
+echo ï¿½ï¿½ï¿½ï¿½: ï¿½Þ·ï¿½Í¨ï¿½ï¿½ IDM ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 echo:
-echo °ïÖú: %mas%
-call :set_exit 1 "IDM ÏÂÔØ²âÊÔÊ§°Ü"
+echo ï¿½ï¿½ï¿½ï¿½: %mas%
+call :set_exit 1 "IDM ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½Ê§ï¿½ï¿½"
 goto :done
 )
 
@@ -798,16 +798,16 @@ echo:
 echo %line%
 echo:
 if %frz%==0 (
-call :_color %Green% "IDM ¼¤»îÒÑÍê³É¡£"
+call :_color %Green% "IDM ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½"
 echo:
-call :_color %Gray% "Èô IDM µ¯³öÐé¼ÙÐòÁÐºÅ´°¿Ú£¬Çë»Øµ½²Ëµ¥¸ÄÑ¡ [1] ¶³½áÊÔÓÃÆÚ¡£"
+call :_color %Gray% "ï¿½ï¿½ IDM ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐºÅ´ï¿½ï¿½Ú£ï¿½ï¿½ï¿½Øµï¿½ï¿½Ëµï¿½ï¿½ï¿½Ñ¡ [1] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¡ï¿½"
 ) else (
-call :_color %Green% "IDM µÄ 30 ÌìÊÔÓÃÆÚÒÑ³É¹¦ÉèÖÃ¶³½á¡£"
+call :_color %Green% "IDM ï¿½ï¿½ 30 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ³É¹ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½á¡£"
 echo:
-call :_color %Gray% "Èç¹û IDM ÌáÊ¾×¢²áµ¯´°£¬ÇëÖØÐÂ°²×° IDM¡£"
+call :_color %Gray% "ï¿½ï¿½ï¿½ IDM ï¿½ï¿½Ê¾×¢ï¿½áµ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½×° IDMï¿½ï¿½"
 )
 echo:
-call :_color %Gray% "IDM ×Ô¶¯¸üÐÂµ½ÐÂ°æ±¾¿ÉÄÜÈÃ¼¤»îÊ§Ð§£»ÈôËüÆµ·±µ¯¸üÐÂÌáÊ¾£¬¿ÉÔÚÖ÷²Ëµ¥Ñ¡ [4] ½ûÓÃ¸üÐÂ¡£"
+call :_color %Gray% "IDM ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½Â°æ±¾ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½Ê§Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½Ñ¡ [4] ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½Â¡ï¿½"
 
 ::========================================================================================================================================
 
@@ -816,46 +816,46 @@ call :_color %Gray% "IDM ×Ô¶¯¸üÐÂµ½ÐÂ°æ±¾¿ÉÄÜÈÃ¼¤»îÊ§Ð§£»ÈôËüÆµ·±µ¯¸üÐÂÌáÊ¾£¬¿ÉÔ
 echo %line%
 echo:
 
-::  ÊÕÎ²Ê±°Ñ±¸·ÝÓëÈÕÖ¾Î»ÖÃÏÔÊ½´òÓ¡³öÀ´£º³ö´íÊ±ÓÃ»§ÄÜÖ±½ÓÄÃµ½»¹Ô­Èë¿ÚºÍ
-::  ¿É·´À¡µÄÈÕÖ¾£¬²»ÓÃÈ¥·­ÎÄµµ²ÂÂ·¾¶¡£
+::  ï¿½ï¿½Î²Ê±ï¿½Ñ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ã»ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½Ô­ï¿½ï¿½Úºï¿½
+::  ï¿½É·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½
 
-if defined _time call :_color %Gray% "×¢²á±í±¸·Ý: %SystemRoot%\Temp\_Backup_*_%_time%.reg £¨»¹Ô­£ºË«»÷¸ÃÎÄ¼þµ¼Èë¼´¿É£©"
-if "%_log_enabled%"=="1" call :_color %Gray% "ÈÕÖ¾ÎÄ¼þ: %log_file%"
-if not "%exit_code%"=="0" if not "%_log_enabled%"=="1" call :_color %Gray% "·´À¡ÎÊÌâÇ°¿É¼Ó /log ²ÎÊýÖØÅÜÒ»´Î£¬»áÉú³ÉÈÕÖ¾ÎÄ¼þ¡£"
+if defined _time call :_color %Gray% "×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: %SystemRoot%\Temp\_Backup_*_%_time%.reg ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½Ë«ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ë¼´ï¿½É£ï¿½"
+if "%_log_enabled%"=="1" call :_color %Gray% "ï¿½ï¿½Ö¾ï¿½Ä¼ï¿½: %log_file%"
+if not "%exit_code%"=="0" if not "%_log_enabled%"=="1" call :_color %Gray% "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½É¼ï¿½ /log ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½Ä¼ï¿½ï¿½ï¿½"
 
 echo:
 echo:
-call :log "Á÷³Ì½áÊø£¬ÍË³öÂë %exit_code%"
+call :log "ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ %exit_code%"
 if %_unattended%==1 (
 if %_silent%==1 exit /b %exit_code%
 timeout /t 2 & exit /b %exit_code%
 )
 
 if defined terminal (
-call :_color %_Yellow% "°´ 0 ¼ü·µ»Ø..."
+call :_color %_Yellow% "ï¿½ï¿½ 0 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..."
 choice /c 0 /n
 ) else (
 call :flush_input
-call :_color %_Yellow% "°´ÈÎÒâ¼ü·µ»Ø..."
+call :_color %_Yellow% "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..."
 pause %nul1%
 )
 goto MainMenu
 
 :done2
 
-if "%_log_enabled%"=="1" if %_silent%==0 echo ÈÕÖ¾ÎÄ¼þ: %log_file%
-call :log "Á÷³Ì½áÊø£¬ÍË³öÂë %exit_code%"
+if "%_log_enabled%"=="1" if %_silent%==0 echo ï¿½ï¿½Ö¾ï¿½Ä¼ï¿½: %log_file%
+call :log "ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ %exit_code%"
 if %_unattended%==1 (
 if %_silent%==1 exit /b %exit_code%
 timeout /t 2 & exit /b %exit_code%
 )
 
 if defined terminal (
-echo °´ 0 ¼üÍË³ö...
+echo ï¿½ï¿½ 0 ï¿½ï¿½ï¿½Ë³ï¿½...
 choice /c 0 /n
 ) else (
 	call :flush_input
-	echo °´ÈÎÒâ¼üÍË³ö...
+	echo ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½...
 	pause %nul1%
 	)
 	exit /b %exit_code%
@@ -871,7 +871,7 @@ exit /b
 :register_IDM
 
 echo:
-echo ÕýÔÚÓ¦ÓÃ×¢²áÐÅÏ¢...
+echo ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½Ï¢...
 echo:
 
 set /a fname = %random% %% 9999 + 1000
@@ -896,9 +896,9 @@ exit /b
 :download_files
 
 echo:
-echo ÕýÔÚÏÂÔØ²âÊÔ×ÊÔ´ÒÔ¼°Ëø¶¨×¢²á±í¼üºó...
+echo ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...
 echo:
-call :log "¿ªÊ¼ÏÂÔØ²âÊÔ×ÊÔ´"
+call :log "ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½ï¿½ï¿½Ô´"
 
 set "file=%SystemRoot%\Temp\temp.png"
 set _fileexist=
@@ -914,7 +914,7 @@ echo:
 timeout /t 3 %nul1%
 %idmcheck% && call :kill_idm
 if exist "%file%" del /f /q "%file%"
-if defined _fileexist (call :log "ÏÂÔØ²âÊÔ×ÊÔ´³É¹¦") else (call :log "ÏÂÔØ²âÊÔ×ÊÔ´Ê§°Ü")
+if defined _fileexist (call :log "ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½É¹ï¿½") else (call :log "ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ê§ï¿½ï¿½")
 exit /b
 
 :download
@@ -928,8 +928,8 @@ start "" /B "%IDMan%" /n /d "%link%" /p "%SystemRoot%\Temp" /f temp.png
 
 timeout /t 1 %nul1%
 set /a attempt+=1
-if exist "%file%" (set _fileexist=1&call :log "ÏÂÔØ³É¹¦: %current_link%"&exit /b)
-if %attempt% GEQ 20 (call :log "ÏÂÔØÊ§°Ü: %current_link%"&exit /b)
+if exist "%file%" (set _fileexist=1&call :log "ï¿½ï¿½ï¿½Ø³É¹ï¿½: %current_link%"&exit /b)
+if %attempt% GEQ 20 (call :log "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½: %current_link%"&exit /b)
 goto :Check_file
 
 ::========================================================================================================================================
@@ -937,9 +937,9 @@ goto :Check_file
 :add_key
 
 echo:
-echo ÕýÔÚÌí¼Ó×¢²á±í¼ü...
+echo ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½...
 echo:
-call :log "¿ªÊ¼Ìí¼Ó×¢²á±í¼ü"
+call :log "ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½"
 
 set "reg="%HKLM%" /v "AdvIntDriverEnabled2""
 
@@ -949,23 +949,23 @@ reg add %reg% /t REG_DWORD /d "1" /f %nul%
 
 if "%errorlevel%"=="0" (
 set "reg=%reg:"=%"
-echo ÒÑÌí¼Ó - !reg!
-call :log "ÒÑÌí¼Ó - !reg!"
+echo ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - !reg!
+call :log "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - !reg!"
 ) else (
 set "reg=%reg:"=%"
-call :_color2 %Red% "Ê§°Ü - !reg!"
-call :set_exit 1 "Ìí¼ÓÊ§°Ü - !reg!"
+call :_color2 %Red% "Ê§ï¿½ï¿½ - !reg!"
+call :set_exit 1 "ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½ - !reg!"
 )
 exit /b
 
 ::========================================================================================================================================
 
-::  ÏÂÃæÕâ¶Î PowerShell ²»ÊÇÓÉ cmd Ö´ÐÐµÄ£¬¶øÊÇ¿¿ [io.file]::ReadAllText °Ñ±¾ÎÄ¼þ
-::  ×ÔÉí¶Á³öÀ´¡¢°´±¾¶ÎÇ°ºóµÄ³É¶Ô±ê¼ÇÇÐ³öÀ´ºó½»¸ø iex Ö´ÐÐ¡£ReadAllText µÄµ¥²ÎÊýÖØÔØ
-::  ÔÚÎÄ¼þÃ»ÓÐ BOM Ê±°´ UTF-8 ½âÂë£¬¶ø±¾½Å±¾ÊÇÎÞ BOM µÄ GBK£¬ÄÇÑù»á°ÑÕâÒ»¶ÎÀïµÄ
-::  ÖÐÎÄÈ«²¿½â³ÉÌæ»»×Ö·û£¬ÓÃ»§¿´µ½µÄ×¢²á±íÉ¨Ãè½çÃæ¾ÍÊÇÒ»ÆÁÂÒÂë¡£ËùÒÔÃ¿Ò»´¦¶ÁÈ¡
-::  ±¾ÎÄ¼þµÄµ÷ÓÃ¶¼±ØÐëÏÔÊ½´« [Text.Encoding]::GetEncoding(936)¡£
-::  Õâ¶ÎÀïµÄÖÐÎÄÖ»ÓÃÓÚÊä³ö£¬²»²ÎÓëÈÎºÎ±È½Ï»òÂß¼­ÅÐ¶Ï¡£
+::  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PowerShell ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ cmd Ö´ï¿½ÐµÄ£ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½ [io.file]::ReadAllText ï¿½Ñ±ï¿½ï¿½Ä¼ï¿½
+::  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½Ä³É¶Ô±ï¿½ï¿½ï¿½Ð³ï¿½ï¿½ï¿½ï¿½ó½»¸ï¿½ iex Ö´ï¿½Ð¡ï¿½ReadAllText ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+::  ï¿½ï¿½ï¿½Ä¼ï¿½Ã»ï¿½ï¿½ BOM Ê±ï¿½ï¿½ UTF-8 ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½ BOM ï¿½ï¿½ GBKï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½
+::  ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ»»ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½É¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ë¡£ï¿½ï¿½ï¿½ï¿½Ã¿Ò»ï¿½ï¿½ï¿½ï¿½È¡
+::  ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Äµï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ [Text.Encoding]::GetEncoding(936)ï¿½ï¿½
+::  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎºÎ±È½Ï»ï¿½ï¿½ß¼ï¿½ï¿½Ð¶Ï¡ï¿½
 
 :regscan:
 $finalValues = @()
@@ -983,7 +983,7 @@ foreach ($regPath in $regPaths) {
     }
 
 	Write-Host
-	Write-Host "ÕýÔÚÉ¨Ãè $regPath  ÖÐµÄ IDM CLSID ×¢²á±í¼ü"
+	Write-Host "ï¿½ï¿½ï¿½ï¿½É¨ï¿½ï¿½ $regPath  ï¿½Ðµï¿½ IDM CLSID ×¢ï¿½ï¿½ï¿½ï¿½ï¿½"
 	Write-Host
 
     $subKeys = Get-ChildItem -Path $regPath -ErrorAction SilentlyContinue -ErrorVariable lockedKeys | Where-Object { $_.PSChildName -match '^\{[A-F0-9]{8}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{12}\}$' }
@@ -991,7 +991,7 @@ foreach ($regPath in $regPaths) {
     foreach ($lockedKey in $lockedKeys) {
         $leafValue = Split-Path -Path $lockedKey.TargetObject -Leaf
         $finalValues += $leafValue
-        Write-Output "$leafValue - ÓÉÓÚËø¶¨±»Ìø¹ý"
+        Write-Output "$leafValue - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
     }
 
     if ($subKeys -eq $null) {
@@ -1009,30 +1009,30 @@ foreach ($regPath in $regPaths) {
 
         if (($defaultValue -match "^\d+$") -and ($key.SubKeyCount -eq 0)) {
             $finalValues += $($key.PSChildName)
-            Write-Output "$($key.PSChildName) - ÔÚÄ¬ÈÏÖµÖÐ·¢ÏÖÊý×Ö£¨½öÊý×Ö£©"
+            Write-Output "$($key.PSChildName) - ï¿½ï¿½Ä¬ï¿½ï¿½Öµï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½"
             continue
         }
         if (($defaultValue -match "\+|=") -and ($key.SubKeyCount -eq 0)) {
             $finalValues += $($key.PSChildName)
-            Write-Output "$($key.PSChildName) - ÔÚÄ¬ÈÏÖµÖÐ·¢ÏÖ + »ò = £¨½öÊý×Ö£©"
+            Write-Output "$($key.PSChildName) - ï¿½ï¿½Ä¬ï¿½ï¿½Öµï¿½Ð·ï¿½ï¿½ï¿½ + ï¿½ï¿½ = ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½"
             continue
         }
         $versionValue = Get-ItemProperty -Path "$fullPath\Version" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty '(default)' -ErrorAction SilentlyContinue
         if (($versionValue -match "^\d+$") -and ($key.SubKeyCount -eq 1)) {
             $finalValues += $($key.PSChildName)
-            Write-Output "$($key.PSChildName) - ÔÚ \Version ÖÐ·¢ÏÖÊý×Ö£¨×Ó¼üÊýÁ¿ÎªÒ»£©"
+            Write-Output "$($key.PSChildName) - ï¿½ï¿½ \Version ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½ï¿½Ó¼ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÒ»ï¿½ï¿½"
             continue
         }
         $keyValues.PSObject.Properties | ForEach-Object {
             if ($_.Name -match "MData|Model|scansk|Therad") {
                 $finalValues += $($key.PSChildName)
-                Write-Output "$($key.PSChildName) - ÕÒµ½ MData Model scansk Therad"
+                Write-Output "$($key.PSChildName) - ï¿½Òµï¿½ MData Model scansk Therad"
                 continue
             }
         }
         if (($key.ValueCount -eq 0) -and ($key.SubKeyCount -eq 0)) {
             $finalValues += $($key.PSChildName)
-            Write-Output "$($key.PSChildName) - ÍêÈ«¿ÕµÄ"
+            Write-Output "$($key.PSChildName) - ï¿½ï¿½È«ï¿½Õµï¿½"
             continue
         }
     }
@@ -1043,21 +1043,21 @@ $finalValues = @($finalValues | Select-Object -Unique)
 if ($finalValues -ne $null) {
     Write-Host
     if ($lockKey -ne $null) {
-        Write-Host "ÕýÔÚËø¶¨ IDM CLSID ×¢²á±í¼ü..."
+        Write-Host "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IDM CLSID ×¢ï¿½ï¿½ï¿½ï¿½ï¿½..."
     }
     if ($deleteKey -ne $null) {
-        Write-Host "ÕýÔÚÉ¾³ý IDM CLSID ×¢²á±í¼ü..."
+        Write-Host "ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ IDM CLSID ×¢ï¿½ï¿½ï¿½ï¿½ï¿½..."
     }
     Write-Host
 } else {
-    Write-Host "Î´ÕÒµ½ IDM CLSID ×¢²á±í¼ü"
+    Write-Host "Î´ï¿½Òµï¿½ IDM CLSID ×¢ï¿½ï¿½ï¿½ï¿½ï¿½"
 	Exit
 }
 
 if (($finalValues.Count -gt 20) -and ($toggle -ne $null)) {
 	$lockKey = $null
 	$deleteKey = 1
-    Write-Host "IDM ¼üÊýÁ¿´óÓÚ 20 ¸ö£¬¸ÄÎªÉ¾³ýËüÃÇ¶ø²»ÊÇËø¶¨..."
+    Write-Host "IDM ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 20 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÉ¾ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..."
 	Write-Host
 }
 
@@ -1120,10 +1120,10 @@ foreach ($regPath in $regPaths) {
             Take-Permissions $rootKey $regKey
             try {
                 Remove-Item -Path $fullPath -Force -Recurse -ErrorAction Stop
-                Write-Host -back 'DarkRed' -fore 'white' "Ê§°Ü - $fullPath"
+                Write-Host -back 'DarkRed' -fore 'white' "Ê§ï¿½ï¿½ - $fullPath"
             }
             catch {
-                Write-Host "ÒÑËø¶¨ - $fullPath"
+                Write-Host "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - $fullPath"
             }
         }
 
@@ -1134,14 +1134,14 @@ foreach ($regPath in $regPaths) {
                     Take-Permissions $rootKey $regKey
                     try {
                         Remove-Item -Path $fullPath -Force -Recurse -ErrorAction Stop
-                        Write-Host "ÒÑÉ¾³ý - $fullPath"
+                        Write-Host "ï¿½ï¿½É¾ï¿½ï¿½ - $fullPath"
                     }
                     catch {
-                        Write-Host -back 'DarkRed' -fore 'white' "Ê§°Ü - $fullPath"
+                        Write-Host -back 'DarkRed' -fore 'white' "Ê§ï¿½ï¿½ - $fullPath"
                     }
                 }
                 else {
-                    Write-Host "ÒÑÉ¾³ý - $fullPath"
+                    Write-Host "ï¿½ï¿½É¾ï¿½ï¿½ - $fullPath"
                 }
             }
         }
@@ -1153,27 +1153,27 @@ foreach ($regPath in $regPaths) {
 
 :kill_idm
 
-::  taskkill /f /im »á¶ÔÃ¿¸öÍ¬Ãû½ø³Ì¸÷Êä³öÒ»ÐÐ£ºÄÜÖÕÖ¹µÄ´òÓ¡¡°³É¹¦: ÒÑÖÕÖ¹½ø³Ì¡±µ½
-::  stdout£¬ÎÞÈ¨ÏÞµÄ£¨ÆäËüÓÃ»§»á»° / ¸ü¸ßÍêÕûÐÔ¼¶±ðµÄÊµÀý£©´òÓ¡¡°¾Ü¾ø·ÃÎÊ¡£¡±µ½ stderr¡£
-::  Á½ÐÐÒÔÇ°¶¼Ö±½ÓÂ©µ½½çÃæÉÏ£¬¶ø¹Ø±Õ IDM Ê§°Ü²¢²»Ó°Ïì¼¤»î½á¹û£¬ÓÃ»§È´»á°Ñ
-::  Õâ¾ä¡°¾Ü¾ø·ÃÎÊ¡£¡±µ±³É¼¤»îÊ§°Ü¡£ÕâÀïÍ³Ò»ÊÕ¿Ú£ºÊä³öÈ«²¿½øÈÕÖ¾£¬
-::  ½çÃæ²»ÔÙ³öÏÖÂãµÄÏµÍ³±¨´í¡£¹Ì¶¨·µ»Ø 0£¬±ÜÃâ taskkill µÄÍË³öÂëÎÛÈ¾µ÷ÓÃ·½¡£
+::  taskkill /f /im ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½Ä´ï¿½Ó¡ï¿½ï¿½ï¿½É¹ï¿½: ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½Ì¡ï¿½ï¿½ï¿½
+::  stdoutï¿½ï¿½ï¿½ï¿½È¨ï¿½ÞµÄ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½á»° / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½Ê¡ï¿½ï¿½ï¿½ï¿½ï¿½ stderrï¿½ï¿½
+::  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½Ö±ï¿½ï¿½Â©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ø±ï¿½ IDM Ê§ï¿½Ü²ï¿½ï¿½ï¿½Ó°ï¿½ì¼¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½È´ï¿½ï¿½ï¿½
+::  ï¿½ï¿½ä¡°ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½Ê¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¼ï¿½ï¿½ï¿½Ê§ï¿½Ü¡ï¿½ï¿½ï¿½ï¿½ï¿½Í³Ò»ï¿½Õ¿Ú£ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½
+::  ï¿½ï¿½ï¿½æ²»ï¿½Ù³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ taskkill ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½
 
 taskkill /f /im idman.exe %nul%
 if "%errorlevel%"=="0" (
-call :log "ÒÑ¹Ø±ÕÕýÔÚÔËÐÐµÄ IDMan.exe"
+call :log "ï¿½Ñ¹Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ IDMan.exe"
 ) else (
-call :log "¹Ø±Õ IDMan.exe Î´ÍêÈ«³É¹¦£¨taskkill ÍË³öÂë %errorlevel%£¬³£¼ûÓÚ¶àÊµÀý»ò¿ç»á»°£©£¬²»Ó°ÏìºóÐøÁ÷³Ì"
+call :log "ï¿½Ø±ï¿½ IDMan.exe Î´ï¿½ï¿½È«ï¿½É¹ï¿½ï¿½ï¿½taskkill ï¿½Ë³ï¿½ï¿½ï¿½ %errorlevel%ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½á»°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
 )
 exit /b 0
 
 :flush_input
 
-::  pause »áÁ¢¿ÌÏû·Ñ¼üÅÌ»º³åÇøÀïÒÑÓÐµÄ°´¼ü¡£¼¤»îÁ÷³Ì°üº¬ÏÂÔØºÍµÈ´ý£¬ÓÃ»§
-::  ÖÐÍ¾ËæÊÖÇÃµÄ¼ü»áÒ»Ö±ÁôÔÚ»º³åÇø£¬µÈÁ÷³ÌÅÜÍêÖ´ÐÐµ½ pause Ê±±»Á¢¿Ì³Ôµô£¬
-::  ±íÏÖ¾ÍÊÇ¡°Ã»°´ÈÎºÎ¼üÈ´×Ô¼ºÌø»ØÈ¥ÁË¡±¡£ÕâÀïÔÚÌáÊ¾Ç°ÏÈÇå¿Õ»º³åÇø¡£
-::  choice ·ÖÖ§Ö»½ÓÊÜÖ¸¶¨°´¼ü£¬²»ÊÜ¸ÃÎÊÌâÓ°Ïì£¬ËùÒÔÖ»ÔÚ pause Â·¾¶µ÷ÓÃ¡£
-::  stdin ±»ÖØ¶¨ÏòÊ±£¨¹ÜµÀµ÷ÓÃ / CI£©RawUI »á±¨´í£¬try-catch ³Ôµô¼´¿É¡£
+::  pause ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¼ï¿½ï¿½Ì»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ØºÍµÈ´ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
+::  ï¿½ï¿½Í¾ï¿½ï¿½ï¿½ï¿½ï¿½ÃµÄ¼ï¿½ï¿½ï¿½Ò»Ö±ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ðµï¿½ pause Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ì³Ôµï¿½ï¿½ï¿½
+::  ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½Ç¡ï¿½Ã»ï¿½ï¿½ï¿½ÎºÎ¼ï¿½È´ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½Ë¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Ç°ï¿½ï¿½ï¿½ï¿½Õ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+::  choice ï¿½ï¿½Ö§Ö»ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ì£¬ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ pause Â·ï¿½ï¿½ï¿½ï¿½ï¿½Ã¡ï¿½
+::  stdin ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ / CIï¿½ï¿½RawUI ï¿½á±¨ï¿½ï¿½ï¿½ï¿½try-catch ï¿½Ôµï¿½ï¿½ï¿½ï¿½É¡ï¿½
 
 %psc% -NoProfile -Command "try{$Host.UI.RawUI.FlushInputBuffer()}catch{}" %nul%
 exit /b 0
@@ -1186,11 +1186,11 @@ exit /b
 
 :extract_logpath
 
-::  ´ÓÍêÕû²ÎÊý´®ÀïÈ¡³ö /log= ºóÃæµÄÂ·¾¶¡£
-::  µÚÒ»¸ö for °´ = ÇÐ£¬token 2 ÊÇµÚÒ»¸ö = Ö®ºóµÄÈ«²¿ÄÚÈÝ£¨"C:\x.log /silent"£©£»
-::  µÚ¶þ¸ö for °´¿Õ¸ñÇÐ£¬token 1 ¾ÍÊÇÂ·¾¶±¾Éí¡£
-::  ²ÎÊý½âÎöÇ°ÒÑ¾­ÓÃ %_args:"=% È¥µôÁËËùÓÐÒýºÅ£¬ËùÒÔÂ·¾¶²»ÄÜº¬¿Õ¸ñ¡£
-::  È¡µ½µÄ¶«Î÷ÈôÒÔ / ¿ªÍ·£¬ËµÃ÷ÓÃ»§Ð´µÄÊÇ "/log= /silent" ÕâÀà¿ÕÂ·¾¶£¬ºöÂÔµô¡£
+::  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ /log= ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½
+::  ï¿½ï¿½Ò»ï¿½ï¿½ for ï¿½ï¿½ = ï¿½Ð£ï¿½token 2 ï¿½Çµï¿½Ò»ï¿½ï¿½ = Ö®ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½"C:\x.log /silent"ï¿½ï¿½ï¿½ï¿½
+::  ï¿½Ú¶ï¿½ï¿½ï¿½ for ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½Ð£ï¿½token 1 ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+::  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Ñ¾ï¿½ï¿½ï¿½ %_args:"=% È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½Üºï¿½ï¿½Õ¸ï¿½
+::  È¡ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½Í·ï¿½ï¿½Ëµï¿½ï¿½ï¿½Ã»ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ "/log= /silent" ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½
 
 for /f "tokens=2 delims==" %%a in ("%_args%") do for /f "tokens=1" %%b in ("%%a") do set "_logpath=%%b"
 if not defined _logpath exit /b
@@ -1200,14 +1200,14 @@ exit /b
 
 :init_log
 
-::  ±ØÐë·ÅÔÚ×Ó³ÌÐòÀïÖðÐÐÖ´ÐÐ£ºÈôÐ´ÔÚ if(...) ´úÂë¿éÄÚ£¬%_logstamp% »áÔÚ
-::  Õû¿é½âÎöÊ±Ò»´ÎÐÔÕ¹¿ª£¬È¡²»µ½ÉÏÒ»ÐÐ¸ÕÐ´ÈëµÄÖµ£¬ÈÕÖ¾ÎÄ¼þÃû»áÍË»¯³É
-::  ×ÖÃæÁ¿ IAS-%_logstamp%.log£¬ËùÓÐ¾²Ä¬ÔËÐÐ¶¼×·¼Óµ½Í¬Ò»¸öÎÄ¼þ¡£
+::  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð£ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ if(...) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½%_logstamp% ï¿½ï¿½ï¿½ï¿½
+::  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Ò»ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ð¸ï¿½Ð´ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ö¾ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½
+::  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IAS-%_logstamp%.logï¿½ï¿½ï¿½ï¿½ï¿½Ð¾ï¿½Ä¬ï¿½ï¿½ï¿½Ð¶ï¿½×·ï¿½Óµï¿½Í¬Ò»ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 
 if not defined _logpath goto :init_log_default
 call :init_logpath
 if defined log_file exit /b
-echo [¾¯¸æ] ÈÕÖ¾Â·¾¶ %_logpath% ²»¿ÉÐ´£¬¸ÄÓÃÄ¬ÈÏÎ»ÖÃ¡£
+echo [ï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½Ö¾Â·ï¿½ï¿½ %_logpath% ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Î»ï¿½Ã¡ï¿½
 
 :init_log_default
 
@@ -1224,7 +1224,7 @@ exit /b
 
 :init_logpath
 
-::  ÏÈ½¨¸¸Ä¿Â¼ÔÙÊÔÐ´Ò»´Î£»Ð´²»½øÈ¥¾Í·µ»Ø¿Õ log_file£¬ÓÉµ÷ÓÃ·½»ØÍËÄ¬ÈÏÂ·¾¶¡£
+::  ï¿½È½ï¿½ï¿½ï¿½Ä¿Â¼ï¿½ï¿½ï¿½ï¿½Ð´Ò»ï¿½Î£ï¿½Ð´ï¿½ï¿½ï¿½ï¿½È¥ï¿½Í·ï¿½ï¿½Ø¿ï¿½ log_fileï¿½ï¿½ï¿½Éµï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½
 
 for %%i in ("%_logpath%") do set "_lpdir=%%~dpi"
 if not exist "%_lpdir%" md "%_lpdir%" 2>nul
