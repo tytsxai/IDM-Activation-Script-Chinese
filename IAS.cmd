@@ -1175,7 +1175,7 @@ exit /b 0
 ::  choice ��ֻ֧����ָ�����������ܸ�����Ӱ�죬����ֻ�� pause ·�����á�
 ::  stdin ���ض���ʱ���ܵ����� / CI��RawUI �ᱨ����try-catch �Ե����ɡ�
 
-%psc% -NoProfile -Command "try{$Host.UI.RawUI.FlushInputBuffer()}catch{}" %nul%
+%psc% "try{$Host.UI.RawUI.FlushInputBuffer()}catch{}" %nul%
 exit /b 0
 
 :set_exit
