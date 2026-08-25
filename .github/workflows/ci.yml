@@ -355,6 +355,14 @@ jobs:
           }
           Write-Host "Embedded segment OK: decoded as GBK, split into 3 parts, Chinese strings intact."
 
+      # 文档同步守卫：从脚本里提取命令行参数、退出码、菜单编号、内部标签和版本号，
+      # 与文档比对，并校验所有 Markdown 的仓库内相对链接。守的是另一类静默漂移 ——
+      # 脚本改了、文档还写着旧的，CI 全绿，用户照着一份不存在的说明操作。
+      # 规则与豁免方式见 docs/doc-sync.md。
+      - name: Verify documentation matches the scripts
+        shell: pwsh
+        run: ./tools/check-docs.ps1
+
       # 发布包校验放在所有脚本冒烟之后：一个过期的发布包不应该掩盖脚本本身的
       # 冒烟结果。前面全绿、只有这一步红，就等于「代码是好的，但包没重新打」。
       - name: Verify release bundle matches the repository
