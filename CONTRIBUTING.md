@@ -15,13 +15,13 @@
 
 | 改了什么 | 需要同步 |
 |----------|----------|
-| 菜单项文案 / 选项编号 | `README.md`、`使用说明.txt`、`llms.txt`、`docs/README.md` |
-| 命令行参数、退出码 | `README.md`（使用方法与退出码表）、`llms.txt`、`ARCHITECTURE.md` |
-| 环境自检项 | `README.md`、`ARCHITECTURE.md`、`llms.txt` |
-| 系统要求、限制与注意 | `README.md`、`llms.txt` |
+| 菜单项文案 / 选项编号 | `README.md`、`使用说明.txt`、`llms.txt`、`llms-full.txt`、`docs/README.md` |
+| 命令行参数、退出码 | `README.md`（使用方法与退出码表）、`llms.txt`、`llms-full.txt`、`ARCHITECTURE.md` |
+| 环境自检项 | `README.md`、`ARCHITECTURE.md`、`llms.txt`、`llms-full.txt` |
+| 系统要求、限制与注意 | `README.md`、`llms.txt`、`llms-full.txt` |
 | `IAS.cmd` 的 `iasver` | `CHANGELOG.md` 顶部版本号（CI 强制校验，不一致直接失败） |
 
-`llms.txt` 是给大语言模型与 AI 搜索引擎读的结构化摘要，漏改不会有任何报错，但会让 AI 长期引用到过期口径，因此改动菜单、参数、退出码或限制条款时务必带上它。
+`llms.txt` 与 `llms-full.txt` 是给大语言模型与 AI 搜索引擎读的结构化摘要，漏改不会有任何报错，但会让 AI 长期引用到过期口径，因此改动菜单、参数、退出码或限制条款时务必带上它们。
 
 ## 编码与换行（最重要）
 
@@ -38,6 +38,7 @@
 
 - 不要把 `.cmd` / `.txt` 另存为 UTF-8（尤其是带 BOM 的 UTF-8），会导致控制台乱码并触发 CI 失败。
 - 不要把 `.cmd` 改成 LF 换行，批处理在部分环境下会异常，且 `IAS.cmd` 内部也有 LF 检测。
+- **PowerShell 调用禁止裸调用**：不要写 `powershell.exe "命令"`，必须带 `-NoProfile -Command`。裸调用在真实控制台下会进入交互模式挂死（见 [#4](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues/4)）。`IAS.cmd` 中统一通过 `%psc%` 变量调用（已包含 `-NoProfile -Command`），新增调用写 `%psc% "命令"` 即可，**不要**再手动拼 `-NoProfile -Command`，否则参数会重复导致静默失败。
 
 ## 本地自检（推荐）
 

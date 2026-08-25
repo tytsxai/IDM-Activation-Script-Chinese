@@ -50,6 +50,7 @@
 
 - 编码：`.cmd`/`.txt` 必须保持 GBK（代码页 936），否则 Windows 控制台可能乱码，且 CI 会失败。
 - 换行：`.cmd`/`.txt` 必须保持 CRLF；`.md` 使用 LF（由 `.gitattributes` 约束与 CI 校验）。
+- PowerShell 调用约定：**禁止裸 `powershell.exe "..."`**，必须带 `-NoProfile -Command`。裸调用在真实控制台（stdin 为控制台设备）下会进入交互模式挂死。`IAS.cmd` 通过第 188 行的 `%psc%` 变量统一处理，新增调用写 `%psc% "命令"` 即可，不要手动拼 `-NoProfile -Command`（否则参数会重复）；`开始激活.cmd` 因调用点少，直接内联 `powershell -NoProfile -Command`。
 - 运行环境差异：脚本大量依赖 Windows 系统组件（例如 `cmd.exe`、PowerShell、WMI 等），macOS/Linux 无法做等价运行验证，因此需要通过 Windows 冒烟记录补齐发布信心。
 
 ## CI 数据流（维护者视角）
