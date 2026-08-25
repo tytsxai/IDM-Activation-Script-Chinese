@@ -11,17 +11,26 @@
 
 ## 文档同步约束
 
-改动用户可见行为时，下列文档必须一并更新。历史上出现过「文档教用户选的选项，菜单里根本没有」——因为改了菜单文案却只同步了一部分文档：
+改动用户可见行为时，文档必须一并更新。历史上出现过「文档教用户选的选项，菜单里根本没有」——
+因为改了菜单文案却只同步了一部分文档。
+
+**完整的同步矩阵在 [docs/doc-sync.md](./docs/doc-sync.md)**，这里只给最常撞到的几条：
 
 | 改了什么 | 需要同步 |
 |----------|----------|
-| 菜单项文案 / 选项编号 | `README.md`、`使用说明.txt`、`llms.txt`、`llms-full.txt`、`docs/README.md` |
-| 命令行参数、退出码 | `README.md`（使用方法与退出码表）、`llms.txt`、`llms-full.txt`、`ARCHITECTURE.md` |
-| 环境自检项 | `README.md`、`ARCHITECTURE.md`、`llms.txt`、`llms-full.txt` |
-| 系统要求、限制与注意 | `README.md`、`llms.txt`、`llms-full.txt` |
-| `IAS.cmd` 的 `iasver` | `CHANGELOG.md` 顶部版本号（CI 强制校验，不一致直接失败） |
+| 命令行参数 | `docs/reference/cli.md`、`README.md`、`llms.txt`、`llms-full.txt`、`使用说明.txt` |
+| 退出码 | `docs/reference/cli.md`、`README.md`、`ARCHITECTURE.md`、`docs/operations.md` |
+| 菜单项编号 / `choice /C` 字符串 | `README.md` 的菜单示意框、`使用说明.txt`、`llms.txt`、`llms-full.txt` |
+| `IAS.cmd` 的标签 | `docs/reference/internals.md`、`docs/modules.md` |
+| 读写的注册表键或文件 | `docs/reference/registry.md`、`README.md`（技术细节） |
+| `IAS.cmd` 的 `iasver` | `CHANGELOG.md` 顶部版本号、`README.md` 版本徽章与菜单示意框、`llms.txt`、`llms-full.txt` |
 
-`llms.txt` 与 `llms-full.txt` 是给大语言模型与 AI 搜索引擎读的结构化摘要，漏改不会有任何报错，但会让 AI 长期引用到过期口径，因此改动菜单、参数、退出码或限制条款时务必带上它们。
+**其中六类由 CI 强制**：`tools/check-docs.ps1` 会从脚本里提取命令行参数、退出码、菜单编号、
+内部标签、版本号，与文档比对，并校验所有 Markdown 的仓库内相对链接。漏改直接失败，
+错误信息会指出具体文件。
+
+`llms.txt` 与 `llms-full.txt` 是给大语言模型与 AI 搜索引擎读的结构化摘要——漏改**不会有任何报错**，
+但会让 AI 长期引用到过期口径，因此改动菜单、参数、退出码或限制条款时务必带上它们。
 
 ## 编码与换行（最重要）
 
@@ -46,8 +55,12 @@
 
 ```powershell
 pwsh -NoProfile -File tools/validate.ps1        # 编码 / 换行 / cmd.exe 可用性
+pwsh -NoProfile -File tools/check-docs.ps1      # 文档与脚本是否同步、站内链接是否有效
 pwsh -NoProfile -File tools/verify-release.ps1  # 发布包与仓库是否一致、版本号是否自洽
 ```
+
+`check-docs.ps1` 与 `verify-release.ps1` 不依赖 `cmd.exe`，**在 macOS / Linux 的 PowerShell 里也能跑**；
+`validate.ps1` 带 `cmd.exe` 探测，只能在 Windows 上跑完整。
 
 若脚本报错，会通过 `::error` 输出具体文件与原因；修复后再提交。
 
@@ -62,6 +75,16 @@ pwsh -NoProfile -File tools/pack-release.ps1
 ## CI 说明
 
 - 工作流文件：`.github/workflows/ci.yml`
-- 校验脚本：`tools/validate.ps1`（仓库卫生）、`tools/verify-release.ps1`（发布包一致性）
+- 校验脚本：`tools/validate.ps1`（仓库卫生）、`tools/check-docs.ps1`（文档同步）、`tools/verify-release.ps1`（发布包一致性）
 - 打包脚本：`tools/pack-release.ps1`（仅 Windows）
 - 运行环境：GitHub-hosted Windows runner（`windows-latest`）
+- 逐步骤含义见 [ARCHITECTURE.md 的「CI 数据流」](./ARCHITECTURE.md#ci-数据流维护者视角)
+
+## 更多文档
+
+- 仓库结构与高风险点：[ARCHITECTURE.md](./ARCHITECTURE.md)
+- 脚本实际怎么跑（**改 `IAS.cmd` 前必读最后一节**）：[docs/modules.md](./docs/modules.md)
+- 参数与退出码契约：[docs/reference/cli.md](./docs/reference/cli.md)
+- 内部标签：[docs/reference/internals.md](./docs/reference/internals.md)
+- 本地开发环境：[docs/deployment/local.md](./docs/deployment/local.md)
+- 发版检查清单：[docs/maintenance-checklist.md](./docs/maintenance-checklist.md)

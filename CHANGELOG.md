@@ -12,9 +12,19 @@
 
 ### 修复
 - **IAS.cmd 裸 powershell.exe 调用导致黑屏卡死** — `set psc=powershell.exe` 改为 `set "psc=powershell.exe -NoProfile -Command"`。在真实控制台下裸 `powershell.exe "..."` 会进入交互模式而非执行命令，导致环境检测通过后清屏黑屏、窗口永久无响应（[#4](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues/4)）。
+- **发布包滞后于仓库** — `release/IDM-Activation-Script.zip` 里的 `IAS.cmd` 仍是修复前的版本，README 首推的下载链接指向它，用户下到的是带黑屏卡死缺陷的脚本。已用 CI 产出的 `release-bundle-rebuilt` 重新覆盖，`tools/verify-release.ps1` 恢复通过（此前 CI 已连续三次因这一项失败）。
+
+### 工程
+- **新增文档同步守卫 `tools/check-docs.ps1`** — 从 `IAS.cmd` 提取命令行参数、退出码、菜单编号、内部标签与版本号，与文档比对，并校验所有 Markdown 的仓库内相对链接。CI 新增 `Verify documentation matches the scripts` 步骤执行它。守的是「脚本改了、文档还写着旧的」这类静默漂移——它不会让任何测试变红，却会让用户照着一份不存在的说明操作。规则见 `docs/doc-sync.md`。
 
 ### 文档
 - **FAQ 新增 Q18/Q19** — Q18 覆盖「激活/冻结后过一两天又弹试用到期」（[#2](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues/2)、[#5](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues/5)）；Q19 覆盖「环境检测通过后黑屏卡死」（[#4](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues/4)）。
+- **建立完整文档体系** — 新增 `docs/modules.md`（关键模块与核心逻辑）、`docs/configuration.md`（配置说明）、`docs/reference/{cli,internals,registry}.md`（命令行契约 / 内部子程序 / 注册表与文件系统副作用）、`docs/deployment/{local,container,server}.md`（本地 / 容器与隔离环境 / 无人值守与批量）、`docs/operations.md`（运维与排错）、`docs/doc-sync.md`（同步规则）。`docs/README.md` 重写为完整索引，README 增加文档地图。
+- **清理 Release / tag 删除后的失效引用** — 仓库不再使用 GitHub Releases 与 tag，`release/` 目录成为唯一下载入口。README 的版本徽章由 `github/v/release`（会渲染成 "none"）改为静态徽章并纳入 CI 校验；`releases/latest` 链接、"历史版本从对应 tag 的 Release Assets 取"等说法全部改写，`release/README.md` 补上从 git 历史取历史版本的方法。
+- **修正与实现漂移的口径** — FAQ 条数 17 → 19（`docs/README.md`、`llms.txt`）；`IAS.cmd` 行数 1100 / 1264 → 约 1270（`ARCHITECTURE.md`、README、`llms-full.txt`）；`ARCHITECTURE.md` 的 CI 数据流补齐非 ANSI 冒烟、伪造 IDM 冒烟、入口脚本冒烟与内嵌 PowerShell 段守卫四步；去掉行号引用（会漂移）改为按标签索引。
+- **删除无法验证的断言** — `llms.txt` / `llms-full.txt` 中「已在 24H2 上验证通过」改为陈述支持范围，与 `docs/reports/smoke-win-baseline.md` 里「真实 IDM 环境回归待补」保持一致，也与 README 免责声明「只写仓库内可自行验证的内容」一致。
+- **补上被漏记的行为** — `:delete_queue` 会删除**整个** `HKLM` 侧的 IDM 键（连同 `InstallFolder`），随后只把 `AdvIntDriverEnabled2` 写回；此前文档只写了「删注册信息与试用计数」。这解释了「跑过脚本后 IDM 路径探测回退到 `ExePath`」这一常被误判为故障的现象。
+- **修正 Issue 模板的失效链接** — `config.yml` 里 FAQ 的锚点 `#-常见问题` 多了一个连字符，点进去落不到章节；同时新增排错指南入口。
 
 ---
 

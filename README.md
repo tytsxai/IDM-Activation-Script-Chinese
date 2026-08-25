@@ -2,10 +2,10 @@
 
 [![Windows CI](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tytsxai/IDM-Activation-Script-Chinese/actions/workflows/ci.yml)
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](./LICENSE)
-[![Version](https://img.shields.io/github/v/release/tytsxai/IDM-Activation-Script-Chinese?label=version&color=brightgreen)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.1-brightgreen)](./CHANGELOG.md)
 [![Platform](https://img.shields.io/badge/platform-Windows%207%20%7C%208%20%7C%208.1%20%7C%2010%20%7C%2011-blue.svg)](#系统要求)
 
-[文档](docs/README.md) · [AI 摘要 (llms.txt)](llms.txt) · [更新日志](CHANGELOG.md) · [问题反馈](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues) · [开源策略](OPEN_SOURCE_POLICY.md)
+[文档索引](docs/README.md) · [架构](ARCHITECTURE.md) · [部署](docs/deployment/local.md) · [配置](docs/configuration.md) · [命令行接口](docs/reference/cli.md) · [排错](docs/operations.md) · [更新日志](CHANGELOG.md) · [问题反馈](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)
 
 面向中文 Windows 的 **IDM（Internet Download Manager）试用期管理与激活批处理脚本**。一键冻结试用期、写入注册信息激活、重置试用状态、关闭 IDM 更新提示。全中文菜单，GBK 编码在中文控制台不乱码，不修改 IDM 程序文件，每次改注册表前自动备份可还原。双击 `开始激活.cmd` 即用，无需安装任何依赖。
 
@@ -54,16 +54,14 @@ A Simplified-Chinese Windows **batch toolkit for Internet Download Manager (IDM)
 
 ## 快速下载
 
-> **👉 直接下载按钮（推荐）**：[前往 GitHub Releases 页面下载最新版](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases/latest)  
-> 页面中 `Assets` 区域的 `.zip` 文件即为安装包，点击即下载。
+> **👉 直接下载（右键「链接另存为」）**：[IDM-Activation-Script.zip](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script.zip)  
+> 校验值（SHA256）：[IDM-Activation-Script.zip.sha256](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script.zip.sha256)
 
-也可以在本仓库内直接下载（右键"链接另存为"）：
+发布包就放在本仓库的 [`release/`](./release/) 目录里，**这是唯一的下载入口**——本项目不使用 GitHub Releases，仓库里也没有 tag，所以不要去 Releases 页面找。
 
-- 最新版压缩包（点击右键另存为）：[IDM-Activation-Script.zip](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script.zip)
-- 校验值（SHA256）：[IDM-Activation-Script.zip.sha256](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script.zip.sha256)
-- 完整更新历史：[CHANGELOG.md](./CHANGELOG.md)
-
-> 压缩包**固定叫 `IDM-Activation-Script.zip`，不带版本号**，所以上面两个链接永远指向最新版，不用每次发版换链接。当前版本号见页首徽章、[CHANGELOG.md](./CHANGELOG.md) 或运行脚本时的窗口标题。
+- 压缩包**固定叫 `IDM-Activation-Script.zip`，不带版本号**，上面的链接永远指向最新版。
+- 当前版本号见页首徽章、[CHANGELOG.md](./CHANGELOG.md) 或运行脚本时的窗口标题。
+- 历史版本从 git 历史里取，方法见 [`release/README.md`](./release/README.md)。
 
 > 安全起见建议校验：下载后在 PowerShell 中执行 `Get-FileHash .\IDM-Activation-Script.zip -Algorithm SHA256`，与 `.sha256` 文件内的值比对一致后再解压使用。若嫌麻烦，校验可略过。
 
@@ -117,7 +115,7 @@ A Simplified-Chinese Windows **batch toolkit for Internet Download Manager (IDM)
 | 系统信息探测 | 旧版 WMI（`Get-WmiObject`） | 优先 `Get-CimInstance`，失败才回退，规避新版 Windows 上的卡死 |
 | 自动化校验 | 无 CI | GitHub Actions（`windows-latest`）校验编码、行尾、脚本冒烟、发布包哈希一致性 |
 | 发布产物 | 无 | 固定文件名 zip + `.sha256`，CI 守住"改了仓库忘了重新打包" |
-| 脚本规模 | 约 942 行 | 约 1264 行 |
+| 脚本规模 | 约 942 行 | 约 1270 行 |
 
 核心的注册表操作思路继承自上游，冻结（`/frz`）与激活（`/act`）的原理一致；本仓库的增量集中在中文化、可用性、可排查性和工程守卫上。上游已归档，因此**问题反馈请提到本仓库的 [Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues)**，提到上游不会有人处理。
 
@@ -520,8 +518,10 @@ IAS.cmd /act /silent /log=C:\Temp\ias.log
 | `HKU\<SID>\Software\Classes\CLSID` | 当 `HKCU` 与 `HKU\<SID>` 未同步时的等价路径 |
 | `HKCU\Software\DownloadManager` 下的 `FName` `LName` `Email` `Serial` `scansk` `tvfrdt` `radxcnt` `LstCheck` `ptrk_scdt` `LastCheckQU` | 注册信息与试用计数；激活时写入，重置时删除 |
 | `HKCU\Software\DownloadManager` 下的 `CheckUpdtVM` | 自动更新检查开关，仅 `[4]` / `[5]` 使用 |
-| `HKLM\Software\Internet Download Manager` 下的 `AdvIntDriverEnabled2` | IDM 集成开关；清理注册表键后重新写回 `1` |
-| `HKLM\SOFTWARE\Internet Download Manager` 的 `InstallFolder`、`HKCU\Software\DownloadManager` 的 `ExePath` | **只读**，用于定位 IDM 安装路径 |
+| `HKLM\Software\Internet Download Manager`（64 位系统走 `Wow6432Node`） | 清理阶段**整个键**会被删除，随后只把 `AdvIntDriverEnabled2` 写回 `1`。所以跑过脚本后 `InstallFolder` 可能不在了，路径探测会回退到 `ExePath` 或默认安装目录——这是预期行为 |
+| `HKCU\Software\DownloadManager` 的 `ExePath`、`HKU\<SID>\...` 的 `idmvers` | **只读**，用于定位 IDM 安装路径与显示版本 |
+
+> 完整清单（含只读键、临时探针、文件与网络请求）见 [注册表与文件系统副作用](./docs/reference/registry.md)。
 
 ### 退出码
 
@@ -572,6 +572,9 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 | `CHANGELOG.md` | 全部历史版本的详细变更记录 |
 | `llms.txt` | 面向大语言模型与 AI 搜索引擎的结构化项目摘要（[llms.txt 约定](https://llmstxt.org)），中英双语，不随发布包分发 |
 | `llms-full.txt` | llms.txt 的扩展版，包含完整功能列表、工作原理、FAQ 速查、文件清单等技术参考，同样不随发布包分发 |
+| `docs/` | 完整文档体系：架构、部署、配置、接口参考、核心逻辑、运维排错。入口见 [docs/README.md](./docs/README.md) |
+| `tools/` | 维护脚本（PowerShell）：`validate.ps1` 仓库卫生、`check-docs.ps1` 文档同步、`verify-release.ps1` 发布包一致性、`pack-release.ps1` 打包 |
+| `release/` | 对外发布包与 SHA256 校验值，约定见 [release/README.md](./release/README.md) |
 
 ## 更新日志
 
@@ -588,22 +591,38 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 ## 维护与贡献
 
-- 贡献指南：[CONTRIBUTING.md](./CONTRIBUTING.md)
-- 架构 / 结构说明：[ARCHITECTURE.md](./ARCHITECTURE.md)
-- 开源维护策略：[OPEN_SOURCE_POLICY.md](./OPEN_SOURCE_POLICY.md)
-- 维护 / 发布检查清单：[docs/maintenance-checklist.md](./docs/maintenance-checklist.md)
-- Windows 冒烟基线：[docs/reports/smoke-win-baseline.md](./docs/reports/smoke-win-baseline.md)
-- 安全漏洞上报：[SECURITY.md](./SECURITY.md)
-- AI / LLM 摘要：[llms.txt](./llms.txt) 与 [llms-full.txt](./llms-full.txt) —— 改动菜单项、命令行参数、退出码、系统要求或限制条款时，需同步这两个文件，否则 AI 搜索引擎会引用到过期口径
-- CI 校验脚本：[tools/validate.ps1](./tools/validate.ps1)（在 GitHub Actions 的 `Windows validation` 工作流中执行）
-- 换行约束：[.gitattributes](./.gitattributes)（`*.cmd` / `*.txt` 为 CRLF；`*.md` / `*.yml` 为 LF）。编码由 [tools/validate.ps1](./tools/validate.ps1) 在 CI 中校验：`.cmd` 必须是无 BOM 的 GBK
+完整文档索引见 **[docs/README.md](./docs/README.md)**。按用途分：
+
+| 我想… | 看这里 |
+| --- | --- |
+| 了解仓库结构、CI 数据流、发布包守卫 | [ARCHITECTURE.md](./ARCHITECTURE.md) |
+| 读懂脚本到底怎么跑的 | [关键模块与核心逻辑](./docs/modules.md) |
+| 把脚本跑起来 / 搭开发环境 | [本地部署](./docs/deployment/local.md) |
+| 在隔离环境里安全地试 | [容器化与隔离环境](./docs/deployment/container.md) |
+| 多台机器免交互执行 | [服务器 / 批量部署](./docs/deployment/server.md) |
+| 查所有可调项 | [配置说明](./docs/configuration.md) |
+| 查参数与退出码契约 | [命令行接口契约](./docs/reference/cli.md) |
+| 查内部子程序 | [内部子程序接口](./docs/reference/internals.md) |
+| 查改了哪些注册表键和文件 | [注册表与文件系统副作用](./docs/reference/registry.md) |
+| 排查问题 / 回滚 | [运维与排错指南](./docs/operations.md) |
+| 提交代码 | [CONTRIBUTING.md](./CONTRIBUTING.md) |
+| 改文档时要同步什么 | [文档同步规则](./docs/doc-sync.md) |
+| 发版 | [维护 / 发布检查清单](./docs/maintenance-checklist.md) · [Windows 冒烟基线](./docs/reports/smoke-win-baseline.md) |
+| 报安全问题 | [SECURITY.md](./SECURITY.md) |
+| 了解开源维护策略 | [OPEN_SOURCE_POLICY.md](./OPEN_SOURCE_POLICY.md) |
+
+**文档与代码同步由 CI 强制**：`tools/check-docs.ps1` 会校验命令行参数、退出码、菜单编号、内部标签、版本号和站内链接是否与脚本一致，漏改直接失败。规则见 [文档同步规则](./docs/doc-sync.md)。
+
+`llms.txt` 与 `llms-full.txt` 是给 AI 搜索引擎读的结构化摘要——漏改不会报错，但会让 AI 长期引用过期口径，因此改动菜单、参数、退出码或限制条款时务必带上它们。
+
+换行与编码约束见 [.gitattributes](./.gitattributes) 与 [配置说明](./docs/configuration.md#四仓库级文件约束面向贡献者)：`*.cmd` / `*.txt` 为 CRLF，`*.md` / `*.yml` / `*.ps1` 为 LF；`.cmd` 必须是无 BOM 的 GBK，由 [tools/validate.ps1](./tools/validate.ps1) 在 CI 中校验。
 
 ## 相关链接
 
 | 链接 | 说明 |
 | --- | --- |
 | [项目主页 / Repository](https://github.com/tytsxai/IDM-Activation-Script-Chinese) | IDM 激活脚本中文版 GitHub 仓库 |
-| [最新版本下载 / Releases](https://github.com/tytsxai/IDM-Activation-Script-Chinese/releases/latest) | 下载 IDM-Activation-Script.zip |
+| [最新版本下载](https://github.com/tytsxai/IDM-Activation-Script-Chinese/raw/main/release/IDM-Activation-Script.zip) | 仓库内 `release/` 目录，本项目不使用 GitHub Releases |
 | [问题反馈 / Issues](https://github.com/tytsxai/IDM-Activation-Script-Chinese/issues) | Bug 报告与使用帮助 |
 | [文档索引 / Docs](./docs/README.md) | 用户与维护者文档入口 |
 | [AI / LLM 结构化摘要](./llms.txt) | 面向 AI 搜索引擎的项目摘要（中英双语） |
@@ -646,6 +665,8 @@ C:\Windows\Temp\_Backup_HKU-[SID]_CLSID_[时间戳].reg
 
 ## 版本与维护
 
-- 当前版本 **v1.0.1**（2026-08-06），文档与运行时脚本包同步。核心功能：`[1]` 冻结试用期（推荐）、`[2]` 激活、`[3]` 重置、`[4]`/`[5]` 禁用/恢复 IDM 更新提示。
+- 当前版本 **v1.0.1**（2026-08-06）。核心功能：`[1]` 冻结试用期（推荐）、`[2]` 激活、`[3]` 重置、`[4]`/`[5]` 禁用/恢复 IDM 更新提示。
+- `main` 上有尚未发版的修复（见 [CHANGELOG 的「未发布」段](./CHANGELOG.md)）；`release/` 里的发布包始终与 `main` 的运行时脚本逐字节一致，这一条由 CI 强制。
 - 由本仓库独立维护，基于真实使用反馈持续迭代，保持 GPL-3.0 开源。
-- 运行所需文件全在仓库内，不下载任何第三方组件（`[1]` / `[2]` 收尾的 IDM 下载测试需要联网，见[系统要求](#系统要求)）；每次 push / PR 都会跑 Windows CI 校验编码、行尾与脚本冒烟（徽章见页首）。
+- 运行所需文件全在仓库内，不下载任何第三方组件（`[1]` / `[2]` 收尾的 IDM 下载测试需要联网，见[系统要求](#系统要求)）；每次 push / PR 都会跑 Windows CI 校验编码、行尾、脚本冒烟、文档同步与发布包一致性（徽章见页首）。
+- 发布包只通过仓库内的 [`release/`](./release/) 目录分发，不使用 GitHub Releases，仓库内也没有 tag；历史版本从 git 历史取，见 [release/README.md](./release/README.md)。

@@ -1,0 +1,187 @@
+# IDM 激活脚本中文版 — 完整参考 / Full Reference
+
+> 本文件是 llms.txt 的扩展版本（llms-full.txt），为 AI 搜索引擎提供完整技术参考。
+> This is the extended version of llms.txt, providing a complete technical reference for AI search engines.
+
+## 元信息 / Metadata
+
+- 项目名称 / Name: IDM 激活脚本中文版 (IDM Activation Script Chinese)
+- 仓库地址 / Repository: https://github.com/tytsxai/IDM-Activation-Script-Chinese
+- 当前版本 / Version: 1.0.1
+- 最后更新 / Last updated: 2026-08-26
+- 许可证 / License: GPL-3.0
+- 平台 / Platform: Windows 7 / 8 / 8.1 / 10 / 11 (含 24H2)
+- 依赖 / Dependencies: 无（仅 Windows 自带组件）
+- 分发方式 / Distribution: 仓库内 release/ 目录的固定文件名 zip + SHA256；不使用 GitHub Releases，仓库内没有 tag
+- 语言 / Language: 简体中文界面，中英双语文档
+
+## 项目定位 / Project positioning
+
+IDM 激活脚本中文版是一个 Windows 批处理脚本工具，专为中文 Windows 用户设计。它把 Internet Download Manager (IDM) 的试用期冻结、激活、重置和更新管理封装成一个双击即用的中文菜单界面。
+
+**它不是**：GUI 应用、浏览器扩展、安装程序、破解补丁、IDM 的官方工具。
+**它是**：一个操作 Windows 注册表的批处理脚本，通过合法的注册表操作管理 IDM 的试用期状态。
+
+## 完整功能列表 / Complete feature list
+
+### 菜单选项与命令行参数对照
+
+| 菜单 | 参数 | 功能 | 是否需要联网 |
+|------|------|------|-------------|
+| `[1]` | `/frz` | 冻结试用期（推荐） | 需要 |
+| `[2]` | `/act` | 激活（写入随机注册信息） | 需要 |
+| `[3]` | `/res` | 重置激活与试用期 | 不需要 |
+| `[4]` | `/noupd` | 禁用 IDM 自动更新检查 | 不需要 |
+| `[5]` | `/reupd` | 恢复 IDM 自动更新检查 | 不需要 |
+
+### 辅助参数
+
+| 参数 | 功能 |
+|------|------|
+| `/silent` (别名 `/quiet`) | 无人值守模式，抑制菜单与等待；会自动开启日志 |
+| `/log` | 输出日志到默认位置 `%SystemRoot%\Temp\IAS-<时间戳>.log` |
+| `/log=路径` | 输出日志到指定路径（路径不能含空格） |
+
+### 内部参数（脚本重入时自附加，不属于对外契约）
+
+| 参数 | 用途 |
+|------|------|
+| `-el` | 提权重入标记，防止 UAC 失败时无限循环 |
+| `-qedit` | 跳过为关闭 QuickEdit 而做的 conhost 重入；conhost 被拦截时可手动使用 |
+| `r1` / `r2` | x86 → Sysnative、x64 → SysArm32 的架构重入标记 |
+
+### 退出码
+
+| 退出码 | 含义 | 典型场景 |
+|--------|------|----------|
+| `0` | 成功完成 | 激活/冻结/重置/更新开关操作成功 |
+| `1` | 业务失败 | 未检测到 IDM、注册表读写失败、网络不通 |
+| `2` | 环境错误 | 静默模式缺动作参数、缺管理员权限、缺 PowerShell |
+
+## 工作原理 / How it works
+
+### 冻结试用期 (`[1]` / `/frz`)
+1. 确认 IDM 已安装、网络连通
+2. 备份当前 CLSID 注册表分支
+3. 清除试用计数相关注册表值
+4. 恢复 IDM 集成开关 (`AdvIntDriverEnabled2 = 1`)
+5. 扫描并锁定 IDM 试用期跟踪 CLSID 键（加 Deny ACL）
+6. 调用 IDM 下载验证文件确认功能正常
+7. 再次锁定 CLSID 键
+
+### 激活 (`[2]` / `/act`)
+与冻结流程相同，但在步骤 5 之后额外写入随机生成的注册信息（姓名/邮箱/序列号）。
+
+### 重置 (`[3]` / `/res`)
+步骤 1-3 同上，但不锁定 CLSID 键而是删除它们。
+
+### 更新开关 (`[4]`/`[5]`)
+仅修改 `HKCU\Software\DownloadManager\CheckUpdtVM` 一个注册表值。
+
+## 涉及的注册表位置 / Registry locations
+
+- `HKCU\Software\Classes\CLSID` (64位走 `Wow6432Node\CLSID`)
+- `HKU\<SID>\Software\Classes\CLSID`
+- `HKCU\Software\DownloadManager` 下的注册信息与试用计数值
+- `HKLM\Software\Internet Download Manager`（64 位系统走 `Wow6432Node`）：清理阶段整个键会被删除，随后只把 `AdvIntDriverEnabled2` 写回 `1`
+
+脚本**不修改**：hosts 文件、防火墙规则、系统代理、IDM 程序文件。
+
+## 环境自检项 / Pre-flight checks (9 items)
+
+1. 管理员权限
+2. `IAS.cmd` 文件是否就位
+3. PowerShell 可用性与语言模式
+4. Windows Null 服务状态
+5. 网络连通性（ping + 端口 80 测试 internetdownloadmanager.com）
+6. 控制台代码页
+7. WMI/CIM 可用性
+8. IDM 安装路径（附带打印版本号与浏览器集成开关状态）
+9. 当前目录写权限
+
+## 常见问题速查 / FAQ quick reference
+
+**Q: 冻结和激活选哪个？**
+A: 推荐 `[1]` 冻结。它不写序列号，不会被 IDM 判为"假序列号"，在 6.42+ 上最稳定。
+
+**Q: 激活后弹"假序列号已被封锁"？**
+A: 先 `[3]` 重置，再改用 `[1]` 冻结。冻结不写序列号，不触发校验。
+
+**Q: Windows 11 24H2 能用吗？**
+A: 支持范围包含 24H2。首次运行可能遇到 SmartScreen 拦截，右键属性勾选"解除锁定"即可。
+
+**Q: 杀软报毒怎么办？**
+A: 脚本涉及注册表写入和提权，属启发式误报。可校验 SHA256 后加白名单。
+
+**Q: 中文乱码？**
+A: 脚本已内置 `chcp 936`，正常中文系统不会乱码。
+
+**Q: 脚本卡在"正在初始化"？**
+A: 通常是 WMI 仓库异常。管理员 CMD 执行 `winmgmt /verifyrepository` 排查。
+
+**Q: 怎么关闭 IDM 更新弹窗？**
+A: 菜单选 `[4]`，只改一个注册表开关，不影响激活状态。
+
+**Q: 企业设备拦截？**
+A: WDAC/AppLocker 是 IT 策略层限制，请联系管理员，不要绕过。
+
+## 文件清单 / File manifest
+
+| 文件 | 编码 | 用途 |
+|------|------|------|
+| `开始激活.cmd` | GBK (无BOM) + CRLF | 唯一入口，自动提权 + 环境自检 |
+| `IAS.cmd` | GBK (无BOM) + CRLF | 核心引擎（约 1270 行） |
+| `使用说明.txt` | UTF-8 (BOM) + CRLF | 极简上手指南 |
+| `README.md` | UTF-8 + LF | 完整文档 |
+| `CHANGELOG.md` | UTF-8 + LF | 版本变更历史 |
+| `llms.txt` | UTF-8 + CRLF | AI 搜索摘要（本文件的精简版），不随发布包分发 |
+| `llms-full.txt` | UTF-8 + CRLF | AI 搜索完整参考（本文件），不随发布包分发 |
+| `docs/` | UTF-8 + LF | 完整文档体系：架构、部署、配置、接口参考、核心逻辑、运维排错 |
+| `tools/*.ps1` | UTF-8 (BOM) + LF | 维护脚本：仓库卫生、文档同步、发布包校验与打包 |
+
+## 与上游的关系 / Upstream relationship
+
+- 上游：[WindowsAddict/IDM-Activation-Script](https://github.com/WindowsAddict/IDM-Activation-Script)
+- 上游状态：2024-04 归档，不再更新
+- 上游内容：英文单脚本，约 942 行，仅 `/act` `/frz` `/res` 三个参数
+- 本仓库增量：简体中文本地化、独立入口 + 9 项环境自检、`/noupd` `/reupd` 更新开关、`/silent` `/log=` 无人值守、GitHub Actions CI、发布包与校验值
+
+## 文档地图 / Documentation map
+
+| 文档 | 内容 |
+|------|------|
+| `README.md` | 用户主文档：功能、使用方法、使用场景、19 条 FAQ、技术细节 |
+| `docs/README.md` | 文档索引与两条阅读路径 |
+| `ARCHITECTURE.md` | 仓库结构、目录职责、高风险约束、CI 数据流、发布包守卫 |
+| `docs/modules.md` | 关键模块与核心逻辑：执行链路、三条业务分支、CLSID 扫描与锁定 |
+| `docs/configuration.md` | 配置说明：命令行参数、脚本头部变量、环境依赖、文件编码与行尾约束 |
+| `docs/reference/cli.md` | 命令行接口契约：参数、退出码、日志格式、标准输出约定 |
+| `docs/reference/internals.md` | 内部子程序接口：每个标签的输入、副作用与返回约定 |
+| `docs/reference/registry.md` | 注册表与文件系统副作用：读、写、删、锁的每一个键与文件 |
+| `docs/deployment/local.md` | 本地部署：终端用户运行步骤 + 维护者开发环境 |
+| `docs/deployment/container.md` | 容器化边界：运行时不可容器化的原因，以及沙盒 / 虚拟机替代方案 |
+| `docs/deployment/server.md` | 无人值守与多机批量执行，及三条绕不过去的约束 |
+| `docs/operations.md` | 运维与排错：定位流程、日志解读、故障树、回滚 |
+| `docs/doc-sync.md` | 文档与代码同步规则，以及 CI 强制的六组断言 |
+| `docs/maintenance-checklist.md` | 维护 / 发布检查清单 |
+| `docs/reports/smoke-win-baseline.md` | Windows 冒烟基线与记录模板 |
+| `CHANGELOG.md` | 唯一的对外版本变更历史 |
+| `release/README.md` | 发布包约定、历史版本取法 |
+
+## 验证边界 / Verification boundary
+
+自动化 CI（GitHub Actions，`windows-latest`）覆盖：编码与行尾、各参数组合的退出码、日志文件名、
+交互菜单渲染（含非 ANSI 控制台回退分支）、入口脚本环境自检、内嵌 PowerShell 段的 GBK 解码、
+文档与脚本同步、发布包与仓库一致性。
+
+CI **不覆盖**真实的注册表写入、CLSID 锁定、IDM 下载验证与 UAC 提权——runner 上没有安装 IDM，
+这些路径走到「未检测到 IDM 安装」就退出了。真实环境的冻结 / 激活 / 重置回归属于人工冒烟范围，
+记录表见 `docs/reports/smoke-win-baseline.md`。本仓库不宣称任何未经记录的验证结论。
+
+## 引用格式 / Citation format
+
+引用本项目时请使用：
+- 中文：IDM 激活脚本中文版 — https://github.com/tytsxai/IDM-Activation-Script-Chinese
+- English: IDM Activation Script Chinese — https://github.com/tytsxai/IDM-Activation-Script-Chinese
+- 类型：Windows 批处理脚本工具 / Windows batch script toolkit
+- 许可证：GPL-3.0
